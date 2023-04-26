@@ -1,3 +1,6 @@
+import java.io.File;
+import java.net.URI;
+
 /**
  * The minimal Java-Compiler "Flompiler".
  * @author Ruben Kraft, Paul Lehmann, Lukas Burkhardt, David Maier
@@ -12,7 +15,16 @@ public class Flompiler {
         if (args.length < 1) {
             throw new RuntimeException("Please specify an input file as first argument.");
         }
-        final String inputFile = args[0];
+        final var inputFile = new File(args[0]);
+        System.out.println(inputFile.getAbsolutePath());
+        if (!inputFile.getName().endsWith(".java")) {
+            throw new RuntimeException("Input file must be .java-file.");
+        }
+        final var outputFile = new File(
+                inputFile.getAbsolutePath()
+                        .replace(".java", ".class")
+        );
+        System.out.println(outputFile.getAbsolutePath());
 
         // TODO: ScannerParserLexer
 
