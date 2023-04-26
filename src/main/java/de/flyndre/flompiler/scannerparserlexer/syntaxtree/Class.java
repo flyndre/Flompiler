@@ -19,6 +19,12 @@ public class Class {
     public String type;
 
     /**
+     *
+     */
+
+    public String name;
+
+    /**
      * 
      */
     public List<Field> fields;
