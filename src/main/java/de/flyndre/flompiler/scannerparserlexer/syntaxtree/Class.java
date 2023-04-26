@@ -27,6 +27,11 @@ public class Class {
     /**
      * 
      */
+    public String access;
+
+    /**
+     * 
+     */
     public List<Field> fields;
 
     /**
