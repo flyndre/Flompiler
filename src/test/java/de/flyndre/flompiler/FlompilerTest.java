@@ -3,13 +3,12 @@ package de.flyndre.flompiler;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.io.File;
 
 /**
  * Unit test for simple App.
  */
-public class FlompilerTest
-    extends TestCase
-{
+public class FlompilerTest extends TestCase {
     /**
      * Create the test case
      *
@@ -34,5 +33,19 @@ public class FlompilerTest
     public void testApp()
     {
         assertTrue( true );
+    }
+
+    /**
+     * Parse empty class.
+     */
+    public void testEmptyClass() {
+        File file = new File(TestConstants.RESOURCES_ROOT + "/basic/EmptyClass.java");
+    }
+
+    /**
+     * Try to parse defective empty class and expect exception.
+     */
+    public void testDefectiveEmptyClass() {
+        File file = new File(TestConstants.RESOURCES_ROOT + "/basic/defective/DefectiveEmptyClass.java");
     }
 }
