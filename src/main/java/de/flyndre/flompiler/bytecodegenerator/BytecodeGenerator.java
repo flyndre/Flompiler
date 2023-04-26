@@ -2,8 +2,10 @@ package de.flyndre.flompiler.bytecodegenerator;
 
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Field;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Method;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;
@@ -32,7 +34,10 @@ public class BytecodeGenerator {
 
             cw.visit(Opcodes.V1_8,visibility, thisClass.name, null, "java/lang/Object", null);
 
+            //generate fields
+            cw = generateByteCodeFields(cw, thisClass.fields);
 
+            //generate constructors
         }
     }
 
@@ -59,7 +64,7 @@ public class BytecodeGenerator {
                 case "int":
                     type = "I";
                     break;
-                case "bool":
+                case "boolean":
                     type = "Z";
                     break;
                 case "char":
@@ -77,6 +82,30 @@ public class BytecodeGenerator {
             cw.visitField(visibility, thisField.name, type, null, null);
         }
 
+        return cw;
+    }
+
+    public ClassWriter generateByteCodeForConstructors(ClassWriter cw, List<Method> methods, List<Field> fields){
+        //get all fields with default values
+        List<Field> defaultFields = new ArrayList<>();
+        for(int i=0;i<fields.size();i++){
+            if(!fields.get(i).standardValue.equals(null)){
+                defaultFields.add(fields.get(i));
+            }
+        }
+
+        //get all constructors out of the methods
+        List<Method> constructors = new ArrayList<>();
+        for(int i=0;i<methods.size();i++){
+            if(methods.get(i).name.equals("<init>")){
+                constructors.add(methods.get(i));
+            }
+        }
+
+        //generate the bytecode for the constructors
+        /*for(int i=0;i<constructors.size();i++){
+            MethodVisitor
+        }*/
         return cw;
     }
 }
