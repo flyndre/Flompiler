@@ -19,7 +19,7 @@ public class BytecodeGenerator {
 
             //get class visibility
             int visibility = Opcodes.ACC_PUBLIC;
-            switch(thisClass.name.toLowerCase()){
+            switch(thisClass.access.toLowerCase()){
                 case "public":
                     visibility = Opcodes.ACC_PUBLIC;
                     break;
@@ -36,7 +36,47 @@ public class BytecodeGenerator {
         }
     }
 
-    public ClassWriter generateByteCodeFields(ClassWriter cw, List<Field>){
-        
+    public ClassWriter generateByteCodeFields(ClassWriter cw, List<Field> fields){
+        for(int i = 0;i<fields.size();i++){
+            Field thisField = fields.get(i);
+
+            //get field visibility
+            int visibility = Opcodes.ACC_PUBLIC;
+            switch(thisField.access.toLowerCase()){
+                case "public":
+                    visibility = Opcodes.ACC_PUBLIC;
+                    break;
+                case "private":
+                    visibility = Opcodes.ACC_PRIVATE;
+                    break;
+                default:
+                    break;
+            }
+
+            //get field type
+            String type = "";
+            switch(thisField.type.toLowerCase()){
+                case "int":
+                    type = "I";
+                    break;
+                case "bool":
+                    type = "Z";
+                    break;
+                case "char":
+                    type = "C";
+                    break;
+                default:
+                    type = "L" + thisField.type + ";";
+                    break;
+            }
+
+            //get initial value
+            //String initalValue = thisField.standardValue;
+            //nur bei statischen Werten
+
+            cw.visitField(visibility, thisField.name, type, null, null);
+        }
+
+        return cw;
     }
 }
