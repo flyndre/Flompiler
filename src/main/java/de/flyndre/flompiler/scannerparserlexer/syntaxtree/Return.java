@@ -16,7 +16,7 @@ public class Return extends Statement {
     }
 
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return expression.typeCheck(fields,parameters);
     }
 

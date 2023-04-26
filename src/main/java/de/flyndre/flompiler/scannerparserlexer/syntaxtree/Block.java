@@ -16,7 +16,7 @@ public class Block extends Statement {
     }
 
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         for(Statement statement: statements){
             if(statement.getClass().equals(Return.class)){
                 return statement.typeCheck(fields,parameters);
