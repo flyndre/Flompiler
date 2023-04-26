@@ -23,15 +23,14 @@ public final class EmptyClassResults {
     private static Program buildAst() {
 
         var program = new Program();
+        program.classes = new ArrayList<>();
         {
             var emptyClass = new Class();
-            {
-                emptyClass.access = "public";
-                emptyClass.name = "EmptyClass";
-                emptyClass.fields = new ArrayList<>();
-                emptyClass.methods = new ArrayList<>();
-            }
-            program.classes = List.of(emptyClass);
+            emptyClass.access = "public";
+            emptyClass.name = "EmptyClass";
+            emptyClass.fields = new ArrayList<>();
+            emptyClass.methods = new ArrayList<>();
+            program.classes.add(emptyClass);
         }
 
         return program;
