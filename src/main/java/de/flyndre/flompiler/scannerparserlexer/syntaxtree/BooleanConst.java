@@ -3,13 +3,13 @@ package de.flyndre.flompiler.scannerparserlexer.syntaxtree;
 /**
  * 
  */
-public class Char extends Expression {
+public class BooleanConst extends Expression {
 
-    public char value;
+    public BooleanConst value;
     /**
      * Default constructor
      */
-    public Char() {
+    public BooleanConst() {
     }
 
 }
