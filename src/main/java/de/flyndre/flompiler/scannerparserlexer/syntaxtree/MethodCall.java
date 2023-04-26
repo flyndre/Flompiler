@@ -13,6 +13,11 @@ public class MethodCall extends StatementExpression {
     public MethodCall() {
     }
 
+    @Override
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        return expr.typeCheck(fields,parameters);
+    }
+
     /**
      * 
      */

@@ -13,6 +13,11 @@ public class New extends StatementExpression {
     public New() {
     }
 
+    @Override
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        return type;
+    }
+
     /**
      * 
      */

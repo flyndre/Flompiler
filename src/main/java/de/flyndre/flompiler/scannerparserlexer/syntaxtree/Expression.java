@@ -1,9 +1,13 @@
 package de.flyndre.flompiler.scannerparserlexer.syntaxtree;
 
+import java.util.List;
+
 /**
  * 
  */
-public class Expression {
+public abstract class Expression {
+
+    String type;
 
     /**
      * Default constructor
@@ -11,4 +15,5 @@ public class Expression {
     public Expression() {
     }
 
+    public abstract String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception;
 }

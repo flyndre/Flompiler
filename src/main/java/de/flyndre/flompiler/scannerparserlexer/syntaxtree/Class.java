@@ -1,7 +1,5 @@
 package de.flyndre.flompiler.scannerparserlexer.syntaxtree;
 
-import de.flyndre.flompiler.typecheker.Type;
-
 import java.util.*;
 
 /**
@@ -36,10 +34,10 @@ public class Class {
      */
     public List<Method> methods;
 
-    public Type typeCheck() throws Exception {
+    public String typeCheck() throws Exception {
         for(Method method:methods){
             method.typeCheck(fields);
         }
-        return Type.classType;
+        return name;
     }
 }
