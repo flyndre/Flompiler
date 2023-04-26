@@ -59,7 +59,7 @@ public class BytecodeGenerator {
                 case "int":
                     type = "I";
                     break;
-                case "boolean":
+                case "bool":
                     type = "Z";
                     break;
                 case "char":
@@ -70,7 +70,10 @@ public class BytecodeGenerator {
                     break;
             }
 
-            cw.visitField(visibility, thisField.name, type, null, );
+            //get initial value
+
+
+            cw.visitField(visibility, thisField.name, type, null, null);
         }
 
         return cw;

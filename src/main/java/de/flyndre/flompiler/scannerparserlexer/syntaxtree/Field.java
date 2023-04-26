@@ -23,7 +23,7 @@ public class Field {
     /**
      * 
      */
-    public Type type;
+    public String type;
 
     public String standardValue;
 
