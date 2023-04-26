@@ -18,4 +18,11 @@ public class Program {
      */
     public List<Class> classes;
 
+    public Program typeCheck() throws Exception {
+        for(Class cl:classes){
+            cl.typeCheck();
+        }
+        return this;
+    }
+
 }

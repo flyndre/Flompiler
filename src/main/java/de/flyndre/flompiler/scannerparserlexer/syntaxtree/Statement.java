@@ -1,9 +1,13 @@
 package de.flyndre.flompiler.scannerparserlexer.syntaxtree;
 
+import jdk.jshell.spi.ExecutionControl;
+
+import java.util.*;
+
 /**
  * 
  */
-public class Statement {
+public abstract class Statement {
 
     /**
      * Default constructor
@@ -11,4 +15,5 @@ public class Statement {
     public Statement() {
     }
 
+    public abstract String typeCheck(List<Field> fields,List<Parameter> parameters) throws Exception;
 }

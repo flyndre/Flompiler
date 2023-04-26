@@ -33,4 +33,11 @@ public class Method {
      */
     public Statement statement;
 
+    public String typeCheck(List<Field> fields) throws Exception {
+        String ty;
+        if(!(ty = statement.typeCheck(fields,parameter)).equals(type)){
+            throw new Exception(String.format("Method %s has not the expected type. Expected %s, but should be %s",name,type,ty));
+        }
+        return type;
+    }
 }
