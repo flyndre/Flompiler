@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * 
  */
-public class Statement {
+public abstract class Statement {
 
     /**
      * Default constructor
@@ -16,7 +16,5 @@ public class Statement {
     public Statement() {
     }
 
-    public Type typeCheck(List<Field> fields,List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Hi");
-    }
+    public abstract Type typeCheck(List<Field> fields,List<Parameter> parameters) throws ExecutionControl.NotImplementedException;
 }
