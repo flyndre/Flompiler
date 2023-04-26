@@ -1,5 +1,7 @@
 package de.flyndre.flompiler.scannerparserlexer.syntaxtree;
 
+import de.flyndre.flompiler.typecheker.Type;
+
 /**
  * 
  */
@@ -21,6 +23,8 @@ public class Field {
     /**
      * 
      */
-    public String type;
+    public Type type;
+
+    public String standardValue;
 
 }
