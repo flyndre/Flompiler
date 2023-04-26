@@ -14,18 +14,13 @@ public class Class {
     }
 
     /**
-     * 
-     */
-    public String type;
-
-    /**
      *
      */
 
     public String name;
 
     /**
-     * 
+     *
      */
     public String access;
 
