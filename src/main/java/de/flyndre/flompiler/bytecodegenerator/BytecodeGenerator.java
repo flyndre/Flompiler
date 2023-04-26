@@ -71,7 +71,8 @@ public class BytecodeGenerator {
             }
 
             //get initial value
-
+            //String initalValue = thisField.standardValue;
+            //nur bei statischen Werten
 
             cw.visitField(visibility, thisField.name, type, null, null);
         }
