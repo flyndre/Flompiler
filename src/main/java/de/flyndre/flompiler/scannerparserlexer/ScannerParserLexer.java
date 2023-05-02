@@ -1,7 +1,10 @@
 package de.flyndre.flompiler.scannerparserlexer;
-import org.antlr.v4.runtime.*;
-import de.flyndre.flompiler.scannerparserlexer.gen.*;
-import org.w3c.dom.Document;
+import de.flyndre.flompiler.scannerparserlexer.parser.adapter.ClassAdapter;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Token;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,27 +14,25 @@ import java.util.ArrayList;
  */
 public class ScannerParserLexer {
     public static void main(String[] args) throws IOException {
-        String as = "public class A { }";
-        CommonTokenStream tokens = compile(as);
-        System.out.println(tokens.getText());
-        ArrayList<Token> tokenArr = (ArrayList<Token>) tokens.getTokens();
-            System.out.println(tokenArr.size());
-        for(Token t : tokenArr){
-            System.out.print(t.getText());
+        String as = "public class asd {}";
+        Program program = compile(as);
+
+        for (Class aClass : program.classes) {
+            System.out.println("Classname: " + aClass.name + ", Classaccess: " + aClass.access );
         }
+
     }
-    public static CommonTokenStream compile(String input) throws IOException {
+    public static Program compile(String input) throws IOException {
         return parse(input);
     }
 
-    private static CommonTokenStream parse(String input) throws IOException {
-        MiniJavaLexer lexer = new MiniJavaLexer(CharStreams.fromString(input));
+    private static Program parse(String input) throws IOException {
+        parser.MiniJavaLexer lexer = new parser.MiniJavaLexer(CharStreams.fromString(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        //MiniJavaParser parser = new MiniJavaParser(tokens);
-        return tokens;
-        //MiniJavaParser.ProgramContext tree = parser.program(); //Parsen
-        //Document doc = new Document(DocumentElementAdapter.adapt(tree.classes()));
-        //return doc;
+        parser.MiniJavaParser parser = new parser.MiniJavaParser(tokens);
+        parser.MiniJavaParser.ProgramContext tree = parser.program(); //Parsen
+        Program doc = new Program(ClassAdapter.adapt(tree.class_()));
+        return doc;
     }
 
 }

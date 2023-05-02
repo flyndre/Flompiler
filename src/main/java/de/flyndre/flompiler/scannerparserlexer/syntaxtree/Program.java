@@ -12,7 +12,9 @@ public class Program {
      */
     public Program() {
     }
-
+    public Program(List<Class> classes) {
+        this.classes = classes;
+    }
     /**
      * 
      */

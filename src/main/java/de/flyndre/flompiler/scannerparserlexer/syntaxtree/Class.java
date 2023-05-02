@@ -13,6 +13,13 @@ public class Class {
     public Class() {
     }
 
+    public Class(String name, String access, List<Field> fields, List<Method> methods){
+        this.name = name;
+        this.access = access;
+        this.fields = fields;
+        this.methods = methods;
+    }
+
     /**
      *
      */
@@ -33,6 +40,8 @@ public class Class {
      * 
      */
     public List<Method> methods;
+
+
 
     public String typeCheck() throws Exception {
         for(Method method:methods){

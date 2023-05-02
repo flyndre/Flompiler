@@ -1,34 +1,27 @@
 grammar MiniJava;
 
-BOOLEAN: 'True' | 'False';
-CHAR: '\'' [a-zA-Z0-9] '\'';
-STRING: '"' CHAR* '"';
-INTEGER: [1-9][0-9]*;
-PUBLIC: 'public';
-PRIVATE : 'private';
-NAME         : [A-Za-z]+;
-WAVEDBROPEN  : '{';
-WAVEDBRCLOSE : '}';
-IntType : 'int';
-StringType : 'String';
-BooleanType : 'Boolean';
-CharType : 'Char';
-VoidType : 'void';
-CLASS : 'class';
-program : classes;
-access           : PUBLIC
-                 | PRIVATE;
-                 //| PROTECTED
-                 //| STATIC
-                 //| ABSTRACT;
-type    : IntType | StringType | BooleanType | CharType | VoidType;
+
+CLASS           : 'class';
+BOOLEAN         : 'True' | 'False';
+CHAR            : '\'' [a-zA-Z0-9] '\'';
+STRING          : '"' CHAR* '"';
+INTEGER         : [1-9][0-9]*;
+PUBLIC          : 'public';
+PRIVATE         : 'private';
+NAME            : [A-Za-z]+;
+WAVEDBROPEN     : '{';
+WAVEDBRCLOSE    : '}';
+IntType         : 'int';
+StringType      : 'String';
+BooleanType     : 'Boolean';
+CharType        : 'Char';
+VoidType        : 'void';
 
 
-classes : class classes | class;
-class   : access CLASS NAME block;
-block   : WAVEDBROPEN statements WAVEDBRCLOSE | WAVEDBROPEN WAVEDBRCLOSE;
-statements: methoddecl;
-methoddecl: access type NAME block;
+program         : class;
+class           : accessMod CLASS NAME block;
+block           : WAVEDBROPEN WAVEDBRCLOSE;
+accessMod       : PUBLIC | PRIVATE;
 /*
 compilationunit  : typedeclarations;
 
