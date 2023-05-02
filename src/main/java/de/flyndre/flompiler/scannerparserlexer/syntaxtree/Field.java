@@ -1,7 +1,5 @@
 package de.flyndre.flompiler.scannerparserlexer.syntaxtree;
 
-import de.flyndre.flompiler.typecheker.Type;
-
 /**
  * 
  */

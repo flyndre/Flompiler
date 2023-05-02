@@ -1,127 +1,135 @@
 grammar MiniJava;
+
+BOOLEAN: 'True' | 'False';
+CHAR: '\'' [a-zA-Z0-9] '\'';
+STRING: '"' CHAR* '"';
+INTEGER: [1-9][0-9]*;
+PUBLIC: 'public';
+PRIVATE : 'private';
+NAME         : [A-Za-z]+;
+WAVEDBROPEN  : '{';
+WAVEDBRCLOSE : '}';
+IntType : 'int';
+StringType : 'String';
+BooleanType : 'Boolean';
+CharType : 'Char';
+VoidType : 'void';
+CLASS : 'class';
+program : classes;
+access           : PUBLIC
+                 | PRIVATE;
+                 //| PROTECTED
+                 //| STATIC
+                 //| ABSTRACT;
+type    : IntType | StringType | BooleanType | CharType | VoidType;
+
+
+classes : class classes | class;
+class   : access CLASS NAME block;
+block   : WAVEDBROPEN statements WAVEDBRCLOSE | WAVEDBROPEN WAVEDBRCLOSE;
+statements: methoddecl;
+methoddecl: access type NAME block;
 /*
-%name parse
-%tokentype { Token }
-%error { parseError }
+compilationunit  : typedeclarations;
 
-%token
-       BOOLEAN { BOOLEAN }
-       BREAK { BREAK }
-       CASE { CASE }
-       CHAR  { CHAR  }
-       CLASS { CLASS}
-       IDENTIFIER { IDENTIFIER $$}
-       INTLITERAL { INTLITERAL $$}
+typedeclarations : typedeclaration
+		 | typedeclarations typedeclaration;
 
-%%
+name             : qualifiedname | simplename;
 
-compilationunit  : typedeclarations { }
+typedeclaration  : classdeclaration;
 
-typedeclarations : typedeclaration { }
-		 | typedeclarations typedeclaration { }
+qualifiedname    : name  DOT IDENTIFIER;
 
-name             : qualifiedname { }
-		 | simplename { }
+simplename       : IDENTIFIER;
 
-typedeclaration  : classdeclaration { }
+classdeclaration : CLASS IDENTIFIER classbody | modifiers CLASS IDENTIFIER classbody;
 
-qualifiedname    : name  DOT IDENTIFIER { }
+classbody        : LBRACKET RBRACKET | LBRACKET classbodydeclarations  RBRACKET;
 
-simplename       : IDENTIFIER { }
+modifiers        : modifier | modifiers modifier;
 
-classdeclaration : CLASS IDENTIFIER classbody { }
-                 | modifiers CLASS IDENTIFIER classbody { }
+classbodydeclarations :  classbodydeclaration | classbodydeclarations classbodydeclaration;
 
-classbody        : LBRACKET RBRACKET  { ([], []) }
-		 | LBRACKET classbodydeclarations  RBRACKET { }
+modifier         : PUBLIC
+		         | PROTECTED
+                 | PRIVATE
+                 | STATIC
+                 | ABSTRACT;
 
-modifiers        : modifier { }
-		 | modifiers modifier		 { }
+classtype        : classorinterfacetype;
 
-classbodydeclarations :  classbodydeclaration { }
-		 | classbodydeclarations classbodydeclaration{ }
+classbodydeclaration : classmemberdeclaration | constructordeclaration;
 
-modifier         : PUBLIC { }
-		 | PROTECTED { }
-                 | PRIVATE { }
-                 | STATIC { }
-                 | ABSTRACT { }
+classorinterfacetype : name;
 
-classtype        : classorinterfacetype{ }
+classmemberdeclaration : fielddeclaration | methoddeclaration;
 
-classbodydeclaration : classmemberdeclaration { }
-		 | constructordeclaration { }
+constructordeclaration : constructordeclarator constructorbody
+		 |  modifiers constructordeclarator constructorbody;
 
-classorinterfacetype : name{ }
+fielddeclaration : type variabledeclarators  SEMICOLON
+ 		 | modifiers type variabledeclarators  SEMICOLON;
 
-classmemberdeclaration : fielddeclaration { }
-		 | methoddeclaration { }
+methoddeclaration : methodheader methodbody;
 
-constructordeclaration : constructordeclarator constructorbody { }
-		 |  modifiers constructordeclarator constructorbody { }
+block            : LBRACKET   RBRACKET
+		 | LBRACKET  blockstatements  RBRACKET;
 
-fielddeclaration : type variabledeclarators  SEMICOLON { }
- 		 | modifiers type variabledeclarators  SEMICOLON { }
+constructordeclarator :  simplename LBRACE  RBRACE
+		 |  simplename LBRACE formalparameterlist RBRACE;
 
-methoddeclaration : methodheader methodbody { }
+constructorbody	 : LBRACKET RBRACKET
+		 | LBRACKET explicitconstructorinvocation  RBRACKET
+		 | LBRACKET blockstatements  RBRACKET
+		 | LBRACKET explicitconstructorinvocation blockstatements RBRACKET;
 
-block            : LBRACKET   RBRACKET { }
-		 | LBRACKET  blockstatements  RBRACKET { }
+methodheader	 : type methoddeclarator
+		 | modifiers type methoddeclarator
+		 | VOID methoddeclarator
+		 | modifiers VOID methoddeclarator;
 
-constructordeclarator :  simplename LBRACE  RBRACE  { }
-		 |  simplename LBRACE formalparameterlist RBRACE  { }
+type            : primitivetype
+		 | referencetype;
 
-constructorbody	 : LBRACKET RBRACKET { }
-		 | LBRACKET explicitconstructorinvocation  RBRACKET { }
-		 | LBRACKET blockstatements  RBRACKET { }
-		 | LBRACKET explicitconstructorinvocation blockstatements RBRACKET { }
+variabledeclarators : variabledeclarator
+		 | variabledeclarators  COMMA  variabledeclarator;
 
-methodheader	 : type methoddeclarator { }
-		 | modifiers type methoddeclarator { }
-		 | VOID methoddeclarator { }
-		 | modifiers VOID methoddeclarator { }
+methodbody       : block
+		 | SEMICOLON;
 
-type             : primitivetype { }
-		 | referencetype { }
+blockstatements  : blockstatement
+		 | blockstatements blockstatement;
 
-variabledeclarators : variabledeclarator { }
-		 | variabledeclarators  COMMA  variabledeclarator { }
+formalparameterlist : formalparameter
+		 | formalparameterlist  COMMA  formalparameter;
 
-methodbody       : block { }
-		 | SEMICOLON { }
+explicitconstructorinvocation : THIS LBRACE  RBRACE   SEMICOLON
+		 | THIS LBRACE argumentlist  RBRACE   SEMICOLON;
 
-blockstatements  : blockstatement { }
-		 | blockstatements blockstatement { }
+classtypelist    : classtype
+		 | classtypelist  COMMA  classtype;
 
-formalparameterlist : formalparameter { }
-		 | formalparameterlist  COMMA  formalparameter{ }
+methoddeclarator : IDENTIFIER LBRACE  RBRACE;
+		 | IDENTIFIER LBRACE formalparameterlist  RBRACE;
 
-explicitconstructorinvocation : THIS LBRACE  RBRACE   SEMICOLON  { }
-		 | THIS LBRACE argumentlist  RBRACE   SEMICOLON  { }
+primitivetype    : BOOLEAN
+		 | numerictype;
 
-classtypelist    : classtype { }
-		 | classtypelist  COMMA  classtype { }
-
-methoddeclarator : IDENTIFIER LBRACE  RBRACE  { }
-		 | IDENTIFIER LBRACE formalparameterlist  RBRACE  { }
-
-primitivetype    : BOOLEAN { }
-		 | numerictype { }
-
-referencetype    : classorinterfacetype { }
+referencetype    : classorinterfacetype;
 
 
-variabledeclarator : variabledeclaratorid { }
-		 | variabledeclaratorid ASSIGN variableinitializer { }
+variabledeclarator : variabledeclaratorid
+		 | variabledeclaratorid ASSIGN variableinitializer;
 
-blockstatement	 : localvariabledeclarationstatement { }
-		 | statement  { }
+blockstatement	 : localvariabledeclarationstatement
+		 | statement;
 
-formalparameter  : type variabledeclaratorid { }
+formalparameter  : type variabledeclaratorid;
 
-argumentlist     : expression { }
-		 | argumentlist  COMMA  expression { }
-
+argumentlist     : expression
+		 | argumentlist  COMMA  expression;
+/*
 numerictype      : integraltype { }
 
 variabledeclaratorid : IDENTIFIER { }
