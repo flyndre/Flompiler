@@ -3,7 +3,11 @@ package de.flyndre.flompiler.scannerparserlexer.parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
 public class MiniJavaParser extends Parser {
@@ -17,10 +21,10 @@ public class MiniJavaParser extends Parser {
 		NAME=8, WAVEDBROPEN=9, WAVEDBRCLOSE=10, IntType=11, StringType=12, BooleanType=13, 
 		CharType=14, VoidType=15;
 	public static final int
-		RULE_program = 0, RULE_class = 1, RULE_block = 2, RULE_accessMod = 3;
+		RULE_program = 0, RULE_classes = 1, RULE_class = 2, RULE_block = 3, RULE_accessMod = 4;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"program", "class", "block", "accessMod"
+			"program", "classes", "class", "block", "accessMod"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -92,8 +96,8 @@ public class MiniJavaParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ProgramContext extends ParserRuleContext {
-		public ClassContext class_() {
-			return getRuleContext(ClassContext.class,0);
+		public ClassesContext classes() {
+			return getRuleContext(ClassesContext.class,0);
 		}
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -120,8 +124,72 @@ public class MiniJavaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(8);
-			class_();
+			setState(10);
+			classes();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ClassesContext extends ParserRuleContext {
+		public ClassContext class_() {
+			return getRuleContext(ClassContext.class,0);
+		}
+		public ClassesContext classes() {
+			return getRuleContext(ClassesContext.class,0);
+		}
+		public ClassesContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_classes; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterClasses(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitClasses(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitClasses(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ClassesContext classes() throws RecognitionException {
+		ClassesContext _localctx = new ClassesContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_classes);
+		try {
+			setState(16);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case PUBLIC:
+			case PRIVATE:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(12);
+				class_();
+				setState(13);
+				classes();
+				}
+				break;
+			case EOF:
+				enterOuterAlt(_localctx, 2);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -166,17 +234,17 @@ public class MiniJavaParser extends Parser {
 
 	public final ClassContext class_() throws RecognitionException {
 		ClassContext _localctx = new ClassContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_class);
+		enterRule(_localctx, 4, RULE_class);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(10);
+			setState(18);
 			accessMod();
-			setState(11);
+			setState(19);
 			match(CLASS);
-			setState(12);
+			setState(20);
 			match(NAME);
-			setState(13);
+			setState(21);
 			block();
 			}
 		}
@@ -216,13 +284,13 @@ public class MiniJavaParser extends Parser {
 
 	public final BlockContext block() throws RecognitionException {
 		BlockContext _localctx = new BlockContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_block);
+		enterRule(_localctx, 6, RULE_block);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(15);
+			setState(23);
 			match(WAVEDBROPEN);
-			setState(16);
+			setState(24);
 			match(WAVEDBRCLOSE);
 			}
 		}
@@ -262,12 +330,12 @@ public class MiniJavaParser extends Parser {
 
 	public final AccessModContext accessMod() throws RecognitionException {
 		AccessModContext _localctx = new AccessModContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_accessMod);
+		enterRule(_localctx, 8, RULE_accessMod);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(18);
+			setState(26);
 			_la = _input.LA(1);
 			if ( !(_la==PUBLIC || _la==PRIVATE) ) {
 			_errHandler.recoverInline(this);
@@ -291,19 +359,24 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u000f\u0015\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
-		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0001\u0000\u0001\u0000"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0002"+
-		"\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0000\u0000"+
-		"\u0004\u0000\u0002\u0004\u0006\u0000\u0001\u0001\u0000\u0006\u0007\u0010"+
-		"\u0000\b\u0001\u0000\u0000\u0000\u0002\n\u0001\u0000\u0000\u0000\u0004"+
-		"\u000f\u0001\u0000\u0000\u0000\u0006\u0012\u0001\u0000\u0000\u0000\b\t"+
-		"\u0003\u0002\u0001\u0000\t\u0001\u0001\u0000\u0000\u0000\n\u000b\u0003"+
-		"\u0006\u0003\u0000\u000b\f\u0005\u0001\u0000\u0000\f\r\u0005\b\u0000\u0000"+
-		"\r\u000e\u0003\u0004\u0002\u0000\u000e\u0003\u0001\u0000\u0000\u0000\u000f"+
-		"\u0010\u0005\t\u0000\u0000\u0010\u0011\u0005\n\u0000\u0000\u0011\u0005"+
-		"\u0001\u0000\u0000\u0000\u0012\u0013\u0007\u0000\u0000\u0000\u0013\u0007"+
-		"\u0001\u0000\u0000\u0000\u0000";
+		"\u0004\u0001\u000f\u001d\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004"+
+		"\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0003\u0001\u0011\b\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002"+
+		"\u0001\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0004\u0001\u0004"+
+		"\u0001\u0004\u0000\u0000\u0005\u0000\u0002\u0004\u0006\b\u0000\u0001\u0001"+
+		"\u0000\u0006\u0007\u0018\u0000\n\u0001\u0000\u0000\u0000\u0002\u0010\u0001"+
+		"\u0000\u0000\u0000\u0004\u0012\u0001\u0000\u0000\u0000\u0006\u0017\u0001"+
+		"\u0000\u0000\u0000\b\u001a\u0001\u0000\u0000\u0000\n\u000b\u0003\u0002"+
+		"\u0001\u0000\u000b\u0001\u0001\u0000\u0000\u0000\f\r\u0003\u0004\u0002"+
+		"\u0000\r\u000e\u0003\u0002\u0001\u0000\u000e\u0011\u0001\u0000\u0000\u0000"+
+		"\u000f\u0011\u0001\u0000\u0000\u0000\u0010\f\u0001\u0000\u0000\u0000\u0010"+
+		"\u000f\u0001\u0000\u0000\u0000\u0011\u0003\u0001\u0000\u0000\u0000\u0012"+
+		"\u0013\u0003\b\u0004\u0000\u0013\u0014\u0005\u0001\u0000\u0000\u0014\u0015"+
+		"\u0005\b\u0000\u0000\u0015\u0016\u0003\u0006\u0003\u0000\u0016\u0005\u0001"+
+		"\u0000\u0000\u0000\u0017\u0018\u0005\t\u0000\u0000\u0018\u0019\u0005\n"+
+		"\u0000\u0000\u0019\u0007\u0001\u0000\u0000\u0000\u001a\u001b\u0007\u0000"+
+		"\u0000\u0000\u001b\t\u0001\u0000\u0000\u0000\u0001\u0010";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

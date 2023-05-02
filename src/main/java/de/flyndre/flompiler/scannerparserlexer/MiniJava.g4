@@ -18,7 +18,8 @@ CharType        : 'Char';
 VoidType        : 'void';
 
 
-program         : class;
+program         : classes;
+classes         : class classes| ;
 class           : accessMod CLASS NAME block;
 block           : WAVEDBROPEN WAVEDBRCLOSE;
 accessMod       : PUBLIC | PRIVATE;

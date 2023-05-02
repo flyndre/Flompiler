@@ -17,6 +17,12 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(MiniJavaParser.ProgramContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#classes}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClasses(MiniJavaParser.ClassesContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#class}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

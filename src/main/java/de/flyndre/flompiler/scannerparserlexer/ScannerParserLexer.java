@@ -1,4 +1,6 @@
 package de.flyndre.flompiler.scannerparserlexer;
+import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaLexer;
+import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaParser;
 import de.flyndre.flompiler.scannerparserlexer.parser.adapter.ClassAdapter;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
  */
 public class ScannerParserLexer {
     public static void main(String[] args) throws IOException {
-        String as = "public class asd {}";
+        String as = "public class asd{} public class dfs{}";
         Program program = compile(as);
 
         for (Class aClass : program.classes) {
@@ -27,11 +29,11 @@ public class ScannerParserLexer {
     }
 
     private static Program parse(String input) throws IOException {
-        parser.MiniJavaLexer lexer = new parser.MiniJavaLexer(CharStreams.fromString(input));
+        MiniJavaLexer lexer = new MiniJavaLexer(CharStreams.fromString(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        parser.MiniJavaParser parser = new parser.MiniJavaParser(tokens);
-        parser.MiniJavaParser.ProgramContext tree = parser.program(); //Parsen
-        Program doc = new Program(ClassAdapter.adapt(tree.class_()));
+        MiniJavaParser parser = new MiniJavaParser(tokens);
+        MiniJavaParser.ProgramContext tree = parser.program(); //Parsen
+        Program doc = new Program(ClassAdapter.adapt(tree.classes()));
         return doc;
     }
 
