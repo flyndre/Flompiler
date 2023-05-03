@@ -62,7 +62,7 @@ public class BytecodeGenerator {
         }
     }
 
-    public static ClassWriter generateByteCodeFields(ClassWriter cw, List<Field> fields){
+    private static ClassWriter generateByteCodeFields(ClassWriter cw, List<Field> fields){
         for(int i = 0;i<fields.size();i++){
             Field thisField = fields.get(i);
 
@@ -106,7 +106,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    public static ClassWriter generateByteCodeForMethods(ClassWriter cw, List<Method> methods){
+    private static ClassWriter generateByteCodeForMethods(ClassWriter cw, List<Method> methods){
         //get all methods without constructors
         List<Method> methodsWithoutConstructors = new ArrayList<>();
         //hashmap of local variables
@@ -201,7 +201,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    public static ClassWriter generateByteCodeForConstructors(ClassWriter cw, List<Method> methods, List<Field> fields){
+    private static ClassWriter generateByteCodeForConstructors(ClassWriter cw, List<Method> methods, List<Field> fields){
         //hashmap of local variables
         HashMap<String, LocalVar> localVarScope = new HashMap<>();//key is the name of the variable, LocalVar contains type and save location
 
@@ -290,7 +290,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    public static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statement, HashMap<String, LocalVar> localVarScope){
+    private static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statement, HashMap<String, LocalVar> localVarScope){
         if(statement instanceof Return){
 
         }
@@ -298,9 +298,21 @@ public class BytecodeGenerator {
         return mv;
     }
 
-    public static MethodVisitor generateByteCodeForExpressions(MethodVisitor mv, Expression expression, HashMap<String, LocalVar> localVarScope){
+    private static String generateByteCodeForExpressions(MethodVisitor mv, Expression expression, HashMap<String, LocalVar> localVarScope){
+        String variable = "";//name of the variable in localVarScope which has been added in the expression
+        if(expression instanceof IntConst){
+            variable = generateByteCodeForIntConst(mv, (IntConst) expression, localVarScope);
+        }
 
+        return variable;
+    }
 
-        return mv;
+    private static String generateByteCodeForIntConst(MethodVisitor mv, IntConst expression, HashMap<String, LocalVar> localVarScope){
+        mv.visitLdcInsn(Integer.valueOf(expression.value));//create new Integer Value
+        mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size()+1);//save new Integer Value at the end of the list of local vars
+        //add the int var to the localVarScope with a generated Name, because a constant has no name
+        localVarScope.put("IntConst" + localVarScope.size()+1, new LocalVar("int", localVarScope.size()+1));
+
+        return "IntConst" + localVarScope.size();
     }
 }
