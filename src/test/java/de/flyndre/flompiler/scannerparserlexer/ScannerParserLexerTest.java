@@ -2,35 +2,73 @@ package de.flyndre.flompiler.scannerparserlexer;
 
 import de.flyndre.flompiler.Flassertions;
 import de.flyndre.flompiler.TestConstants;
+import de.flyndre.flompiler.results.attributes.BooleanClassResults;
 import de.flyndre.flompiler.results.basic.EmptyClassResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class ScannerParserLexerTest {
 
     /**
-     * Parse empty class.
+     * Tests if a .java file can be successfully parsed by the `ScannerParserLexer`.
+     * @param inputFilePath path to the .java file
+     * @param expected the expected AST
      */
-    @Test
-    public void testEmptyClass() {
-        final var path = TestConstants.RESOURCES_ROOT + "/basic/EmptyClass.java";
-        final var result = EmptyClassResults.AST;
-        // TODO: Import input file from path
-        Program program = ScannerParserLexer.compile("public class EmptyClass { }");
-        Flassertions.assertDeeplyAlike(result, program);
+    private void testSuccess(String inputFilePath, Program expected) {
+        final var inputPath = TestConstants.RESOURCES_ROOT + inputFilePath;
+        final String inputString;
+        try {
+            inputString = Files.readString(Path.of(inputPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        final var actual = ScannerParserLexer.compile(inputString);
+        Flassertions.assertDeeplyAlike(expected, actual);
     }
 
     /**
-     * Try to parse defective empty class and expect exception.
+     * Tests if a faulty .java file produces an exception when parsed.
+     * @param inputFilePath path to the .java file
      */
-    @Test
-    public void testDefectiveEmptyClass() {
-        final var path = TestConstants.RESOURCES_ROOT + "/basic/defective/DefectiveEmptyClass.java";
-        // TODO: Import input file from path
-        final Executable executable = () -> ScannerParserLexer.compile("public class EmptyClass {");
+    private void testFailure(String inputFilePath) {
+        final var inputPath = TestConstants.RESOURCES_ROOT + inputFilePath;
+        final String inputString;
+        try {
+            inputString = Files.readString(Path.of(inputPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        final Executable executable = () -> ScannerParserLexer.compile(inputString);
         Assertions.assertThrows(Exception.class, executable);
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Empty Class")
+    public void testEmptyClass() {
+        testSuccess("/basic/EmptyClass.java", EmptyClassResults.AST);
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Defective Empty Class")
+    public void testDefectiveEmptyClass() {
+        testFailure("/basic/defective/DefectiveEmptyClass.java");
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Boolean Attribute Class")
+    public void testAttributeBooleanClass() {
+        testSuccess("/attributes/BooleanClass.java", BooleanClassResults.AST);
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Defective Boolean Attribute Class")
+    public void testAttributeDefectiveBooleanClass() {
+        testFailure("/attributes/defective/DefectiveBooleanClass.java");
     }
 
 }
