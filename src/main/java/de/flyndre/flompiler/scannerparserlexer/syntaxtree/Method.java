@@ -19,6 +19,11 @@ public class Method {
     public String type;
 
     /**
+     *
+     */
+    public String access;
+
+    /**
      * 
      */
     public String name;
