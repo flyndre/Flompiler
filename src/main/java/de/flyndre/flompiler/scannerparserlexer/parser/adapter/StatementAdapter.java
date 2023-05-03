@@ -8,26 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StatementAdapter {
-    public static List<Method> adaptMethods(MiniJavaParser.StatementsContext ctx) {
+    public static List<Method> adaptMethods(MiniJavaParser.ClassbodyContext ctx) {
         List<Method> methods = new ArrayList<>();
-        if(ctx != null && ctx.statement() != null){
-            if(ctx.statement().methoddeclaration() != null){
-                methods.add(MethodAdapter.adapt(ctx.statement().methoddeclaration()));
+        if(ctx != null && ctx.methoddeclaration() != null){
+            if(ctx.methoddeclaration() != null){
+                methods.add(MethodAdapter.adapt(ctx.methoddeclaration()));
             }
-            if(ctx.statements() != null){
-                methods.addAll(adaptMethods(ctx.statements()));
+            if(ctx.classbody() != null){
+                methods.addAll(adaptMethods(ctx.classbody()));
             }
         }
         return methods;
     }
 
-    public static List<Field> adaptFields(MiniJavaParser.StatementsContext ctx) {
+    public static List<Field> adaptFields(MiniJavaParser.ClassbodyContext ctx) {
         List<Field> fields = new ArrayList<>();
-        if(ctx != null && ctx.statement() != null && ctx.statement().fielddeclaration() != null){
-            fields.add(FieldAdapter.adapt(ctx.statement().fielddeclaration()));
+        if(ctx != null && ctx.fielddeclaration() != null){
+            fields.add(FieldAdapter.adapt(ctx.fielddeclaration()));
         }
-        if(ctx.statements() != null){
-            fields.addAll(adaptFields(ctx.statements()));
+        if(ctx.classbody() != null){
+            fields.addAll(adaptFields(ctx.classbody()));
         }
         return fields;
         }

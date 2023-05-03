@@ -11,9 +11,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.IOException;
 
-/**
- * Created by janulrich on 28.11.14.
- */
 public class ScannerParserLexer {
     public static void main(String[] args) throws IOException {
         String as = "public class asd{ public String abc = \"hallo\"; private boolean gams(){}}";
