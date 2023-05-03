@@ -1,3 +1,5 @@
+package de.flyndre.flompiler;
+
 import de.flyndre.flompiler.bytecodegenerator.BytecodeGenerator;
 import de.flyndre.flompiler.scannerparserlexer.ScannerParserLexer;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;

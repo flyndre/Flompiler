@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import java.io.IOException;
 
 public class ScannerParserLexer {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String as = "public class asd{ public String abc = \"hallo\"; private boolean gams(){}}";
         Program program = compile(as);
 
