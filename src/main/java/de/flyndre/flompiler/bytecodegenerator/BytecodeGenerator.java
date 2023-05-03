@@ -290,7 +290,16 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    public static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statements, HashMap<String, LocalVar> localVarScope){
+    public static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statement, HashMap<String, LocalVar> localVarScope){
+        if(statement instanceof Return){
+
+        }
+
+        return mv;
+    }
+
+    public static MethodVisitor generateByteCodeForExpressions(MethodVisitor mv, Expression expression, HashMap<String, LocalVar> localVarScope){
+
 
         return mv;
     }
