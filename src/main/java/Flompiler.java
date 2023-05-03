@@ -1,3 +1,4 @@
+import de.flyndre.flompiler.bytecodegenerator.BytecodeGenerator;
 import de.flyndre.flompiler.scannerparserlexer.ScannerParserLexer;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 
@@ -45,5 +46,6 @@ public class Flompiler {
         program = program.typeCheck();
 
         // TODO: Bytecode
+        BytecodeGenerator.generateByteCode(program, outputFile);
     }
 }

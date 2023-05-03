@@ -6,11 +6,13 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BytecodeGenerator {
-    public void generateByteCode(Program program){
+    public static void generateByteCode(Program program, File outputFile){
         ArrayList<Class> classes = (ArrayList<Class>) program.classes;
 
         for(int i=0; i< classes.size();i++){
@@ -36,10 +38,25 @@ public class BytecodeGenerator {
             cw = generateByteCodeFields(cw, thisClass.fields);
 
             //generate constructors
+            cw = generateByteCodeForConstructors(cw, thisClass.methods, thisClass.fields);
+
+            //generate methods
+            cw = generateByteCodeForMethods(cw, thisClass.methods);
+
+            //print code
+            byte[] b = cw.toByteArray();
+
+            try{
+                FileOutputStream f = new FileOutputStream(outputFile);
+                f.write(b);
+                f.close();
+            }catch(Exception e){
+
+            }
         }
     }
 
-    public ClassWriter generateByteCodeFields(ClassWriter cw, List<Field> fields){
+    public static ClassWriter generateByteCodeFields(ClassWriter cw, List<Field> fields){
         for(int i = 0;i<fields.size();i++){
             Field thisField = fields.get(i);
 
@@ -83,7 +100,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    public ClassWriter generateByteCodeForMethods(ClassWriter cw, List<Method> methods){
+    public static ClassWriter generateByteCodeForMethods(ClassWriter cw, List<Method> methods){
         //get all methods without constructors
         List<Method> methodsWithoutConstructors = new ArrayList<>();
         for(int i=0;i<methods.size();i++){
@@ -95,7 +112,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    public ClassWriter generateByteCodeForConstructors(ClassWriter cw, List<Method> methods, List<Field> fields){
+    public static ClassWriter generateByteCodeForConstructors(ClassWriter cw, List<Method> methods, List<Field> fields){
         //get all fields with default values
         /*List<Field> defaultFields = new ArrayList<>();
         for(int i=0;i<fields.size();i++){
@@ -174,7 +191,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    public MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statements){
+    public static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statements){
 
         return mv;
     }
