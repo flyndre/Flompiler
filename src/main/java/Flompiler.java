@@ -3,7 +3,8 @@ import de.flyndre.flompiler.scannerparserlexer.ScannerParserLexer;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 
 import java.io.*;
-import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * The minimal Java-Compiler "Flompiler".
@@ -19,33 +20,25 @@ public class Flompiler {
         if (args.length < 1) {
             throw new RuntimeException("Please specify an input file as first argument.");
         }
-        final var inputFile = new File(args[0]);
-        System.out.println(inputFile.getAbsolutePath());
+
+        final var inputPath = args[0];
+        final var inputFile = new File(inputPath);
+
         if (!inputFile.getName().endsWith(".java")) {
             throw new RuntimeException("Input file must be .java-file.");
         }
+
         final var outputFile = new File(
                 inputFile.getAbsolutePath()
                         .replace(".java", ".class")
         );
-        System.out.println(outputFile.getAbsolutePath());
 
-        BufferedReader objReader = new BufferedReader(new FileReader(inputFile));
+        String inputString = Files.readString(Path.of(inputFile.getAbsolutePath()));
 
-        String strCurrentLine;
-        String input = "";
+        Program ast = ScannerParserLexer.compile(inputString);
 
-        while ((strCurrentLine = objReader.readLine()) != null) {
-            input += strCurrentLine;
+        Program typedAst = ast.typeCheck();
 
-        }
-        Program program = ScannerParserLexer.compile(input);
-        // TODO: ScannerParserLexer
-
-        // TODO: Syntax
-        program = program.typeCheck();
-
-        // TODO: Bytecode
-        BytecodeGenerator.generateByteCode(program, outputFile);
+        BytecodeGenerator.generateByteCode(typedAst, outputFile);
     }
 }
