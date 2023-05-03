@@ -21,9 +21,13 @@ public class Program {
     public List<Class> classes;
 
     public Program typeCheck() throws Exception {
-        for(Class cl:classes){
-            cl.typeCheck();
-        }
+        classes.forEach(aClass -> {
+            try {
+                aClass.typeCheck();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         return this;
     }
 

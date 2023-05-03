@@ -43,10 +43,9 @@ public class Class {
 
 
 
-    public String typeCheck() throws Exception {
+    public void typeCheck() throws Exception {
         for(Method method:methods){
             method.typeCheck(fields);
         }
-        return name;
     }
 }
