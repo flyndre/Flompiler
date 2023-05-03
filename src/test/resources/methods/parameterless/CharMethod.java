@@ -1,5 +1,5 @@
 public class CharMethod {
-    public int method() {
-        return 'S';
+    public char method() {
+
     }
 }

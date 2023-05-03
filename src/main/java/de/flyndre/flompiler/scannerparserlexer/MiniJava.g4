@@ -27,7 +27,7 @@ SEQUENCE            : [a-zA-Z0-9];
 
 program             : classes;
 classes             : class classes| ;
-class               : accessMod CLASS NAME block;
+class               : accessMod CLASS NAME WAVEDBROPEN classbody WAVEDBRCLOSE;
 block               : WAVEDBROPEN WAVEDBRCLOSE
                     | WAVEDBROPEN statements WAVEDBRCLOSE;
 accessMod           : PUBLIC
@@ -42,8 +42,12 @@ type                : BOOLEANTYPE
 
 statements          : statement statements
                     | ;
-statement           : fielddeclaration
-                    | methoddeclaration;
+statement           : fielddeclaration;
+
+classbody           : fielddeclaration classbody
+                    | methoddeclaration classbody
+                    | ;
+
 fielddeclaration    : booldeclaration
                     | stringdeclaration
                     | chardeclaration
@@ -64,7 +68,7 @@ intdeclaration      : accessMod INTTYPE NAME SEMICOLON
                     | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
 
 methoddeclaration   : accessMod  type NAME BROPEN parameters BRCLOSE block;
-parameters          : ;//parameter parameters | ;
+parameters          : parameter parameters | ;
 
 /*
 DOT : '.';

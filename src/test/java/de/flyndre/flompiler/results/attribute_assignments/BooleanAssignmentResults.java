@@ -1,16 +1,15 @@
-package de.flyndre.flompiler.results.attributes;
+package de.flyndre.flompiler.results.attribute_assignments;
 
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Field;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Results for parsing the boolean-class.
  */
-public final class BooleanClassResults {
+public final class BooleanAssignmentResults {
 
     /**
      * The manually parsed resulting untyped abstract syntax tree for the boolean-class.
@@ -28,14 +27,14 @@ public final class BooleanClassResults {
         {
             var booleanClass = new Class();
             booleanClass.access = "public";
-            booleanClass.name = "BooleanClass";
+            booleanClass.name = "BooleanAssignment";
             booleanClass.fields = new ArrayList<>();
             {
                 var isTrueField = new Field();
                 isTrueField.access = "public";
                 isTrueField.type = "boolean";
                 isTrueField.name = "isTrue";
-                isTrueField.standardValue = "false";
+                isTrueField.standardValue = "true";
                 booleanClass.fields.add(isTrueField);
             }
             booleanClass.methods = new ArrayList<>();
