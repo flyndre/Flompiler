@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Flompiler" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="de.flyndre.flompiler.Flompiler" />
+    <module name="Flompiler" />
+    <option name="PROGRAM_PARAMETERS" value="&quot;$MODULE_DIR$/src/test/resources/basic/EmptyClass.java&quot;" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
