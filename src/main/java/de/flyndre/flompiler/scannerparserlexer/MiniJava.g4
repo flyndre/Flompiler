@@ -1,29 +1,133 @@
 grammar MiniJava;
 
 
-CLASS           : 'class';
-BOOLEAN         : 'True' | 'False';
-CHAR            : '\'' [a-zA-Z0-9] '\'';
-STRING          : '"' CHAR* '"';
-INTEGER         : [1-9][0-9]*;
-PUBLIC          : 'public';
-PRIVATE         : 'private';
-NAME            : [A-Za-z]+;
-WAVEDBROPEN     : '{';
-WAVEDBRCLOSE    : '}';
-IntType         : 'int';
-StringType      : 'String';
-BooleanType     : 'Boolean';
-CharType        : 'Char';
-VoidType        : 'void';
+CLASS               : 'class';
+BOOLEAN             : 'True' | 'False';
+INTTYPE             : 'int';
+STRINGTYPE          : 'String';
+BOOLEANTYPE         : 'Boolean';
+CHARTYPE            : 'Char';
+VOIDTYPE            : 'void';
+EQUALS              : '=';
+STRING              : '"' SEQUENCE* '"';
+CHAR                : '\'' [a-zA-Z0-9] '\'';
 
 
-program         : classes;
-classes         : class classes| ;
-class           : accessMod CLASS NAME block;
-block           : WAVEDBROPEN WAVEDBRCLOSE;
-accessMod       : PUBLIC | PRIVATE;
+INTEGER             : [1-9][0-9]*;
+PUBLIC              : 'public';
+PRIVATE             : 'private';
+PROTECTED           : 'protected';
+NAME                : [A-Za-z]+;
+WAVEDBROPEN         : '{';
+WAVEDBRCLOSE        : '}';
+SEMICOLON           : ';';
+BROPEN              : '(';
+BRCLOSE             : ')';
+SEQUENCE            : [a-zA-Z0-9];
+
+program             : classes;
+classes             : class classes| ;
+class               : accessMod CLASS NAME block;
+block               : WAVEDBROPEN WAVEDBRCLOSE
+                    | WAVEDBROPEN statements WAVEDBRCLOSE;
+accessMod           : PUBLIC
+                    | PRIVATE
+                    | PROTECTED
+                    | ;
+type                : BOOLEANTYPE
+                    | STRINGTYPE
+                    | CHARTYPE
+                    | VOIDTYPE
+                    | INTTYPE;
+
+statements          : statement statements
+                    | ;
+statement           : fielddeclaration
+                    | methoddeclaration;
+fielddeclaration    : booldeclaration
+                    | stringdeclaration
+                    | chardeclaration
+                    | intdeclaration;
+
+parameter           : accessMod BOOLEANTYPE NAME
+                    | accessMod STRINGTYPE NAME
+                    | accessMod CHARTYPE NAME
+                    | accessMod INTTYPE NAME;
+
+booldeclaration     : accessMod BOOLEANTYPE NAME SEMICOLON
+                    | accessMod BOOLEANTYPE NAME EQUALS BOOLEAN SEMICOLON;
+stringdeclaration   : accessMod STRINGTYPE NAME SEMICOLON
+                    | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
+chardeclaration     : accessMod CHARTYPE NAME SEMICOLON
+                    | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
+intdeclaration      : accessMod INTTYPE NAME SEMICOLON
+                    | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
+
+methoddeclaration   : accessMod  type NAME BROPEN parameters BRCLOSE block;
+parameters          : ;//parameter parameters | ;
+
 /*
+DOT : '.';
+CLASS : 'class';
+IDENTIFIER : [A-Za-z]+;
+LBRACKET : '{';
+RBRACKET : '}';
+PUBLIC : 'public';
+PROTECTED : 'protected';
+PRIVATE : 'private';
+STATIC : 'static';
+ABSTRACT : 'abstract';
+SEMICOLON : ';';
+LBRACE : '(';
+RBRACE : ')';
+COMMA : ',';
+THIS : 'this';
+ASSIGN : '=';
+MOD : '%';
+DIV : '/';
+MUL : '*';
+INSTANCEOF  : '.instanceOf';
+GREATEREQUAL : '>=';
+LESSEQUAL : '<=';
+GREATER : '>';
+LESS : '<';
+NOTEQUAL : '!=';
+EQUAL : '==';
+AND : '&&';
+JNULL : 'null';
+STRINGLITERAL : '"' [A-Za-z]+ '"';
+CHARLITERAL : [A-Za-z];
+BOOLLITERAL : 'True' | 'False';
+INTLITERAL : [0-9]+;
+EXCLMARK : '!';
+TILDE : '~';
+OR : 'or';
+MINUS : '-';
+PLUS : '+';
+NEW : 'new';
+DECREMENT : '--';
+INCREMENT : '++';
+OREQUAL : '|=';
+CHAR : 'char';
+INT : 'int';
+ELSE : 'else';
+IF : 'if';
+WHILE : 'while';
+RETURN : 'return';
+COLON : 'asdk';
+QUESMARK : '?';
+LOGICALOR : 'asdy';
+TIMESEQUAL : '*=';
+DIVIDEEQUAL : '/=';
+MODULOEQUAL : '%=';
+PLUSEQUAL : '+=';
+MINUSEQUAL : '-=';
+SHIFTLEFTEQUAL : 'asd';
+SIGNEDSHIFTRIGHTEQUAL : '<<';
+UNSIGNEDSHIFTRIGHTEQUAL : '>>';
+ANDEQUAL : 'asd';
+XOREQUAL : 'yxc';
+
 compilationunit  : typedeclarations;
 
 typedeclarations : typedeclaration
@@ -104,7 +208,7 @@ explicitconstructorinvocation : THIS LBRACE  RBRACE   SEMICOLON
 classtypelist    : classtype
 		 | classtypelist  COMMA  classtype;
 
-methoddeclarator : IDENTIFIER LBRACE  RBRACE;
+methoddeclarator : IDENTIFIER LBRACE  RBRACE
 		 | IDENTIFIER LBRACE formalparameterlist  RBRACE;
 
 primitivetype    : BOOLEAN
@@ -123,180 +227,171 @@ formalparameter  : type variabledeclaratorid;
 
 argumentlist     : expression
 		 | argumentlist  COMMA  expression;
-/*
-numerictype      : integraltype { }
 
-variabledeclaratorid : IDENTIFIER { }
+numerictype      : integraltype;
 
-variableinitializer  : expression { }
+variabledeclaratorid : IDENTIFIER;
 
-localvariabledeclarationstatement : localvariabledeclaration  SEMICOLON  { }
+variableinitializer  : expression;
 
-statement        : statementwithouttrailingsubstatement{ }
-		 | ifthenstatement { }
-		 | ifthenelsestatement { }
-		 | whilestatement { }
+localvariabledeclarationstatement : localvariabledeclaration  SEMICOLON;
 
-
-expression       : assignmentexpression { }
-
-integraltype     : INT  { }
-                 | CHAR { }
-
-localvariabledeclaration : type variabledeclarators { }
-
-statementwithouttrailingsubstatement : block { }
-		 | emptystatement { }
-		 | expressionstatement { }
-		 | returnstatement { }
-
-ifthenstatement  : IF LBRACE expression  RBRACE  statement { }
-
-ifthenelsestatement : IF LBRACE expression  RBRACE statementnoshortif ELSE statement  { }
-
-whilestatement   : WHILE LBRACE expression  RBRACE  statement { }
-
-assignmentexpression : conditionalexpression { }
-		 |  assignment{ }
-
-emptystatement	 :  SEMICOLON  { }
-
-expressionstatement : statementexpression  SEMICOLON { }
-
-returnstatement  : RETURN  SEMICOLON  { }
-		 | RETURN expression  SEMICOLON { }
-
-statementnoshortif : statementwithouttrailingsubstatement { }
-		 | ifthenelsestatementnoshortif { }
-		 | whilestatementnoshortif { }
-
-conditionalexpression : conditionalorexpression { }
-		 | conditionalorexpression QUESMARK expression  COLON  conditionalexpression { }
-
-assignment       :lefthandside assignmentoperator assignmentexpression { }
+statement        : statementwithouttrailingsubstatement
+		 | ifthenstatement
+		 | ifthenelsestatement
+		 | whilestatement;
 
 
-statementexpression : assignment { }
-		 | preincrementexpression { }
-		 | predecrementexpression { }
-		 | postincrementexpression { }
-		 | postdecrementexpression { }
-		 | methodinvocation { }
-		 | classinstancecreationexpression { }
+expression       : assignmentexpression;
+integraltype     : INT
+                 | CHAR;
+
+localvariabledeclaration : type variabledeclarators;
+
+statementwithouttrailingsubstatement : block
+		 | emptystatement
+		 | expressionstatement
+		 | returnstatement;
+
+ifthenstatement  : IF LBRACE expression  RBRACE  statement;
+
+ifthenelsestatement : IF LBRACE expression  RBRACE statementnoshortif ELSE statement;
+
+whilestatement   : WHILE LBRACE expression  RBRACE  statement;
+
+assignmentexpression : conditionalexpression
+		 |  assignment;
+
+emptystatement	 :  SEMICOLON;
+
+expressionstatement : statementexpression  SEMICOLON;
+
+returnstatement  : RETURN  SEMICOLON
+		 | RETURN expression  SEMICOLON;
+
+statementnoshortif : statementwithouttrailingsubstatement
+		 | ifthenelsestatementnoshortif
+		 | whilestatementnoshortif;
+
+conditionalexpression : conditionalorexpression
+		 | conditionalorexpression QUESMARK expression  COLON  conditionalexpression;
+
+assignment       :lefthandside assignmentoperator assignmentexpression;
+
+
+statementexpression : assignment
+		 | preincrementexpression
+		 | predecrementexpression
+		 | postincrementexpression
+		 | postdecrementexpression
+		 | methodinvocation
+		 | classinstancecreationexpression;
 
 ifthenelsestatementnoshortif :IF LBRACE expression  RBRACE  statementnoshortif
-			      ELSE statementnoshortif  { }
+			      ELSE statementnoshortif;
 
-whilestatementnoshortif : WHILE LBRACE expression  RBRACE  statementnoshortif { }
+whilestatementnoshortif : WHILE LBRACE expression  RBRACE  statementnoshortif;
 
-conditionalorexpression : conditionalandexpression { }
-		 | conditionalorexpression LOGICALOR conditionalandexpression{ }
+conditionalorexpression : conditionalandexpression
+		 | conditionalorexpression LOGICALOR conditionalandexpression;
 
-lefthandside     : name { }
+lefthandside     : name;
 
-assignmentoperator : ASSIGN{ }
-		 | TIMESEQUAL { }
-		 | DIVIDEEQUAL { }
-		 | MODULOEQUAL { }
-		 | PLUSEQUAL { }
-		 | MINUSEQUAL { }
-		 | SHIFTLEFTEQUAL { }
-		 | SIGNEDSHIFTRIGHTEQUAL { }
-		 | UNSIGNEDSHIFTRIGHTEQUAL { }
-		 | ANDEQUAL { }
-		 | XOREQUAL { }
-		 | OREQUAL{ }
+assignmentoperator : ASSIGN
+		 | TIMESEQUAL
+		 | DIVIDEEQUAL
+		 | MODULOEQUAL
+		 | PLUSEQUAL
+		 | MINUSEQUAL
+		 | SHIFTLEFTEQUAL
+		 | SIGNEDSHIFTRIGHTEQUAL
+		 | UNSIGNEDSHIFTRIGHTEQUAL
+		 | ANDEQUAL
+		 | XOREQUAL
+		 | OREQUAL;
 
-preincrementexpression : INCREMENT unaryexpression { }
+preincrementexpression : INCREMENT unaryexpression;
 
-predecrementexpression : DECREMENT unaryexpression { }
+predecrementexpression : DECREMENT unaryexpression;
 
-postincrementexpression : postfixexpression INCREMENT { }
+postincrementexpression : postfixexpression INCREMENT;
 
-postdecrementexpression : postfixexpression DECREMENT { }
+postdecrementexpression : postfixexpression DECREMENT;
 
-methodinvocation : name LBRACE   RBRACE  { }
-		 | name LBRACE argumentlist RBRACE { }
-		 | primary  DOT IDENTIFIER LBRACE RBRACE  { }
-		 | primary  DOT IDENTIFIER LBRACE argumentlist  RBRACE  { }
+methodinvocation : name LBRACE   RBRACE
+		 | name LBRACE argumentlist RBRACE
+		 | primary  DOT IDENTIFIER LBRACE RBRACE
+		 | primary  DOT IDENTIFIER LBRACE argumentlist  RBRACE;
 
-classinstancecreationexpression : NEW classtype LBRACE   RBRACE  { }
-                 | NEW classtype LBRACE  argumentlist  RBRACE  { }
+classinstancecreationexpression : NEW classtype LBRACE   RBRACE
+                 | NEW classtype LBRACE  argumentlist  RBRACE;
 
-conditionalandexpression : inclusiveorexpression { }
+conditionalandexpression : inclusiveorexpression;
 
-fieldaccess      : primary  DOT IDENTIFIER { }
+fieldaccess      : primary  DOT IDENTIFIER;
 
-unaryexpression	 : preincrementexpression { }
-		 | predecrementexpression { }
-		 | PLUS unaryexpression { }
-		 | MINUS unaryexpression { }
-		 | unaryexpressionnotplusminus { }
+unaryexpression	 : preincrementexpression
+		 | predecrementexpression
+		 | PLUS unaryexpression
+		 | MINUS unaryexpression
+		 | unaryexpressionnotplusminus;
 
-postfixexpression : primary { }
-		 | name { }
-		 | postincrementexpression { }
-		 | postdecrementexpression{ }
+postfixexpression : primary
+		 | name
+		 | postincrementexpression
+		 | postdecrementexpression;
+primary		 : primarynonewarray;
 
-primary		 : primarynonewarray { }
+inclusiveorexpression : exclusiveorexpression
+		 | inclusiveorexpression OR exclusiveorexpression;
 
-inclusiveorexpression : exclusiveorexpression { }
-		 | inclusiveorexpression OR exclusiveorexpression { }
+primarynonewarray : literal
+		 | THIS
+		 | LBRACE expression RBRACE
+                 | classinstancecreationexpression
+		 | fieldaccess
+		 | methodinvocation;
 
-primarynonewarray : literal { }
-		 | THIS { }
-		 | LBRACE expression RBRACE  { }
-                 | classinstancecreationexpression { }
-		 | fieldaccess { }
-		 | methodinvocation { }
+unaryexpressionnotplusminus : postfixexpression
+	         | TILDE unaryexpression
+		 | EXCLMARK unaryexpression
+		 | castexpression;
 
-unaryexpressionnotplusminus : postfixexpression { }
-	         | TILDE unaryexpression { }
-		 | EXCLMARK unaryexpression { }
-		 | castexpression{ }
+exclusiveorexpression : andexpression
+		 | exclusiveorexpression XOR andexpression;
 
-exclusiveorexpression : andexpression { }
-		 | exclusiveorexpression XOR andexpression { }
+literal		 : INTLITERAL
+		 | BOOLLITERAL
+		 | CHARLITERAL
+		 | STRINGLITERAL
+		 | JNULL;
 
-literal		 : INTLITERAL { }
-		 | BOOLLITERAL { }
-		 | CHARLITERAL { }
-		 | STRINGLITERAL { }
-		 | JNULL { }
+castexpression	 : LBRACE  primitivetype  RBRACE  unaryexpression
+ 		 | LBRACE  expression  RBRACE  unaryexpressionnotplusminus;
 
-castexpression	 : LBRACE  primitivetype  RBRACE  unaryexpression { }
- 		 | LBRACE  expression  RBRACE  unaryexpressionnotplusminus{ }
+andexpression    : equalityexpression
+		 | andexpression AND equalityexpression;
 
-andexpression    : equalityexpression { }
-		 | andexpression AND equalityexpression { }
+equalityexpression : relationalexpression
+		 | equalityexpression EQUAL relationalexpression
+		 | equalityexpression NOTEQUAL relationalexpression;
 
-equalityexpression : relationalexpression { }
-		 | equalityexpression EQUAL relationalexpression { }
-		 | equalityexpression NOTEQUAL relationalexpression { }
+relationalexpression : shiftexpression
+		 | relationalexpression LESS shiftexpression
+		 | relationalexpression GREATER shiftexpression
+		 | relationalexpression LESSEQUAL shiftexpression
+		 | relationalexpression GREATEREQUAL shiftexpression
+		 | relationalexpression INSTANCEOF referencetype;
 
-relationalexpression : shiftexpression { }
-		 | relationalexpression LESS shiftexpression { }
-		 | relationalexpression GREATER shiftexpression { }
-		 | relationalexpression LESSEQUAL shiftexpression { }
-		 | relationalexpression GREATEREQUAL shiftexpression { }
-		 | relationalexpression INSTANCEOF referencetype { }
+shiftexpression	 : additiveexpression;
 
-shiftexpression	 : additiveexpression { }
+additiveexpression : multiplicativeexpression
+		 | additiveexpression PLUS multiplicativeexpression
+		 | additiveexpression MINUS multiplicativeexpression;
 
-additiveexpression : multiplicativeexpression { }
-		 | additiveexpression PLUS multiplicativeexpression { }
-		 | additiveexpression MINUS multiplicativeexpression { }
+multiplicativeexpression : unaryexpression
+		 | multiplicativeexpression MUL unaryexpression
+		 | multiplicativeexpression DIV unaryexpression
+		 | multiplicativeexpression MOD unaryexpression;
 
-multiplicativeexpression : unaryexpression { }
-		 | multiplicativeexpression MUL unaryexpression { }
-		 | multiplicativeexpression DIV unaryexpression { }
-		 | multiplicativeexpression MOD unaryexpression { }
-
-
-{
-
-parseError :: [Token] -> a
-parseError _ = error "Parse error"
-
-}
 */

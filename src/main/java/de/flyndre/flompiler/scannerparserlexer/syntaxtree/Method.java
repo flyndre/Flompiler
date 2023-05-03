@@ -13,6 +13,12 @@ public class Method {
     public Method() {
     }
 
+    public Method(String type, String name, List<Parameter> parameter, Statement statement){
+        this.type = type;
+        this.name = name;
+        this.parameter = parameter;
+        this.statement = statement;
+    }
     /**
      * 
      */
