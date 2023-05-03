@@ -14,8 +14,13 @@ import java.nio.file.Path;
 
 public class ScannerParserLexerTest {
 
-    private void testSuccess(String path, Program expected) {
-        final var inputPath = TestConstants.RESOURCES_ROOT + path;
+    /**
+     * Tests if a .java file can be successfully parsed by the `ScannerParserLexer`.
+     * @param inputFilePath path to the .java file
+     * @param expected the expected AST
+     */
+    private void testSuccess(String inputFilePath, Program expected) {
+        final var inputPath = TestConstants.RESOURCES_ROOT + inputFilePath;
         final String inputString;
         try {
             inputString = Files.readString(Path.of(inputPath));
@@ -26,8 +31,12 @@ public class ScannerParserLexerTest {
         Flassertions.assertDeeplyAlike(expected, actual);
     }
 
-    private void testFailure(String path) {
-        final var inputPath = TestConstants.RESOURCES_ROOT + path;
+    /**
+     * Tests if a faulty .java file produces an exception when parsed.
+     * @param inputFilePath path to the .java file
+     */
+    private void testFailure(String inputFilePath) {
+        final var inputPath = TestConstants.RESOURCES_ROOT + inputFilePath;
         final String inputString;
         try {
             inputString = Files.readString(Path.of(inputPath));
@@ -38,18 +47,12 @@ public class ScannerParserLexerTest {
         Assertions.assertThrows(Exception.class, executable);
     }
 
-    /**
-     * Parse empty class.
-     */
     @Test
     @DisplayName("ScannerParserLexer: Empty Class")
     public void testEmptyClass() {
         testSuccess("/basic/EmptyClass.java", EmptyClassResults.AST);
     }
 
-    /**
-     * Try to parse defective empty class and expect exception.
-     */
     @Test
     @DisplayName("ScannerParserLexer: Defective Empty Class")
     public void testDefectiveEmptyClass() {
@@ -57,14 +60,13 @@ public class ScannerParserLexerTest {
     }
 
     @Test
+    @DisplayName("ScannerParserLexer: Boolean Attribute Class")
     public void testAttributeBooleanClass() {
         testSuccess("/attributes/BooleanClass.java", BooleanClassResults.AST);
     }
 
-    /**
-     * Try to parse defective empty class and expect exception.
-     */
     @Test
+    @DisplayName("ScannerParserLexer: Defective Boolean Attribute Class")
     public void testAttributeDefectiveBooleanClass() {
         testFailure("/attributes/defective/DefectiveBooleanClass.java");
     }
