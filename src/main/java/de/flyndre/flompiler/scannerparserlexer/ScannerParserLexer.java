@@ -24,11 +24,11 @@ public class ScannerParserLexer {
         }
 
     }
-    public static Program compile(String input) throws IOException {
+    public static Program compile(String input) {
         return parse(input);
     }
 
-    private static Program parse(String input) throws IOException {
+    private static Program parse(String input) {
         MiniJavaLexer lexer = new MiniJavaLexer(CharStreams.fromString(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);
