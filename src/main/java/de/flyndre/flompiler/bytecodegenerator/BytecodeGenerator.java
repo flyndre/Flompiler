@@ -2,16 +2,20 @@ package de.flyndre.flompiler.bytecodegenerator;
 
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
+import de.flyndre.flompiler.typecheker.utils.LocalVar;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BytecodeGenerator {
+    private static HashMap<String, String> classFields = new HashMap<>();//key string is the field name, second string is the field type
     public static void generateByteCode(Program program, File outputFile){
         ArrayList<Class> classes = (ArrayList<Class>) program.classes;
 
@@ -43,6 +47,8 @@ public class BytecodeGenerator {
             //generate methods
             cw = generateByteCodeForMethods(cw, thisClass.methods);
 
+            cw.visitEnd();
+
             //print code
             byte[] b = cw.toByteArray();
 
@@ -51,7 +57,7 @@ public class BytecodeGenerator {
                 f.write(b);
                 f.close();
             }catch(Exception e){
-
+                System.out.println(e);
             }
         }
     }
@@ -90,11 +96,11 @@ public class BytecodeGenerator {
                     break;
             }
 
-            //get initial value
-            //String initalValue = thisField.standardValue;
-            //nur bei statischen Werten
+            //save field in classFields
+            classFields.put(thisField.name, thisField.type);
 
-            cw.visitField(visibility, thisField.name, type, null, null);
+            FieldVisitor fv = cw.visitField(visibility, thisField.name, type, null, null);
+            fv.visitEnd();
         }
 
         return cw;
@@ -103,16 +109,102 @@ public class BytecodeGenerator {
     public static ClassWriter generateByteCodeForMethods(ClassWriter cw, List<Method> methods){
         //get all methods without constructors
         List<Method> methodsWithoutConstructors = new ArrayList<>();
+        //hashmap of local variables
+        HashMap<String, LocalVar> localVarScope = new HashMap<>();//key is the name of the variable, LocalVar contains type and save location
+
         for(int i=0;i<methods.size();i++){
             if(!methods.get(i).name.equals("<init>")){
                 methodsWithoutConstructors.add(methods.get(i));
             }
         }
 
+        //generate the bytecode for the methods
+        for(int i=0;i<methodsWithoutConstructors.size();i++){
+            Method thisMethod = methodsWithoutConstructors.get(i);
+
+            //generate method descriptor
+            ////generate the parameters
+            List<Parameter> params = thisMethod.parameter;
+            String parametersDescriptor = "";//if list is empty, empty method descriptor
+            for(int a=0; a<params.size();a++){
+                switch(params.get(a).type){
+                    case "int":
+                        parametersDescriptor = parametersDescriptor + "I";
+                        break;
+                    case "boolean":
+                        parametersDescriptor = parametersDescriptor + "Z";
+                        break;
+                    case "char":
+                        parametersDescriptor = parametersDescriptor + "C";
+                        break;
+                    default:
+                        parametersDescriptor = parametersDescriptor + "L" + params.get(a).type + ";";
+                        break;
+                }
+            }
+
+            ////generate the return value descriptor
+            String returnDescriptor = "";
+            switch(thisMethod.type){
+                case "int":
+                    returnDescriptor = "I";
+                    break;
+                case "boolean":
+                    returnDescriptor = "Z";
+                    break;
+                case "char":
+                    returnDescriptor = "C";
+                    break;
+                case "void":
+                    returnDescriptor = "V";
+                    break;
+                default:
+                    returnDescriptor = "L" + thisMethod.type + ";";
+                    break;
+            }
+            ////get the visibility of the method
+            int visibility = Opcodes.ACC_PUBLIC;
+            switch(thisMethod.access.toLowerCase()){
+                case "public":
+                    visibility = Opcodes.ACC_PUBLIC;
+                    break;
+                case "private":
+                    visibility = Opcodes.ACC_PRIVATE;
+                    break;
+                default:
+                    break;
+            }
+
+            ////generate the actual descriptor
+            String descriptor = "(" + parametersDescriptor + ")" + returnDescriptor;
+            MethodVisitor mv = cw.visitMethod(visibility, thisMethod.name, descriptor, null, null);
+            mv.visitCode();
+
+            //save all params to local variables
+            for(int a = 0; a<thisMethod.parameter.size();a++){
+                Parameter parameter = thisMethod.parameter.get(a);
+                int saveplace = localVarScope.size() + 1;
+                localVarScope.put(parameter.name, new LocalVar(parameter.type, saveplace));
+            }
+
+            //Aufruf des normalen generateByteCodeForStatements
+            mv = generateByteCodeForStatements(mv, thisMethod.statement, localVarScope);
+
+            if(thisMethod.type.equals("void")){//hier nur return, wenn method rückgabewert void hat, ansonsten wird der return in der expression behandelt
+                mv.visitInsn(Opcodes.RETURN);
+            }
+
+            mv.visitMaxs(0,0);
+            mv.visitEnd();
+        }
+
         return cw;
     }
 
     public static ClassWriter generateByteCodeForConstructors(ClassWriter cw, List<Method> methods, List<Field> fields){
+        //hashmap of local variables
+        HashMap<String, LocalVar> localVarScope = new HashMap<>();//key is the name of the variable, LocalVar contains type and save location
+
         //get all fields with default values
         /*List<Field> defaultFields = new ArrayList<>();
         for(int i=0;i<fields.size();i++){
@@ -181,8 +273,15 @@ public class BytecodeGenerator {
             consMeth.visitVarInsn(Opcodes.ALOAD, 0);
             consMeth.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
 
+            //save all params to local variables
+            for(int a = 0; a<thisConstructor.parameter.size();a++){
+                Parameter parameter = thisConstructor.parameter.get(a);
+                int saveplace = localVarScope.size() + 1;
+                localVarScope.put(parameter.name, new LocalVar(parameter.type, saveplace));
+            }
+
             //Aufruf des normalen generateByteCodeForStatements
-            consMeth = generateByteCodeForStatements(consMeth, thisConstructor.statement);
+            consMeth = generateByteCodeForStatements(consMeth, thisConstructor.statement, localVarScope);
 
             consMeth.visitInsn(Opcodes.RETURN);
             consMeth.visitMaxs(0,0);
@@ -191,7 +290,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    public static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statements){
+    public static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statements, HashMap<String, LocalVar> localVarScope){
 
         return mv;
     }
