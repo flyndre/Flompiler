@@ -23,7 +23,6 @@ public final class BooleanClassResults {
     public static final Program TYPED_AST = buildTypedAst();
 
     private static Program buildAst() {
-
         var program = new Program();
         program.classes = new ArrayList<>();
         {
@@ -48,6 +47,22 @@ public final class BooleanClassResults {
     private static Program buildTypedAst() {
         var program = new Program();
         program.classes = new ArrayList<>();
+        {
+            var booleanClass = new Class();
+            booleanClass.access = "public";
+            booleanClass.name = "BooleanClass";
+            booleanClass.fields = new ArrayList<>();
+            {
+                var isTrueField = new Field();
+                isTrueField.access = "public";
+                isTrueField.type = "boolean";
+                isTrueField.name = "isTrue";
+                booleanClass.fields.add(isTrueField);
+            }
+            booleanClass.methods = new ArrayList<>();
+            program.classes.add(booleanClass);
+        }
+
         return program;
     }
 }
