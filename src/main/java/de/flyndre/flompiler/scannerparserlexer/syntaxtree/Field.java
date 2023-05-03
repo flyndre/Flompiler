@@ -21,7 +21,7 @@ public class Field {
     /**
      * 
      */
-    public String type;
+    public  String type;
 
     public String standardValue;
 
