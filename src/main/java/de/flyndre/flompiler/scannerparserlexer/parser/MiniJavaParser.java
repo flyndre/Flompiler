@@ -34,7 +34,7 @@ public class MiniJavaParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'class'", null, "'int'", "'String'", "'Boolean'", "'Char'", "'void'", 
+			null, "'class'", null, "'int'", "'String'", "'boolean'", "'char'", "'void'", 
 			"'='", null, null, null, "'public'", "'private'", "'protected'", null, 
 			"'{'", "'}'", "';'", "'('", "')'"
 		};

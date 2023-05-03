@@ -2,11 +2,11 @@ grammar MiniJava;
 
 
 CLASS               : 'class';
-BOOLEAN             : 'True' | 'False';
+BOOLEAN             : 'true' | 'false';
 INTTYPE             : 'int';
 STRINGTYPE          : 'String';
-BOOLEANTYPE         : 'Boolean';
-CHARTYPE            : 'Char';
+BOOLEANTYPE         : 'boolean';
+CHARTYPE            : 'char';
 VOIDTYPE            : 'void';
 EQUALS              : '=';
 STRING              : '"' SEQUENCE* '"';

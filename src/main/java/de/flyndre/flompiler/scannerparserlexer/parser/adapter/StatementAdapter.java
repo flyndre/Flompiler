@@ -33,11 +33,12 @@ public class StatementAdapter {
 
     public static List<Field> adaptFields(MiniJavaParser.StatementsContext ctx) {
         List<Field> fields = new ArrayList<>();
+        Field newField = new Field();
         if(ctx != null && ctx.statement() != null){
             if(ctx.statement().fielddeclaration() != null){
                 MiniJavaParser.FielddeclarationContext fielddeclarationContext = ctx.statement().fielddeclaration();
                 if(fielddeclarationContext.booldeclaration() != null){
-                    Field newField = new Field(fielddeclarationContext.booldeclaration().NAME().getText(),
+                     newField = new Field(fielddeclarationContext.booldeclaration().NAME().getText(),
                                          fielddeclarationContext.booldeclaration().accessMod().getText(),
                                          "boolean",
                                          "false"
@@ -48,7 +49,7 @@ public class StatementAdapter {
                     }
 
                 }else if(fielddeclarationContext.chardeclaration() != null){
-                    Field newField = new Field(fielddeclarationContext.chardeclaration().NAME().getText(),
+                     newField = new Field(fielddeclarationContext.chardeclaration().NAME().getText(),
                             fielddeclarationContext.chardeclaration().accessMod().getText(),
                             "char",
                             ""
@@ -59,7 +60,7 @@ public class StatementAdapter {
                     }
 
                 }else if(fielddeclarationContext.intdeclaration() != null){
-                    Field newField = new Field(fielddeclarationContext.intdeclaration().NAME().getText(),
+                     newField = new Field(fielddeclarationContext.intdeclaration().NAME().getText(),
                             fielddeclarationContext.intdeclaration().accessMod().getText(),
                             "int",
                             "0"
@@ -70,7 +71,7 @@ public class StatementAdapter {
                     }
 
                 }else if(fielddeclarationContext.stringdeclaration() != null){
-                    Field newField = new Field(fielddeclarationContext.stringdeclaration().NAME().getText(),
+                     newField = new Field(fielddeclarationContext.stringdeclaration().NAME().getText(),
                             fielddeclarationContext.stringdeclaration().accessMod().getText(),
                             "String",
                             ""
@@ -80,7 +81,7 @@ public class StatementAdapter {
                         newField.standardValue = fielddeclarationContext.stringdeclaration().STRING().getText();
                     }
                 }
-                fields.add(new Field());
+                fields.add(newField);
             }
 
             if(ctx.statements() != null){

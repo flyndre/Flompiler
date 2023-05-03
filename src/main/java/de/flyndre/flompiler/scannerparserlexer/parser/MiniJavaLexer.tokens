@@ -22,8 +22,8 @@ SEQUENCE=21
 'class'=1
 'int'=3
 'String'=4
-'Boolean'=5
-'Char'=6
+'boolean'=5
+'char'=6
 'void'=7
 '='=8
 'public'=12

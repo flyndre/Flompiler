@@ -4,8 +4,8 @@ null
 null
 'int'
 'String'
-'Boolean'
-'Char'
+'boolean'
+'char'
 'void'
 '='
 null

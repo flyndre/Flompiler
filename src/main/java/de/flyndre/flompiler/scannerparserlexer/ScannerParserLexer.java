@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class ScannerParserLexer {
     public static void main(String[] args) throws IOException {
-        String as = "public class asd{ String abc = \"hallo\"; private Boolean gams(){}}";
+        String as = "public class asd{ public String abc = \"hallo\"; private boolean gams(){}}";
         Program program = compile(as);
 
         for (Class aClass : program.classes) {
