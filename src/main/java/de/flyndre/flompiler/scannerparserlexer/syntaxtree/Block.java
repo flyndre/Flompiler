@@ -17,12 +17,18 @@ public class Block extends Statement {
 
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        for(Statement statement: statements){
-            if(statement.getClass().equals(Return.class)){
-                return statement.typeCheck(fields,parameters);
+        type = "void";
+        for(Statement stm:statements){
+            String nextType;
+            if((nextType=stm.typeCheck(fields,parameters)).equals("void")){
+                continue;
             }
+            if(!type.equals("void")&&!(nextType=stm.typeCheck(fields,parameters)).equals(type)){
+                throw new Exception(String.format("There are two different return types. First: %s Second: %s",type,nextType));
+            }
+            type = nextType;
         }
-        return "void";
+        return type;
     }
 
     /**
