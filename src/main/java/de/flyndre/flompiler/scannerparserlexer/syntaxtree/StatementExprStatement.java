@@ -16,14 +16,9 @@ public class StatementExprStatement extends Statement {
     }
 
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return type;
     }
-
-    /**
-     * 
-     */
-    public String type;
 
     /**
      * 

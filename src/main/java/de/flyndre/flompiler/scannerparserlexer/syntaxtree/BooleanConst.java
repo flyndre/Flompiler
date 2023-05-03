@@ -16,7 +16,7 @@ public class BooleanConst extends Expression {
 
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        return "boolean";
+        return type = "boolean";
     }
 
 }

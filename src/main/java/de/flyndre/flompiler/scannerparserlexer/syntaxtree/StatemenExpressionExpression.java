@@ -15,7 +15,7 @@ public class StatemenExpressionExpression extends Expression {
 
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        return statementExpression.typeCheck(fields,parameters);
+        return type = statementExpression.typeCheck(fields,parameters);
     }
 
     /**

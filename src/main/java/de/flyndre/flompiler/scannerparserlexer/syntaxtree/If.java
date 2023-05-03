@@ -16,8 +16,13 @@ public class If extends Statement {
     }
 
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
-        return null;
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        String ifType = ifStatement.typeCheck(fields,parameters);
+        String elseType = elseStatement.typeCheck(fields,parameters);
+        if(!ifType.equals(elseType)){
+            throw new Exception(String.format("The two statement have different return types. If has %s, Else has %s",ifType,elseType));
+        }
+        return type = ifType;
     }
 
     /**
@@ -34,5 +39,6 @@ public class If extends Statement {
      * 
      */
     public Statement elseStatement;
+
 
 }

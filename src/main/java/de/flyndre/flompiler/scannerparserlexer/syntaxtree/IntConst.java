@@ -16,7 +16,7 @@ public class IntConst extends Expression {
 
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        return "int";
+        return type ="int";
     }
 
 }

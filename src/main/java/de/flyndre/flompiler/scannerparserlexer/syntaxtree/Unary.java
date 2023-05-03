@@ -15,7 +15,7 @@ public class Unary extends Expression {
 
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        return null;
+        return type = expression.typeCheck(fields,parameters);
     }
 
     /**

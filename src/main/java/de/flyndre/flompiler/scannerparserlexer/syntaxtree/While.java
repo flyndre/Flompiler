@@ -17,11 +17,7 @@ public class While extends Statement {
 
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        String ty;
-        if((ty=condition.typeCheck(fields,parameters)).equals("bool")){
-            return statement.typeCheck(fields,parameters);
-        }
-        throw new Exception("Expected boolean in condition but was"+ty);
+        return type = statement.typeCheck(fields,parameters);
     }
 
     /**

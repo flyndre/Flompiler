@@ -16,14 +16,9 @@ public class LocalVarDecl extends Statement {
     }
 
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
-        return null;
+    public String typeCheck(List<Field> fields, List<Parameter> parameters)  {
+        return type;
     }
-
-    /**
-     * 
-     */
-    public String type;
 
     /**
      * 

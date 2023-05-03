@@ -18,7 +18,7 @@ public class Binary extends Expression {
         String tyl;
         String tyr;
         if((tyl=expressionLeft.typeCheck(fields,parameters)).equals(tyr=expressionRight.typeCheck(fields,parameters))){
-            return tyl;
+            return type = tyl;
         }
         throw new Exception(String.format("Expected two equal types but was %s and %s",tyl,tyr));
     }
