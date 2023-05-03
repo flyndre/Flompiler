@@ -15,5 +15,7 @@ public abstract class Statement {
     public Statement() {
     }
 
+    public String type;
+
     public abstract String typeCheck(List<Field> fields,List<Parameter> parameters) throws Exception;
 }
