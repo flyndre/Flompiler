@@ -8,17 +8,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class ScannerParserLexerTest {
 
     /**
      * Parse empty class.
      */
     @Test
-    public void testEmptyClass() {
+    public void testEmptyClass() throws IOException {
         final var path = TestConstants.RESOURCES_ROOT + "/basic/EmptyClass.java";
+        final var inputString = Files.readString(Path.of(path));
         final var result = EmptyClassResults.AST;
-        // TODO: Import input file from path
-        Program program = ScannerParserLexer.compile("public class EmptyClass { }");
+        Program program = ScannerParserLexer.compile(inputString);
         Flassertions.assertDeeplyAlike(result, program);
     }
 
@@ -26,10 +30,10 @@ public class ScannerParserLexerTest {
      * Try to parse defective empty class and expect exception.
      */
     @Test
-    public void testDefectiveEmptyClass() {
+    public void testDefectiveEmptyClass() throws IOException {
         final var path = TestConstants.RESOURCES_ROOT + "/basic/defective/DefectiveEmptyClass.java";
-        // TODO: Import input file from path
-        final Executable executable = () -> ScannerParserLexer.compile("public class EmptyClass {");
+        final var inputString = Files.readString(Path.of(path));
+        final Executable executable = () -> ScannerParserLexer.compile(inputString);
         Assertions.assertThrows(Exception.class, executable);
     }
 
