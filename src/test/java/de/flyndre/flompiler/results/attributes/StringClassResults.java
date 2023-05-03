@@ -5,12 +5,11 @@ import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Field;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Results for parsing the boolean-class.
  */
-public final class BooleanClassResults {
+public final class StringClassResults {
 
     /**
      * The manually parsed resulting untyped abstract syntax tree for the boolean-class.
@@ -26,20 +25,20 @@ public final class BooleanClassResults {
         var program = new Program();
         program.classes = new ArrayList<>();
         {
-            var booleanClass = new Class();
-            booleanClass.access = "public";
-            booleanClass.name = "BooleanClass";
-            booleanClass.fields = new ArrayList<>();
+            var stringClass = new Class();
+            stringClass.access = "public";
+            stringClass.name = "StringClass";
+            stringClass.fields = new ArrayList<>();
             {
-                var isTrueField = new Field();
-                isTrueField.access = "public";
-                isTrueField.type = "boolean";
-                isTrueField.name = "isTrue";
-                isTrueField.standardValue = "false";
-                booleanClass.fields.add(isTrueField);
+                var stringField = new Field();
+                stringField.access = "public";
+                stringField.type = "String";
+                stringField.name = "word";
+                stringField.standardValue = "";
+                stringClass.fields.add(stringField);
             }
-            booleanClass.methods = new ArrayList<>();
-            program.classes.add(booleanClass);
+            stringClass.methods = new ArrayList<>();
+            program.classes.add(stringClass);
         }
 
         return program;

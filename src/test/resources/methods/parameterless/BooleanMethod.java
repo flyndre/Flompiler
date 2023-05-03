@@ -1,5 +1,5 @@
 public class BooleanMethod {
-    public int method() {
-        return true;
+    public boolean method() {
+
     }
 }
