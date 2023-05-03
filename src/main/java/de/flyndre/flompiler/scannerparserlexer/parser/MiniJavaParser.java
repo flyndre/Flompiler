@@ -936,9 +936,8 @@ public class MiniJavaParser extends Parser {
 		public TerminalNode CHARTYPE() { return getToken(MiniJavaParser.CHARTYPE, 0); }
 		public TerminalNode NAME() { return getToken(MiniJavaParser.NAME, 0); }
 		public TerminalNode SEMICOLON() { return getToken(MiniJavaParser.SEMICOLON, 0); }
-		public TerminalNode STRINGTYPE() { return getToken(MiniJavaParser.STRINGTYPE, 0); }
 		public TerminalNode EQUALS() { return getToken(MiniJavaParser.EQUALS, 0); }
-		public TerminalNode STRING() { return getToken(MiniJavaParser.STRING, 0); }
+		public TerminalNode CHAR() { return getToken(MiniJavaParser.CHAR, 0); }
 		public ChardeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -984,13 +983,13 @@ public class MiniJavaParser extends Parser {
 				setState(128);
 				accessMod();
 				setState(129);
-				match(STRINGTYPE);
+				match(CHARTYPE);
 				setState(130);
 				match(NAME);
 				setState(131);
 				match(EQUALS);
 				setState(132);
-				match(STRING);
+				match(CHAR);
 				setState(133);
 				match(SEMICOLON);
 				}
@@ -1016,9 +1015,8 @@ public class MiniJavaParser extends Parser {
 		public TerminalNode INTTYPE() { return getToken(MiniJavaParser.INTTYPE, 0); }
 		public TerminalNode NAME() { return getToken(MiniJavaParser.NAME, 0); }
 		public TerminalNode SEMICOLON() { return getToken(MiniJavaParser.SEMICOLON, 0); }
-		public TerminalNode STRINGTYPE() { return getToken(MiniJavaParser.STRINGTYPE, 0); }
 		public TerminalNode EQUALS() { return getToken(MiniJavaParser.EQUALS, 0); }
-		public TerminalNode STRING() { return getToken(MiniJavaParser.STRING, 0); }
+		public TerminalNode INTEGER() { return getToken(MiniJavaParser.INTEGER, 0); }
 		public IntdeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1064,13 +1062,13 @@ public class MiniJavaParser extends Parser {
 				setState(142);
 				accessMod();
 				setState(143);
-				match(STRINGTYPE);
+				match(INTTYPE);
 				setState(144);
 				match(NAME);
 				setState(145);
 				match(EQUALS);
 				setState(146);
-				match(STRING);
+				match(INTEGER);
 				setState(147);
 				match(SEMICOLON);
 				}
@@ -1270,24 +1268,24 @@ public class MiniJavaParser extends Parser {
 		"\u0000\u0000yr\u0001\u0000\u0000\u0000z\u0017\u0001\u0000\u0000\u0000"+
 		"{|\u0003\b\u0004\u0000|}\u0005\u0006\u0000\u0000}~\u0005\u000f\u0000\u0000"+
 		"~\u007f\u0005\u0012\u0000\u0000\u007f\u0088\u0001\u0000\u0000\u0000\u0080"+
-		"\u0081\u0003\b\u0004\u0000\u0081\u0082\u0005\u0004\u0000\u0000\u0082\u0083"+
+		"\u0081\u0003\b\u0004\u0000\u0081\u0082\u0005\u0006\u0000\u0000\u0082\u0083"+
 		"\u0005\u000f\u0000\u0000\u0083\u0084\u0005\b\u0000\u0000\u0084\u0085\u0005"+
-		"\t\u0000\u0000\u0085\u0086\u0005\u0012\u0000\u0000\u0086\u0088\u0001\u0000"+
+		"\n\u0000\u0000\u0085\u0086\u0005\u0012\u0000\u0000\u0086\u0088\u0001\u0000"+
 		"\u0000\u0000\u0087{\u0001\u0000\u0000\u0000\u0087\u0080\u0001\u0000\u0000"+
 		"\u0000\u0088\u0019\u0001\u0000\u0000\u0000\u0089\u008a\u0003\b\u0004\u0000"+
 		"\u008a\u008b\u0005\u0003\u0000\u0000\u008b\u008c\u0005\u000f\u0000\u0000"+
 		"\u008c\u008d\u0005\u0012\u0000\u0000\u008d\u0096\u0001\u0000\u0000\u0000"+
-		"\u008e\u008f\u0003\b\u0004\u0000\u008f\u0090\u0005\u0004\u0000\u0000\u0090"+
+		"\u008e\u008f\u0003\b\u0004\u0000\u008f\u0090\u0005\u0003\u0000\u0000\u0090"+
 		"\u0091\u0005\u000f\u0000\u0000\u0091\u0092\u0005\b\u0000\u0000\u0092\u0093"+
-		"\u0005\t\u0000\u0000\u0093\u0094\u0005\u0012\u0000\u0000\u0094\u0096\u0001"+
-		"\u0000\u0000\u0000\u0095\u0089\u0001\u0000\u0000\u0000\u0095\u008e\u0001"+
-		"\u0000\u0000\u0000\u0096\u001b\u0001\u0000\u0000\u0000\u0097\u0098\u0003"+
-		"\b\u0004\u0000\u0098\u0099\u0003\n\u0005\u0000\u0099\u009a\u0005\u000f"+
-		"\u0000\u0000\u009a\u009b\u0005\u0013\u0000\u0000\u009b\u009c\u0003\u001e"+
-		"\u000f\u0000\u009c\u009d\u0005\u0014\u0000\u0000\u009d\u009e\u0003\u0006"+
-		"\u0003\u0000\u009e\u001d\u0001\u0000\u0000\u0000\u009f\u00a0\u0001\u0000"+
-		"\u0000\u0000\u00a0\u001f\u0001\u0000\u0000\u0000\u000b&39AEK]ky\u0087"+
-		"\u0095";
+		"\u0005\u000b\u0000\u0000\u0093\u0094\u0005\u0012\u0000\u0000\u0094\u0096"+
+		"\u0001\u0000\u0000\u0000\u0095\u0089\u0001\u0000\u0000\u0000\u0095\u008e"+
+		"\u0001\u0000\u0000\u0000\u0096\u001b\u0001\u0000\u0000\u0000\u0097\u0098"+
+		"\u0003\b\u0004\u0000\u0098\u0099\u0003\n\u0005\u0000\u0099\u009a\u0005"+
+		"\u000f\u0000\u0000\u009a\u009b\u0005\u0013\u0000\u0000\u009b\u009c\u0003"+
+		"\u001e\u000f\u0000\u009c\u009d\u0005\u0014\u0000\u0000\u009d\u009e\u0003"+
+		"\u0006\u0003\u0000\u009e\u001d\u0001\u0000\u0000\u0000\u009f\u00a0\u0001"+
+		"\u0000\u0000\u0000\u00a0\u001f\u0001\u0000\u0000\u0000\u000b&39AEK]ky"+
+		"\u0087\u0095";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

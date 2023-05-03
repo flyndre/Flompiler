@@ -59,9 +59,9 @@ booldeclaration     : accessMod BOOLEANTYPE NAME SEMICOLON
 stringdeclaration   : accessMod STRINGTYPE NAME SEMICOLON
                     | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
 chardeclaration     : accessMod CHARTYPE NAME SEMICOLON
-                    | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
+                    | accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON;
 intdeclaration      : accessMod INTTYPE NAME SEMICOLON
-                    | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
+                    | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
 
 methoddeclaration   : accessMod  type NAME BROPEN parameters BRCLOSE block;
 parameters          : ;//parameter parameters | ;

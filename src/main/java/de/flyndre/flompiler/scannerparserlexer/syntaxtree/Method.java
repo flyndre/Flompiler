@@ -13,8 +13,9 @@ public class Method {
     public Method() {
     }
 
-    public Method(String type, String name, List<Parameter> parameter, Statement statement){
+    public Method(String type, String name, List<Parameter> parameter, Statement statement, String access){
         this.type = type;
+        this.access = access;
         this.name = name;
         this.parameter = parameter;
         this.statement = statement;

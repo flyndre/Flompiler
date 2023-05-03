@@ -3,6 +3,7 @@ import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaLexer;
 import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaParser;
 import de.flyndre.flompiler.scannerparserlexer.parser.adapter.ClassAdapter;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Field;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Method;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import org.antlr.v4.runtime.CharStreams;
@@ -15,16 +16,22 @@ import java.io.IOException;
  */
 public class ScannerParserLexer {
     public static void main(String[] args) throws IOException {
-        String as = "public class asd{ public String gams(){}}";
+        String as = "public class asd{ String abc = \"hallo\"; private Boolean gams(){}}";
         Program program = compile(as);
 
         for (Class aClass : program.classes) {
             System.out.println("Classname: " + aClass.name + ", Classaccess: " + aClass.access );
-            System.out.println("Folgende Methoden sind Teil der Methode:");
+            System.out.println("Folgende Methoden sind Teil der Klasse:");
 
             for(Method method : aClass.methods){
-                System.out.println(" " + method.name);
+                System.out.println(" " + method.name + " Accesstyp: " + method.access + " Type: " + method.type);
             }
+            System.out.println("Folgende Felder sind Teil der Klasse:");
+
+            for(Field field : aClass.fields){
+                System.out.println(" " + field.name + " Accesstyp: " + field.access + " Type: " + field.type + " Wert: " + field.standardValue);
+            }
+
 
         }
 

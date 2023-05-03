@@ -5,6 +5,12 @@ package de.flyndre.flompiler.scannerparserlexer.syntaxtree;
  */
 public class Field {
 
+    public Field(String name, String access, String type, String standardValue){
+        this.name = name;
+        this.access = access;
+        this.type = type;
+        this.standardValue = standardValue;
+    }
     /**
      * Default constructor
      */
