@@ -17,6 +17,9 @@ public class ScannerParserLexer {
                 "        if(true){\n" +
                 "            return 1;\n" +
                 "        }\n" +
+                "        while(true){\n" +
+                "            return 5; \n" +
+                "        }\n" +
                 "}\n" +
                 "}";
         Program program = compile(as);

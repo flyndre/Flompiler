@@ -47,9 +47,25 @@ public class StatementAdapter {
         else if(ctx.ifelsestatement() != null){
             return adaptIfElse(ctx.ifelsestatement());
         }
+        else if(ctx.while_() != null){
+            return adaptWhile(ctx.while_());
+        }
         throw new RuntimeException();
     }
 
+    public static While adaptWhile(MiniJavaParser.WhileContext ctx){
+        if(ctx.expression() != null && ctx.statement() != null){
+            Expression exp = ExpressionAdapter.adapt(ctx.expression());
+            Statement statement = adaptStatement(ctx.statement());
+            return new While(exp, statement);
+        }
+        else if(ctx.expression() != null && ctx.block() != null){
+            Expression exp = ExpressionAdapter.adapt(ctx.expression());
+            Block block = BlockAdapter.adapt(ctx.block());
+            return new While(exp, block);
+        }
+        throw new RuntimeException();
+    }
 
     public static If adaptIf(MiniJavaParser.IfstatementContext ctx){
         if(ctx.statement() != null && ctx.expression() != null){
