@@ -1,0 +1,34 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test_scanner_parser_lexer:
+    name: Scanner-Parser-Lexer-Test
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+      - uses: actions/checkout@v1 
+      
+      #Set up JDK 17
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+          
+      #Test the application using Maven
+      - name: Test with Maven
+        run: mvn -Dtest=scannerparserlexer.SannerParserLexerTest test --file pom.xml
+        
+      #Test the application using Maven - all Tests
+      - name: Test with Maven - all
+        run: mvn test --file pom.xml
