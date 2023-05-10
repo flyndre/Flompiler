@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class ScannerParserLexer {
     public static void main(String[] args) {
-        String as = "public class asd{ public String abc = \"hallo\"; private boolean gams(){}}";
+        String as = "public class asd{public int i = 1; public int gams(){} public String abc(){}}";
         Program program = compile(as);
 
         for (Class aClass : program.classes) {
