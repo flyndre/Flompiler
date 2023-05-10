@@ -121,6 +121,7 @@ public class BytecodeGenerator {
         //generate the bytecode for the methods
         for(int i=0;i<methodsWithoutConstructors.size();i++){
             Method thisMethod = methodsWithoutConstructors.get(i);
+            localVarScope = new HashMap<>();
 
             //generate method descriptor
             ////generate the parameters
@@ -224,6 +225,7 @@ public class BytecodeGenerator {
         //generate the bytecode for the constructors
         for(int i=0;i<constructors.size();i++){
             Method thisConstructor = constructors.get(i);
+            localVarScope = new HashMap<>();
 
             //generate constructor method descriptor
             ////generate the parameters
@@ -292,7 +294,26 @@ public class BytecodeGenerator {
 
     private static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statement, HashMap<String, LocalVar> localVarScope){
         if(statement instanceof Return){
+            String ergebnisExpression = generateByteCodeForExpressions(mv, ((Return) statement).expression, localVarScope);
 
+            switch(localVarScope.get(ergebnisExpression).type){
+                case "int":
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression).location);
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                case "boolean":
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression).location);
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                case "char":
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression).location);
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                default:
+                    mv.visitVarInsn(Opcodes.ALOAD, localVarScope.get(ergebnisExpression).location);
+                    mv.visitInsn(Opcodes.ARETURN);
+                    break;
+            }
         }
 
         return mv;
