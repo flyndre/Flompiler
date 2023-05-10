@@ -14,13 +14,16 @@ public class MethodAdapter {
     public static Method adapt(MiniJavaParser.MethoddeclarationContext ctx) {
         if(ctx.type() != null && ctx.NAME() != null && ctx.accessMod() != null){
             Block block = new Block();
-            block.statements = new ArrayList<>();
 
             List<Parameter> parameters = new ArrayList<>();
 
 
             if(ctx.parameters() != null){
                 parameters.addAll(ParameterAdapter.adapt(ctx.parameters()));
+            }
+
+            if(ctx.block() != null){
+              block = BlockAdapter.adapt(ctx.block());
             }
 
 

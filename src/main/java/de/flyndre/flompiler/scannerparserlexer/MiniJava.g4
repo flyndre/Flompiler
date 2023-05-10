@@ -1,6 +1,6 @@
 grammar MiniJava;
 
-
+RETURN              : 'return';
 CLASS               : 'class';
 BOOLEAN             : 'true' | 'false';
 INTTYPE             : 'int';
@@ -28,7 +28,7 @@ SEQUENCE            : [a-zA-Z0-9];
 program             : classes;
 classes             : class classes| ;
 class               : accessMod CLASS NAME WAVEDBROPEN classbody WAVEDBRCLOSE;
-block               : WAVEDBROPEN WAVEDBRCLOSE
+block               : WAVEDBROPEN WAVEDBRCLOSE |
                     | WAVEDBROPEN statements WAVEDBRCLOSE;
 accessMod           : PUBLIC
                     | PRIVATE
@@ -42,7 +42,9 @@ type                : BOOLEANTYPE
 
 statements          : statement statements
                     | ;
-statement           : fielddeclaration;
+statement           : returnstatement;
+
+returnstatement     : RETURN INTEGER SEMICOLON | RETURN STRING SEMICOLON | RETURN CHAR SEMICOLON |RETURN BOOLEAN SEMICOLON;
 
 classbody           : fielddeclaration classbody
                     | methoddeclaration classbody

@@ -14,6 +14,10 @@ public class BooleanConst extends Expression {
     public BooleanConst() {
     }
 
+    public BooleanConst(boolean value) {
+        this.value = value;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return type = "boolean";

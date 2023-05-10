@@ -14,6 +14,10 @@ public class CharConst extends Expression {
     public CharConst() {
     }
 
+    public CharConst(char value) {
+        this.value = value;
+    }
+
 
 
     @Override

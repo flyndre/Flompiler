@@ -11,7 +11,9 @@ import java.io.IOException;
 
 public class ScannerParserLexer {
     public static void main(String[] args) {
-        String as = "public class asd{public int i = 1; public int gams(){} public String abc(int i){}}";
+        String as = "public class abc{\n" +
+                "    public String abc(int i){return 1;}\n" +
+                "}";
         Program program = compile(as);
 
         for (Class aClass : program.classes) {
