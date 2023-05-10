@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class BooleanConst extends Expression {
 
-    public BooleanConst value;
+    public boolean value;
     /**
      * Default constructor
      */
