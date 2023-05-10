@@ -335,8 +335,29 @@ public class BytecodeGenerator {
 
             mv.visitLabel(end);
 
-        }else if(statement instanceof  If){
+        }else if(statement instanceof If){
+            Label elseKeyWord = new Label();
+            Label end = new Label();
 
+            String ergebnisExpression = generateByteCodeForExpressions(mv, ((If) statement).condition, localVarScope);
+
+            mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression).location);
+            mv.visitInsn(Opcodes.ICONST_0);
+            mv.visitJumpInsn(Opcodes.IF_ICMPEQ, elseKeyWord);
+
+            mv = generateByteCodeForStatements(mv, ((If) statement).ifStatement, localVarScope);
+            mv.visitJumpInsn(Opcodes.GOTO, end);
+
+            mv.visitLabel(elseKeyWord);
+
+            if(!(((If) statement).elseStatement == null)){
+                mv = generateByteCodeForStatements(mv, ((If) statement).elseStatement, localVarScope);
+            }
+
+            mv.visitLabel(end);
+
+        }else if(statement instanceof LocalVarDecl){
+            localVarScope.put(((LocalVarDecl) statement).name, new LocalVar(statement.type, -1));
         }
 
         return mv;
@@ -384,5 +405,13 @@ public class BytecodeGenerator {
         localVarScope.put("CharConst" + (localVarScope.size()+1), new LocalVar("char",(localVarScope.size()+1)));
 
         return "CharConst" + localVarScope.size();
+    }
+
+    private static String generateByteCodeForStringConst(MethodVisitor mv, StringConst expression, HashMap<String, LocalVar> localVarScope){
+        mv.visitLdcInsn(expression.value);
+        mv.visitVarInsn(Opcodes.ASTORE, localVarScope.size()+1);
+        localVarScope.put("StringConst" + (localVarScope.size()+1), new LocalVar("String", (localVarScope.size()+1)));
+
+        return "StringConst" + localVarScope.size();
     }
 }
