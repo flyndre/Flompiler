@@ -12,7 +12,12 @@ import java.io.IOException;
 public class ScannerParserLexer {
     public static void main(String[] args) {
         String as = "public class abc{\n" +
-                "    public String abc(int i){return 1;}\n" +
+                "\n" +
+                "public String abasc(){\n" +
+                "        if(true){\n" +
+                "            return 1;\n" +
+                "        }\n" +
+                "}\n" +
                 "}";
         Program program = compile(as);
 

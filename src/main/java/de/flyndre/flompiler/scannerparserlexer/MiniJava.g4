@@ -1,5 +1,7 @@
 grammar MiniJava;
 
+IF                  : 'if';
+ELSE                : 'else';
 RETURN              : 'return';
 CLASS               : 'class';
 BOOLEAN             : 'true' | 'false';
@@ -12,8 +14,10 @@ EQUALS              : '=';
 STRING              : '"' SEQUENCE* '"';
 CHAR                : '\'' [a-zA-Z0-9] '\'';
 
-COMMA               : ',';
+
 INTEGER             : [1-9][0-9]*;
+COMMA               : ',';
+
 PUBLIC              : 'public';
 PRIVATE             : 'private';
 PROTECTED           : 'protected';
@@ -24,6 +28,7 @@ SEMICOLON           : ';';
 BROPEN              : '(';
 BRCLOSE             : ')';
 SEQUENCE            : [a-zA-Z0-9];
+
 
 program             : classes;
 classes             : class classes| ;
@@ -42,7 +47,19 @@ type                : BOOLEANTYPE
 
 statements          : statement statements
                     | ;
-statement           : returnstatement;
+statement           : returnstatement
+                    | ifstatement
+                    | ifelsestatement;
+
+ifstatement         : IF BROPEN expression BRCLOSE statement SEMICOLON
+                    | IF BROPEN expression BRCLOSE block
+                    | IF BROPEN expression BRCLOSE;
+
+ifelsestatement     : IF BROPEN expression BRCLOSE statement ELSE statement
+                    | IF BROPEN expression BRCLOSE block ELSE block;
+
+expression          : BOOLEAN;
+
 
 returnstatement     : RETURN INTEGER SEMICOLON | RETURN STRING SEMICOLON | RETURN CHAR SEMICOLON |RETURN BOOLEAN SEMICOLON;
 

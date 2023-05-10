@@ -15,6 +15,12 @@ public class If extends Statement {
     public If() {
     }
 
+    public If(Expression condition, Statement ifStatement, Statement elseStatement){
+        this.condition = condition;
+        this.ifStatement = ifStatement;
+        this.elseStatement = elseStatement;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         String ifType = ifStatement.typeCheck(fields,parameters);
