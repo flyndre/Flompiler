@@ -29,10 +29,11 @@ public class ClassAdapter {
             for(Method method : methods){
                 if(method.name.equals(ctx.class_().NAME().toString())){
                     hasConstructor = true;
+                    method.name = "<init>";
                 }
             }
 
-            if(methods.size() == 0 || hasConstructor){
+            if(methods.size() == 0 || !hasConstructor){
 
                 Block b = new Block();
                 b.statements = new ArrayList<>();
