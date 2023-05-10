@@ -22,16 +22,13 @@ public class StatementAdapter {
         else if(ctx.STRING() != null){
             return new Return(new StringConst(ctx.STRING().getText()));
         }
-
         return new Return(new Null());
     }
 
     public static List<Statement> adapt(MiniJavaParser.StatementsContext ctx){
         List<Statement> statements = new ArrayList<>();
         if(ctx.statement() != null){
-            if(ctx.statement().returnstatement() != null){
-                statements.add(adaptReturn(ctx.statement().returnstatement()));
-            }
+            statements.add(adaptStatement(ctx.statement()));
         }
         if(ctx.statements() != null){
             statements.addAll(StatementAdapter.adapt(ctx.statements()));
@@ -40,6 +37,48 @@ public class StatementAdapter {
         return statements;
     }
 
+    public static Statement adaptStatement(MiniJavaParser.StatementContext ctx){
+        if(ctx.returnstatement() != null){
+            return adaptReturn(ctx.returnstatement());
+        }
+        else if(ctx.ifstatement() != null){
+            return adaptIf(ctx.ifstatement());
+        }
+        else if(ctx.ifelsestatement() != null){
+            return adaptIfElse(ctx.ifelsestatement());
+        }
+        throw new RuntimeException();
+    }
+
+
+    public static If adaptIf(MiniJavaParser.IfstatementContext ctx){
+        if(ctx.statement() != null && ctx.expression() != null){
+            Expression e = ExpressionAdapter.adapt(ctx.expression());
+            Statement ifSatement =  adaptStatement(ctx.statement());
+            return new If(e, ifSatement, null);
+        }
+        else if(ctx.expression() != null && ctx.block() != null){
+            Expression e = ExpressionAdapter.adapt(ctx.expression());
+            Block ifSatement =  BlockAdapter.adapt(ctx.block());
+            return new If(e, ifSatement, null);
+        }
+        throw new RuntimeException();
+    }
+
+    public static If adaptIfElse(MiniJavaParser.IfelsestatementContext ctx){
+        if(ctx.statement() != null && ctx.expression() != null){
+            Expression e = ExpressionAdapter.adapt(ctx.expression());
+            Statement ifSatement =  adaptStatement(ctx.statement().get(0));
+            Statement elseSatement = adaptStatement(ctx.statement().get(1));
+            return new If(e, ifSatement, elseSatement);
+        }else if(ctx.expression() != null && ctx.block() != null){
+            Expression e = ExpressionAdapter.adapt(ctx.expression());
+            Block ifSatement =  BlockAdapter.adapt(ctx.block().get(0));
+            Block elseSatement = BlockAdapter.adapt(ctx.block().get(1));
+            return new If(e, ifSatement, elseSatement);
+        }
+        throw new RuntimeException();
+    }
 
     public static List<Method> adaptMethods(MiniJavaParser.ClassbodyContext ctx) {
         List<Method> methods = new ArrayList<>();
