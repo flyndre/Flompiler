@@ -19,11 +19,11 @@ jobs:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - uses: actions/checkout@v1 
       
-      #Set up JDK 17
+      #Set up JDK 19
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
-          java-version: '17'
+          java-version: '19'
           
       #Test the application using Maven
       - name: Test with Maven
