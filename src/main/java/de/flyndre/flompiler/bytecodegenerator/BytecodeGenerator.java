@@ -3,10 +3,7 @@ package de.flyndre.flompiler.bytecodegenerator;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
 import de.flyndre.flompiler.typecheker.utils.LocalVar;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +18,7 @@ public class BytecodeGenerator {
 
         for(int i=0; i< classes.size();i++){
             Class thisClass = classes.get(i);
+            classFields = new HashMap<>();
             ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
 
             //get class visibility
@@ -314,6 +312,31 @@ public class BytecodeGenerator {
                     mv.visitInsn(Opcodes.ARETURN);
                     break;
             }
+        }else if(statement instanceof Block){
+            List<Statement> statementList = ((Block) statement).statements;
+
+            for(int i=0;i<statementList.size();i++){
+                generateByteCodeForStatements(mv, statementList.get(i), localVarScope);
+            }
+        }else if(statement instanceof While){
+            Label loop = new Label();
+            Label end = new Label();
+
+            mv.visitLabel(loop);
+            String ergebnisExpression = generateByteCodeForExpressions(mv, ((While) statement).condition, localVarScope);
+
+            mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression).location);
+            mv.visitInsn(Opcodes.ICONST_0);
+            mv.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
+
+            mv = generateByteCodeForStatements(mv, ((While) statement).statement, localVarScope);
+
+            mv.visitJumpInsn(Opcodes.GOTO, loop);
+
+            mv.visitLabel(end);
+
+        }else if(statement instanceof  If){
+
         }
 
         return mv;
@@ -323,6 +346,10 @@ public class BytecodeGenerator {
         String variable = "";//name of the variable in localVarScope which has been added in the expression
         if(expression instanceof IntConst){
             variable = generateByteCodeForIntConst(mv, (IntConst) expression, localVarScope);
+        }else if(expression instanceof BooleanConst){
+            variable = generateByteCodeForBooleanConst(mv, (BooleanConst) expression, localVarScope);
+        }else if(expression instanceof CharConst){
+            variable = generateByteCodeForCharConst(mv, (CharConst) expression, localVarScope);
         }
 
         return variable;
@@ -332,8 +359,30 @@ public class BytecodeGenerator {
         mv.visitLdcInsn(Integer.valueOf(expression.value));//create new Integer Value
         mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size()+1);//save new Integer Value at the end of the list of local vars
         //add the int var to the localVarScope with a generated Name, because a constant has no name
-        localVarScope.put("IntConst" + localVarScope.size()+1, new LocalVar("int", localVarScope.size()+1));
+        localVarScope.put("IntConst" + (localVarScope.size()+1), new LocalVar("int", (localVarScope.size()+1)));
 
         return "IntConst" + localVarScope.size();
+    }
+
+    private static String generateByteCodeForBooleanConst(MethodVisitor mv, BooleanConst expression, HashMap<String, LocalVar> localVarScope){
+        if(expression.value){
+            mv.visitInsn(Opcodes.ICONST_1);
+        }else{
+            mv.visitInsn(Opcodes.ICONST_0);
+        }
+        mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size()+1);
+
+        localVarScope.put("BooleanConst" + (localVarScope.size()+1), new LocalVar("boolean", (localVarScope.size()+1)));
+
+        return "BooleanConst" + localVarScope.size();
+    }
+
+    private static String generateByteCodeForCharConst(MethodVisitor mv, CharConst expression, HashMap<String, LocalVar> localVarScope){
+        int charToInt = Character.getNumericValue(expression.value);
+        mv.visitLdcInsn(Integer.valueOf(charToInt));
+        mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size()+1);
+        localVarScope.put("CharConst" + (localVarScope.size()+1), new LocalVar("char",(localVarScope.size()+1)));
+
+        return "CharConst" + localVarScope.size();
     }
 }
