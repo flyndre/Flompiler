@@ -9,6 +9,10 @@ public class StringConst extends Expression{
 
     }
 
+    public StringConst(String value){
+        this.value = value;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return type = "string";

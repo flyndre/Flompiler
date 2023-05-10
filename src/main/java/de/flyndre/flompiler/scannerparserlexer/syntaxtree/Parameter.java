@@ -21,4 +21,8 @@ public class Parameter {
      */
     public String name;
 
+    public Parameter(String name, String type){
+        this.type = type;
+        this.name = name;
+    }
 }

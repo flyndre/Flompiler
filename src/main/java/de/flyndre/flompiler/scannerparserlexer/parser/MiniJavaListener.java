@@ -88,6 +88,16 @@ public interface MiniJavaListener extends ParseTreeListener {
 	 */
 	void exitStatement(MiniJavaParser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#returnstatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnstatement(MiniJavaParser.ReturnstatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#returnstatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnstatement(MiniJavaParser.ReturnstatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#classbody}.
 	 * @param ctx the parse tree
 	 */

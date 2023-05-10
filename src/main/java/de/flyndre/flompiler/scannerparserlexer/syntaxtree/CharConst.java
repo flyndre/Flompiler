@@ -14,6 +14,12 @@ public class CharConst extends Expression {
     public CharConst() {
     }
 
+    public CharConst(char value) {
+        this.value = value;
+    }
+
+
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return type = "char";

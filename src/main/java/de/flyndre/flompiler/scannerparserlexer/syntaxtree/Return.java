@@ -15,6 +15,10 @@ public class Return extends Statement {
     public Return() {
     }
 
+    public Return(Expression expression){
+        this.expression = expression;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return type= expression.typeCheck(fields,parameters);

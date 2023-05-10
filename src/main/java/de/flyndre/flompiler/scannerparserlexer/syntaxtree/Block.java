@@ -15,6 +15,10 @@ public class Block extends Statement {
     public Block() {
     }
 
+    public Block(List<Statement> statements){
+        this.statements = statements;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         type = "void";

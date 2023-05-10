@@ -33,4 +33,27 @@ public class FlompilerTest {
         testFailure("/basic/defective/DefectiveEmptyClass.java");
     }
 
+    @Test
+    @DisplayName("Flompiler: Boolean Attribute Class")
+    public void testFlompilerBooleanAttributeClass() {
+        testSuccess("/attributes/BooleanClass.java");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Defective Boolean Attribute Class")
+    public void testFlompilerDefectiveBooleanAttributeClass() {
+        testFailure("/attributes/defective/DefectiveBooleanClass.java");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Boolean Method Class")
+    public void testFlompilerBooleanMethodClass() {
+        testSuccess("/methods/parameterless/BooleanMethod.java");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Defective Boolean Method Class")
+    public void testFlompilerDefectiveBooleanMethodClass() {
+        testFailure("/methods/parameterless/defective/BooleanMethod.java");
+    }
 }

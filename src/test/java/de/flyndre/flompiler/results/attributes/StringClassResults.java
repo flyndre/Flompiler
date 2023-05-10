@@ -1,8 +1,7 @@
 package de.flyndre.flompiler.results.attributes;
 
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Field;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 
 import java.util.ArrayList;
 
@@ -38,6 +37,19 @@ public final class StringClassResults {
                 stringClass.fields.add(stringField);
             }
             stringClass.methods = new ArrayList<>();
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                }
+                constructor.statement = block;
+                stringClass.methods.add(constructor);
+            }
             program.classes.add(stringClass);
         }
 
@@ -48,19 +60,34 @@ public final class StringClassResults {
         var program = new Program();
         program.classes = new ArrayList<>();
         {
-            var booleanClass = new Class();
-            booleanClass.access = "public";
-            booleanClass.name = "BooleanClass";
-            booleanClass.fields = new ArrayList<>();
+            var stringClass = new Class();
+            stringClass.access = "public";
+            stringClass.name = "StringClass";
+            stringClass.fields = new ArrayList<>();
             {
-                var isTrueField = new Field();
-                isTrueField.access = "public";
-                isTrueField.type = "boolean";
-                isTrueField.name = "isTrue";
-                booleanClass.fields.add(isTrueField);
+                var stringField = new Field();
+                stringField.access = "public";
+                stringField.type = "String";
+                stringField.name = "word";
+                stringField.standardValue = "";
+                stringClass.fields.add(stringField);
             }
-            booleanClass.methods = new ArrayList<>();
-            program.classes.add(booleanClass);
+            stringClass.methods = new ArrayList<>();
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                    block.type = "void";
+                }
+                constructor.statement = block;
+                stringClass.methods.add(constructor);
+            }
+            program.classes.add(stringClass);
         }
 
         return program;

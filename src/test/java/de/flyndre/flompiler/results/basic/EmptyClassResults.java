@@ -1,6 +1,8 @@
 package de.flyndre.flompiler.results.basic;
 
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Block;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Method;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import java.util.ArrayList;
 
@@ -28,6 +30,19 @@ public final class EmptyClassResults {
             emptyClass.name = "EmptyClass";
             emptyClass.fields = new ArrayList<>();
             emptyClass.methods = new ArrayList<>();
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                }
+                constructor.statement = block;
+                emptyClass.methods.add(constructor);
+            }
             program.classes.add(emptyClass);
         }
 
@@ -43,6 +58,20 @@ public final class EmptyClassResults {
             emptyClass.name = "EmptyClass";
             emptyClass.fields = new ArrayList<>();
             emptyClass.methods = new ArrayList<>();
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                    block.type = "void";
+                }
+                constructor.statement = block;
+                emptyClass.methods.add(constructor);
+            }
             program.classes.add(emptyClass);
         }
 
