@@ -12,7 +12,7 @@ EQUALS              : '=';
 STRING              : '"' SEQUENCE* '"';
 CHAR                : '\'' [a-zA-Z0-9] '\'';
 
-
+COMMA               : ',';
 INTEGER             : [1-9][0-9]*;
 PUBLIC              : 'public';
 PRIVATE             : 'private';
@@ -68,8 +68,7 @@ intdeclaration      : accessMod INTTYPE NAME SEMICOLON
                     | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
 
 methoddeclaration   : accessMod  type NAME BROPEN parameters BRCLOSE block;
-parameters          : parameter parameters | ;
-
+parameters          : parameter COMMA parameters | parameter | ;
 /*
 DOT : '.';
 CLASS : 'class';
