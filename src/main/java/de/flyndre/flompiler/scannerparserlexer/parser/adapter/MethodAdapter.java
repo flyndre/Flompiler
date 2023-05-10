@@ -4,6 +4,7 @@ import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaParser;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Block;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Method;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Parameter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,17 @@ public class MethodAdapter {
             Block block = new Block();
             block.statements = new ArrayList<>();
 
+            List<Parameter> parameters = new ArrayList<>();
+
+
+            if(ctx.parameters() != null){
+                parameters.addAll(ParameterAdapter.adapt(ctx.parameters()));
+            }
+
+
             return new Method(ctx.type().getText(),
                     ctx.NAME().getText(),
-                    new ArrayList<>(),
+                    parameters,
                     block,
                     ctx.accessMod().getText());
         }else{
