@@ -1,6 +1,6 @@
 class Test {
     public static void main(String args[]) {
-        boolean x = new BooleanMethod().method();
+        var x = new StaticIfElse().method();
         System.out.println(x);
     }
 }

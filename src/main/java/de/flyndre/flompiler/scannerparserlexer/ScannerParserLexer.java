@@ -4,10 +4,12 @@ import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaParser;
 import de.flyndre.flompiler.scannerparserlexer.parser.adapter.ClassAdapter;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.ATNConfigSet;
+import org.antlr.v4.runtime.dfa.DFA;
 
 import java.io.IOException;
+import java.util.BitSet;
 
 public class ScannerParserLexer {
     public static void main(String[] args) {

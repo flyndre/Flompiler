@@ -56,4 +56,17 @@ public class FlompilerTest {
     public void testFlompilerDefectiveBooleanMethodClass() {
         testFailure("/methods/parameterless/defective/BooleanMethod.java");
     }
+
+    @Test
+    @DisplayName("Flompiler: Static If Condition")
+    public void testFlompilerStaticIf() {
+        testSuccess("/if_condition/StaticIf.java");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Static If Else Condition")
+    public void testFlompilerStaticIfElse() {
+        testSuccess("/if_condition/StaticIfElse.java");
+    }
+
 }
