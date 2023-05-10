@@ -1,8 +1,7 @@
 package de.flyndre.flompiler.results.attributes;
 
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Field;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 
 import java.util.ArrayList;
 
@@ -38,6 +37,19 @@ public final class StringClassResults {
                 stringClass.fields.add(stringField);
             }
             stringClass.methods = new ArrayList<>();
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                }
+                constructor.statement = block;
+                stringClass.methods.add(constructor);
+            }
             program.classes.add(stringClass);
         }
 
