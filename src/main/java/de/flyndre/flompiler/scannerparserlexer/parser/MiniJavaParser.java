@@ -17,7 +17,7 @@ public class MiniJavaParser extends Parser {
 		WHILE=1, IF=2, ELSE=3, RETURN=4, CLASS=5, BOOLEAN=6, INTTYPE=7, STRINGTYPE=8, 
 		BOOLEANTYPE=9, CHARTYPE=10, VOIDTYPE=11, EQUALS=12, STRING=13, CHAR=14, 
 		INTEGER=15, COMMA=16, PUBLIC=17, PRIVATE=18, PROTECTED=19, NAME=20, WAVEDBROPEN=21, 
-		WAVEDBRCLOSE=22, SEMICOLON=23, BROPEN=24, BRCLOSE=25, SEQUENCE=26;
+		WAVEDBRCLOSE=22, SEMICOLON=23, BROPEN=24, BRCLOSE=25, SEQUENCE=26, WS=27;
 	public static final int
 		RULE_program = 0, RULE_classes = 1, RULE_class = 2, RULE_block = 3, RULE_accessMod = 4, 
 		RULE_type = 5, RULE_statements = 6, RULE_statement = 7, RULE_ifstatement = 8, 
@@ -50,7 +50,8 @@ public class MiniJavaParser extends Parser {
 			null, "WHILE", "IF", "ELSE", "RETURN", "CLASS", "BOOLEAN", "INTTYPE", 
 			"STRINGTYPE", "BOOLEANTYPE", "CHARTYPE", "VOIDTYPE", "EQUALS", "STRING", 
 			"CHAR", "INTEGER", "COMMA", "PUBLIC", "PRIVATE", "PROTECTED", "NAME", 
-			"WAVEDBROPEN", "WAVEDBRCLOSE", "SEMICOLON", "BROPEN", "BRCLOSE", "SEQUENCE"
+			"WAVEDBROPEN", "WAVEDBRCLOSE", "SEMICOLON", "BROPEN", "BRCLOSE", "SEQUENCE", 
+			"WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -1745,7 +1746,7 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u001a\u0106\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0004\u0001\u001b\u0106\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
 		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004"+
 		"\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007"+
 		"\u0002\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b"+

@@ -82,15 +82,15 @@ public class StatementAdapter {
     }
 
     public static If adaptIfElse(MiniJavaParser.IfelsestatementContext ctx){
-        if(ctx.statement() != null && ctx.expression() != null){
+        if(ctx.statement().size() != 0 && ctx.expression() != null){
             Expression e = ExpressionAdapter.adapt(ctx.expression());
-            Statement ifSatement =  adaptStatement(ctx.statement().get(0));
-            Statement elseSatement = adaptStatement(ctx.statement().get(1));
+            Statement ifSatement =  adaptStatement(ctx.statement(0));
+            Statement elseSatement = adaptStatement(ctx.statement(1));
             return new If(e, ifSatement, elseSatement);
-        }else if(ctx.expression() != null && ctx.block() != null){
+        }else if(ctx.expression() != null && ctx.block().size() != 0){
             Expression e = ExpressionAdapter.adapt(ctx.expression());
-            Block ifSatement =  BlockAdapter.adapt(ctx.block().get(0));
-            Block elseSatement = BlockAdapter.adapt(ctx.block().get(1));
+            Block ifSatement =  BlockAdapter.adapt(ctx.block(0));
+            Block elseSatement = BlockAdapter.adapt(ctx.block(1));
             return new If(e, ifSatement, elseSatement);
         }
         throw new RuntimeException();

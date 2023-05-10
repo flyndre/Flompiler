@@ -16,6 +16,8 @@ public class ScannerParserLexer {
                 "public String abasc(){\n" +
                 "        if(true){\n" +
                 "            return 1;\n" +
+                "        }else{\n" +
+                "            return 1; \n" +
                 "        }\n" +
                 "        while(true){\n" +
                 "            return 5; \n" +

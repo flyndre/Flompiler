@@ -24,6 +24,7 @@ SEMICOLON=23
 BROPEN=24
 BRCLOSE=25
 SEQUENCE=26
+WS=27
 'while'=1
 'if'=2
 'else'=3

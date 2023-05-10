@@ -95,6 +95,8 @@ methoddeclaration   : accessMod  type NAME BROPEN parameters BRCLOSE block;
 
 parameters          : parameter COMMA parameters | parameter | ;
 
+WS                  : [ \t\r\n]+ -> skip;
+
 
 /*
 DOT : '.';
