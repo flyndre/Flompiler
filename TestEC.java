@@ -1,5 +1,5 @@
 class TestEC {
-    void m() {
+    public static void main(String args[]) {
         new EmptyClass();
     }
 }

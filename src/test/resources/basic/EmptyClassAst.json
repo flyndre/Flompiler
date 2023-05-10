@@ -1,0 +1,20 @@
+{
+  "classes": [
+    {
+      "name": "EmptyClass",
+      "access": "public",
+      "fields": [],
+      "methods": [
+        {
+          "type": "void",
+          "access": "public",
+          "name": "\u003cinit\u003e",
+          "parameter": [],
+          "statement": {
+            "statements": []
+          }
+        }
+      ]
+    }
+  ]
+}
