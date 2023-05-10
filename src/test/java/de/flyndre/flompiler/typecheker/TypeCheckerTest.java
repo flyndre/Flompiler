@@ -1,6 +1,10 @@
 package de.flyndre.flompiler.typecheker;
 
 import de.flyndre.flompiler.Flassertions;
+import de.flyndre.flompiler.results.attributes.BooleanClassResults;
+import de.flyndre.flompiler.results.attributes.CharClassResults;
+import de.flyndre.flompiler.results.attributes.IntegerClassResults;
+import de.flyndre.flompiler.results.attributes.StringClassResults;
 import de.flyndre.flompiler.results.basic.EmptyClassResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import org.junit.jupiter.api.Assertions;
@@ -34,9 +38,50 @@ public class TypeCheckerTest {
         Assertions.assertThrows(Exception.class, executable);
     }
 
+
+
+    // EMPTY CLASS
+
     @Test
     @DisplayName("TypeChecker: Empty Class")
     public void testEmptyClass() {
         testSuccess(EmptyClassResults.AST, EmptyClassResults.TYPED_AST);
     }
+
+
+
+    // ATTRIBUTES
+
+    @Test
+    @DisplayName("TypeChecker: Boolean Attribute Class")
+    public void testBooleanAttributeClass() {
+        testSuccess(BooleanClassResults.AST, BooleanClassResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Integer Attribute Class")
+    public void testIntegerAttributeClass() {
+        testSuccess(IntegerClassResults.AST, IntegerClassResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Char Attribute Class")
+    public void testCharAttributeClass() {
+        testSuccess(CharClassResults.AST, CharClassResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: String Attribute Class")
+    public void testStringAttributeClass() {
+        testSuccess(StringClassResults.AST, StringClassResults.TYPED_AST);
+    }
+
+
+
+    // ATTRIBUTE ASSIGNMENTS
+
+    // METHODS
+
+
+
 }

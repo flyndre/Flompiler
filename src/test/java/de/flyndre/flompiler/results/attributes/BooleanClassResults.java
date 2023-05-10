@@ -70,9 +70,24 @@ public final class BooleanClassResults {
                 isTrueField.access = "public";
                 isTrueField.type = "boolean";
                 isTrueField.name = "isTrue";
+                isTrueField.standardValue = "false";
                 booleanClass.fields.add(isTrueField);
             }
             booleanClass.methods = new ArrayList<>();
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                    block.type = "void";
+                }
+                constructor.statement = block;
+                booleanClass.methods.add(constructor);
+            }
             program.classes.add(booleanClass);
         }
 

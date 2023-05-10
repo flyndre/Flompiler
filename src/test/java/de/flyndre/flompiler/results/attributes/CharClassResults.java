@@ -60,19 +60,34 @@ public final class CharClassResults {
         var program = new Program();
         program.classes = new ArrayList<>();
         {
-            var booleanClass = new Class();
-            booleanClass.access = "public";
-            booleanClass.name = "BooleanClass";
-            booleanClass.fields = new ArrayList<>();
+            var charClass = new Class();
+            charClass.access = "public";
+            charClass.name = "CharClass";
+            charClass.fields = new ArrayList<>();
             {
-                var isTrueField = new Field();
-                isTrueField.access = "public";
-                isTrueField.type = "boolean";
-                isTrueField.name = "isTrue";
-                booleanClass.fields.add(isTrueField);
+                var charField = new Field();
+                charField.access = "public";
+                charField.type = "char";
+                charField.name = "symbol";
+                charField.standardValue = "";
+                charClass.fields.add(charField);
             }
-            booleanClass.methods = new ArrayList<>();
-            program.classes.add(booleanClass);
+            charClass.methods = new ArrayList<>();
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                    block.type = "void";
+                }
+                constructor.statement = block;
+                charClass.methods.add(constructor);
+            }
+            program.classes.add(charClass);
         }
 
         return program;
