@@ -59,6 +59,24 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(MiniJavaParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#ifstatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfstatement(MiniJavaParser.IfstatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#ifelsestatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfelsestatement(MiniJavaParser.IfelsestatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpression(MiniJavaParser.ExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#returnstatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
