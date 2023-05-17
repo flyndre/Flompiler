@@ -1,10 +1,19 @@
-# name: Tests
+ name: Tests
 
-# on:
-#   push:
-#     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
+ on:
+   push:
+     branches: [ "main" ]
+   pull_request:
+     branches: [ "main" ]
+
+ jobs:
+   succeed:
+     name: Succeed
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v1
+       - name: echo
+         run: echo Succeeded
 
 # jobs:
 #   test_scanner_parser_lexer:

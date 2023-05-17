@@ -17,7 +17,6 @@ public class BlockAdapter {
         if(ctx.statements() != null){
             stats.addAll(StatementAdapter.adapt(ctx.statements()));
         }
-
         return new Block(stats);
     }
 }

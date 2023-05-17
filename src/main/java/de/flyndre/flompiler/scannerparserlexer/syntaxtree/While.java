@@ -15,6 +15,11 @@ public class While extends Statement {
     public While() {
     }
 
+    public While(Expression condition, Statement statement){
+        this.condition = condition;
+        this.statement = statement;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return type = statement.typeCheck(fields,parameters);

@@ -1,5 +1,6 @@
 grammar MiniJava;
 
+WHILE               : 'while';
 IF                  : 'if';
 ELSE                : 'else';
 RETURN              : 'return';
@@ -49,7 +50,8 @@ statements          : statement statements
                     | ;
 statement           : returnstatement
                     | ifstatement
-                    | ifelsestatement;
+                    | ifelsestatement
+                    | while;
 
 ifstatement         : IF BROPEN expression BRCLOSE statement SEMICOLON
                     | IF BROPEN expression BRCLOSE block
@@ -57,6 +59,9 @@ ifstatement         : IF BROPEN expression BRCLOSE statement SEMICOLON
 
 ifelsestatement     : IF BROPEN expression BRCLOSE statement ELSE statement
                     | IF BROPEN expression BRCLOSE block ELSE block;
+
+while               : WHILE BROPEN expression BRCLOSE statement
+                    | WHILE BROPEN expression BRCLOSE block;
 
 expression          : BOOLEAN;
 
@@ -87,7 +92,12 @@ intdeclaration      : accessMod INTTYPE NAME SEMICOLON
                     | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
 
 methoddeclaration   : accessMod  type NAME BROPEN parameters BRCLOSE block;
+
 parameters          : parameter COMMA parameters | parameter | ;
+
+WS                  : [ \t\r\n]+ -> skip;
+
+
 /*
 DOT : '.';
 CLASS : 'class';

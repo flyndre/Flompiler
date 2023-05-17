@@ -18,10 +18,7 @@ public class New extends StatementExpression {
         return type;
     }
 
-    /**
-     * 
-     */
-    public String type;
+
 
     /**
      * 

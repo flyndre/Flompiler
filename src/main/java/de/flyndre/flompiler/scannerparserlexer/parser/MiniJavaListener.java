@@ -108,6 +108,16 @@ public interface MiniJavaListener extends ParseTreeListener {
 	 */
 	void exitIfelsestatement(MiniJavaParser.IfelsestatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#while}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile(MiniJavaParser.WhileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#while}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile(MiniJavaParser.WhileContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#expression}.
 	 * @param ctx the parse tree
 	 */
