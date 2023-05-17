@@ -385,7 +385,7 @@ public class BytecodeGenerator {
             Expr ergebnisExpression = generateByteCodeForExpressions(mv, ((If) statement).condition, localVarScope);
 
             if(ergebnisExpression.type == ExprType.LocalVar) {
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression).location);
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
                 mv.visitInsn(Opcodes.ICONST_0);
                 mv.visitJumpInsn(Opcodes.IF_ICMPEQ, elseKeyWord);
 
@@ -450,7 +450,7 @@ public class BytecodeGenerator {
         //add the int var to the localVarScope with a generated Name, because a constant has no name
         localVarScope.put("IntConst" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
 
-        return new Expr("IntConst" + localVarScope.size(), ExprType.LocalVar);
+        return new Expr("IntConst" + (localVarScope.size()-1), ExprType.LocalVar);
     }
 
     private static Expr generateByteCodeForBooleanConst(MethodVisitor mv, BooleanConst expression, HashMap<String, LocalVar> localVarScope){
@@ -463,7 +463,7 @@ public class BytecodeGenerator {
 
         localVarScope.put("BooleanConst" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
 
-        return new Expr("BooleanConst" + localVarScope.size(), ExprType.LocalVar);
+        return new Expr("BooleanConst" + (localVarScope.size()-1), ExprType.LocalVar);
     }
 
     private static Expr generateByteCodeForCharConst(MethodVisitor mv, CharConst expression, HashMap<String, LocalVar> localVarScope){
@@ -472,7 +472,7 @@ public class BytecodeGenerator {
         mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
         localVarScope.put("CharConst" + (localVarScope.size()), new LocalVar("char",(localVarScope.size())));
 
-        return new Expr("CharConst" + localVarScope.size(), ExprType.LocalVar);
+        return new Expr("CharConst" + (localVarScope.size()-1), ExprType.LocalVar);
     }
 
     private static Expr generateByteCodeForStringConst(MethodVisitor mv, StringConst expression, HashMap<String, LocalVar> localVarScope){
@@ -480,7 +480,7 @@ public class BytecodeGenerator {
         mv.visitVarInsn(Opcodes.ASTORE, localVarScope.size());
         localVarScope.put("StringConst" + (localVarScope.size()), new LocalVar("String", (localVarScope.size())));
 
-        return new Expr("StringConst" + localVarScope.size(), ExprType.LocalVar);
+        return new Expr("StringConst" + (localVarScope.size()-1), ExprType.LocalVar);
     }
 
     private static Expr generateByteCodeForLocalOrFieldVar(MethodVisitor mv, LocalOrFieldVar expression, HashMap<String, LocalVar> localVarScope){
@@ -490,6 +490,8 @@ public class BytecodeGenerator {
             return new Expr(expression.name, ExprType.LocalVar);
         }
     }
-    
 
+    /*private static Expr generateByteCodeForBinary(MethodVisitor mv, Binary expression, HashMap<String, LocalVar> localVarScope){
+
+    }*/
 }
