@@ -437,6 +437,8 @@ public class BytecodeGenerator {
             variable = generateByteCodeForCharConst(mv, c, localVarScope);
         }else if(expression instanceof StringConst s){
             variable = generateByteCodeForStringConst(mv, s, localVarScope);
+        }else if(expression instanceof LocalOrFieldVar l){
+            variable = generateByteCodeForLocalOrFieldVar(mv, l, localVarScope);
         }
 
         return variable;
@@ -488,5 +490,6 @@ public class BytecodeGenerator {
             return new Expr(expression.name, ExprType.LocalVar);
         }
     }
+    
 
 }
