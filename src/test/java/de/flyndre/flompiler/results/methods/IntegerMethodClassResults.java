@@ -91,6 +91,7 @@ public class IntegerMethodClassResults {
                         {
                             var expression = new IntConst();
                             expression.value = 1;
+                            expression.type = "int";
                             statement.expression = expression;
                         }
                         block.statements.add(statement);
@@ -108,6 +109,7 @@ public class IntegerMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);

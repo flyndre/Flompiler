@@ -6,6 +6,10 @@ import de.flyndre.flompiler.results.attributes.CharClassResults;
 import de.flyndre.flompiler.results.attributes.IntegerClassResults;
 import de.flyndre.flompiler.results.attributes.StringClassResults;
 import de.flyndre.flompiler.results.basic.EmptyClassResults;
+import de.flyndre.flompiler.results.methods.BooleanMethodClassResults;
+import de.flyndre.flompiler.results.methods.CharMethodClassResults;
+import de.flyndre.flompiler.results.methods.IntegerMethodClassResults;
+import de.flyndre.flompiler.results.methods.StringMethodClassResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -82,6 +86,30 @@ public class TypeCheckerTest {
 
     // METHODS
 
+    // EMPTY METHODS
 
+    @Test
+    @DisplayName("TypeChecker: Parameterless Boolean Method Class")
+    public void testMethodBooleanParameterlessClass() {
+        testSuccess(BooleanMethodClassResults.AST, BooleanMethodClassResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Parameterless Integer Method Class")
+    public void testMethodIntegerParameterlessClass() {
+        testSuccess(IntegerMethodClassResults.AST, IntegerMethodClassResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Parameterless Char Method Class")
+    public void testMethodCharParameterlessClass() {
+        testSuccess(CharMethodClassResults.AST, CharMethodClassResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Parameterless String Method Class")
+    public void testMethodStringParameterlessClass() {
+        testSuccess(StringMethodClassResults.AST, StringMethodClassResults.TYPED_AST);
+    }
 
 }

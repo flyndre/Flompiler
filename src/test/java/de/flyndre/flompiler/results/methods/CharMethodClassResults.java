@@ -91,6 +91,7 @@ public class CharMethodClassResults {
                         {
                             var expression = new CharConst();
                             expression.value = 'X';
+                            expression.type = "char";
                             statement.expression = expression;
                         }
                         block.statements.add(statement);
@@ -108,6 +109,7 @@ public class CharMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);

@@ -91,6 +91,7 @@ public class BooleanMethodClassResults {
                         {
                             var expression = new BooleanConst();
                             expression.value = true;
+                            expression.type = "boolean";
                             statement.expression = expression;
                         }
                         block.statements.add(statement);
@@ -108,6 +109,7 @@ public class BooleanMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);

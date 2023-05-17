@@ -91,6 +91,7 @@ public class StringMethodClassResults {
                         {
                             var expression = new StringConst();
                             expression.value = "Hello World!";
+                            expression.type = "String";
                             statement.expression = expression;
                         }
                         block.statements.add(statement);
@@ -108,6 +109,7 @@ public class StringMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 emptyClass.methods.add(constructor);
