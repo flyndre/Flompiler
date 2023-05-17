@@ -17,7 +17,7 @@ public class DoWhile extends Statement {
 
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
-        return "void";
+        return type = "void";
     }
 
 }

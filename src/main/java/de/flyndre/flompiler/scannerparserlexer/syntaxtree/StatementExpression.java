@@ -6,6 +6,10 @@ import java.util.List;
  * 
  */
 public abstract class StatementExpression {
+    /**
+     *
+     */
+    public String type;
 
     /**
      * Default constructor

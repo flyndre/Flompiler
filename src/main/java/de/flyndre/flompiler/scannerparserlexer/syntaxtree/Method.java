@@ -46,7 +46,10 @@ public class Method {
     public Statement statement;
 
     public String typeCheck(List<Field> fields) throws Exception {
-        type = statement.typeCheck(fields,parameter);
+        String foundType = statement.typeCheck(fields,parameter);
+        if(!foundType.equals(type)){
+            throw new Exception(String.format("The given type does not equal the expected. Expected: %s found: %s",type,foundType));
+        }
         return type;
     }
 }
