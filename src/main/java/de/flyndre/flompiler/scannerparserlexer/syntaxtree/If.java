@@ -30,7 +30,7 @@ public class If extends Statement {
         }catch (NullPointerException e){
             elseType="void";
         }
-        if(!ifType.equals(elseType)||elseType.equals("void")){
+        if(!ifType.equals(elseType)&&!elseType.equals("void")){
             throw new Exception(String.format("The two statement have different return types. If has %s, Else has %s",ifType,elseType));
         }
         return type = ifType;
