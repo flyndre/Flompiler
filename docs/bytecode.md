@@ -6,4 +6,4 @@ date: today
 
 # Bytecode-Generator
 
-Einstiegspunkt: [`de.flyndre.flompiler.bytecodegenerator.BytecodeGenerator`](/src/main/java/de/flyndre/flompiler/bytecodegenerator/BytecodeGenerator.java)
+Einstiegspunkt: [`de.flyndre.flompiler.bytecodegenerator.BytecodeGenerator`](../src/main/java/de/flyndre/flompiler/bytecodegenerator/BytecodeGenerator.java)
