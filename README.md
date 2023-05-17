@@ -1,3 +1,5 @@
+![Flompiler Logo](docs/flompiler.png)
+
 # Flompiler
 
 Im Rahmen der Vorlesung "Compilerbau" an der DHBW Stuttgart Campus Horb entwickeln wir als Gruppe den minimalen Java-Compiler "Flompiler".
