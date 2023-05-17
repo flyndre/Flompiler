@@ -492,6 +492,160 @@ public class BytecodeGenerator {
     }
 
     /*private static Expr generateByteCodeForBinary(MethodVisitor mv, Binary expression, HashMap<String, LocalVar> localVarScope){
+        Expr right = generateByteCodeForExpressions(mv, expression.expressionRight, localVarScope);
+        Expr left = generateByteCodeForExpressions(mv, expression.expressionLeft, localVarScope);
 
+        switch(expression.operator){
+            case "+":
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                }
+
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                mv.visitInsn(Opcodes.IADD);
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("IntAddition" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
+                return new Expr("IntAddition" + (localVarScope.size()-1), ExprType.LocalVar);
+
+            case "-":
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                }
+
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                mv.visitInsn(Opcodes.ISUB);
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("IntSubtraction" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
+                return new Expr("IntSubtraction" + (localVarScope.size()-1), ExprType.LocalVar);
+
+            case "*":
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                }
+
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                mv.visitInsn(Opcodes.IMUL);
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("IntMultiplication" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
+                return new Expr("IntMultiplication" + (localVarScope.size()-1), ExprType.LocalVar);
+
+            case "/":
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                }
+
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                mv.visitInsn(Opcodes.IDIV);
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("IntDivision" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
+                return new Expr("IntDivision" + (localVarScope.size()-1), ExprType.LocalVar);
+
+            case "==":
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    switch(localVarScope.get(right.name).type){
+                        case "int":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                            break;
+                        case "char":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "C");
+                            break;
+                        case "boolean":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "Z");
+                            break;
+                    }
+                }
+
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    switch(localVarScope.get(left.name).type){
+                        case "int":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                            break;
+                        case "char":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "C");
+                            break;
+                        case "boolean":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "Z");
+                            break;
+                    }
+                }
+                Label second = new Label();
+                Label end = new Label();
+
+                mv.visitJumpInsn(Opcodes.IF_ICMPEQ, second);
+
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitJumpInsn(Opcodes.GOTO, end);
+
+                mv.visitLabel(second);
+                mv.visitInsn(Opcodes.ICONST_0);
+                mv.visitLabel(end);
+
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
+                localVarScope.put("EqualLeftRight" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("EqualLeftRight" + (localVarScope.size()-1), ExprType.LocalVar);
+                break;
+            case "!=":
+                break;
+            case "<":
+                break;
+            case "<=":
+                break;
+            case ">":
+                break;
+            case ">=":
+                break;
+            case "&&":
+                break;
+            case "||":
+                break;
+            default:
+                return new Expr("AllesGingSchief" + "Hilfe", ExprType.LocalVar);
+        }
     }*/
 }
