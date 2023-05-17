@@ -21,6 +21,10 @@ public class FlompilerTest {
         Assertions.assertThrows(Exception.class, executable);
     }
 
+
+
+    // EMPTY CLASS
+
     @Test
     @DisplayName("Flompiler: Empty Class")
     public void testFlompilerEmptyClass() {
@@ -32,6 +36,10 @@ public class FlompilerTest {
     public void testFlompilerDefectiveEmptyClass() {
         testFailure("/basic/defective/DefectiveEmptyClass.java");
     }
+
+
+
+    // ATTRIBUTES
 
     @Test
     @DisplayName("Flompiler: Boolean Attribute Class")
@@ -45,6 +53,10 @@ public class FlompilerTest {
         testFailure("/attributes/defective/DefectiveBooleanClass.java");
     }
 
+
+
+    // METHODS (NO PARAMETERS)
+
     @Test
     @DisplayName("Flompiler: Boolean Method Class")
     public void testFlompilerBooleanMethodClass() {
@@ -57,6 +69,38 @@ public class FlompilerTest {
         testFailure("/methods/parameterless/defective/BooleanMethod.java");
     }
 
+
+
+    // METHODS WITH PARAMETERS
+
+    @Test
+    @DisplayName("Flompiler: Boolean Method Class with Boolean Parameter")
+    public void testFlompilerBooleanMethodParametersClass() {
+        testSuccess("/methods/parameters/BooleanMethod.java");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Boolean Method Class with returned Boolean Parameter")
+    public void testFlompilerBooleanMethodReturnedParametersClass() {
+        testSuccess("/methods/parameters/BooleanMethodReturn.java");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Integer Method Class with increased Integer Parameter")
+    public void testFlompilerIntegerMethodParametersClass() {
+        testSuccess("/methods/parameters/IntegerMethod.java");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Char Method Class with returned Char Parameter")
+    public void testFlompilerCharMethodParametersClass() {
+        testSuccess("/methods/parameters/CharMethod.java");
+    }
+
+
+
+    // STATIC IF AND IF-ELSE
+
     @Test
     @DisplayName("Flompiler: Static If Condition")
     public void testFlompilerStaticIf() {
@@ -64,9 +108,24 @@ public class FlompilerTest {
     }
 
     @Test
-    @DisplayName("Flompiler: Static If Else Condition")
+    @DisplayName("Flompiler: Static If-Else Condition")
     public void testFlompilerStaticIfElse() {
         testSuccess("/if_condition/StaticIfElse.java");
     }
 
+
+
+    // DYNAMIC IF AND IF-ELSE
+
+    @Test
+    @DisplayName("Flompiler: Dynamic If Condition")
+    public void testFlompilerDynamicIf() {
+        testSuccess("/if_condition/DynamicIf.java");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Dynamic If-Else Condition")
+    public void testFlompilerDynamicIfElse() {
+        testSuccess("/if_condition/DynamicIfElse.java");
+    }
 }
