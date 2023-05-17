@@ -1,9 +1,7 @@
 package de.flyndre.flompiler.results.methods;
 
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Block;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Method;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 
 import java.util.ArrayList;
 
@@ -33,8 +31,34 @@ public class StringMethodClassResults {
                 booleanMethod.type = "String";
                 booleanMethod.name = "method";
                 booleanMethod.parameter = new ArrayList<>();
-                booleanMethod.statement = new Block();
+                {
+                    var block = new Block();
+                    block.statements = new ArrayList<>();
+                    {
+                        var statement = new Return();
+                        {
+                            var expression = new StringConst();
+                            expression.value = "Hello World!";
+                            statement.expression = expression;
+                        }
+                        block.statements.add(statement);
+                    }
+                    booleanMethod.statement = block;
+                }
                 emptyClass.methods.add(booleanMethod);
+            }
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                }
+                constructor.statement = block;
+                emptyClass.methods.add(constructor);
             }
             program.classes.add(emptyClass);
         }
@@ -48,9 +72,46 @@ public class StringMethodClassResults {
         {
             var emptyClass = new Class();
             emptyClass.access = "public";
-            emptyClass.name = "EmptyClass";
+            emptyClass.name = "StringMethod";
             emptyClass.fields = new ArrayList<>();
             emptyClass.methods = new ArrayList<>();
+            {
+                var booleanMethod = new Method();
+                booleanMethod.access = "public";
+                booleanMethod.type = "String";
+                booleanMethod.name = "method";
+                booleanMethod.parameter = new ArrayList<>();
+                {
+                    var block = new Block();
+                    block.type = "String";
+                    block.statements = new ArrayList<>();
+                    {
+                        var statement = new Return();
+                        statement.type = "String";
+                        {
+                            var expression = new StringConst();
+                            expression.value = "Hello World!";
+                            statement.expression = expression;
+                        }
+                        block.statements.add(statement);
+                    }
+                    booleanMethod.statement = block;
+                }
+                emptyClass.methods.add(booleanMethod);
+            }
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                }
+                constructor.statement = block;
+                emptyClass.methods.add(constructor);
+            }
             program.classes.add(emptyClass);
         }
 

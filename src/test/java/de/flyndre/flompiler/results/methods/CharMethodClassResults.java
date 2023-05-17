@@ -1,11 +1,11 @@
 package de.flyndre.flompiler.results.methods;
 
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 
 import java.util.ArrayList;
 
-public class BooleanMethodClassResults {
+public class CharMethodClassResults {
     /**
      * The manually parsed resulting untyped abstract syntax tree for the class with a boolean method.
      */
@@ -22,13 +22,13 @@ public class BooleanMethodClassResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "BooleanMethod";
+            clazz.name = "CharMethod";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
                 var method = new Method();
                 method.access = "public";
-                method.type = "boolean";
+                method.type = "char";
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
@@ -37,8 +37,8 @@ public class BooleanMethodClassResults {
                     {
                         var statement = new Return();
                         {
-                            var expression = new BooleanConst();
-                            expression.value = true;
+                            var expression = new CharConst();
+                            expression.value = 'X';
                             statement.expression = expression;
                         }
                         block.statements.add(statement);
@@ -72,25 +72,25 @@ public class BooleanMethodClassResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "BooleanMethod";
+            clazz.name = "CharMethod";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
                 var method = new Method();
                 method.access = "public";
-                method.type = "boolean";
+                method.type = "char";
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
                     var block = new Block();
-                    block.type = "boolean";
+                    block.type = "char";
                     block.statements = new ArrayList<>();
                     {
                         var statement = new Return();
-                        statement.type = "boolean";
+                        statement.type = "char";
                         {
-                            var expression = new BooleanConst();
-                            expression.value = true;
+                            var expression = new CharConst();
+                            expression.value = 'X';
                             statement.expression = expression;
                         }
                         block.statements.add(statement);

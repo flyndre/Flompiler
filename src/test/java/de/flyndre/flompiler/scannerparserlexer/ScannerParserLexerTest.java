@@ -12,6 +12,8 @@ import de.flyndre.flompiler.results.attributes.IntegerClassResults;
 import de.flyndre.flompiler.results.attributes.StringClassResults;
 import de.flyndre.flompiler.results.basic.EmptyClassResults;
 import de.flyndre.flompiler.results.methods.BooleanMethodClassResults;
+import de.flyndre.flompiler.results.methods.CharMethodClassResults;
+import de.flyndre.flompiler.results.methods.IntegerMethodClassResults;
 import de.flyndre.flompiler.results.methods.StringMethodClassResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import org.junit.jupiter.api.*;
@@ -152,6 +154,18 @@ public class ScannerParserLexerTest {
     @DisplayName("ScannerParserLexer: Parameterless Boolean Method Class")
     public void testMethodBooleanParameterlessClass() {
         testSuccess("/methods/parameterless/BooleanMethod.java", BooleanMethodClassResults.AST);
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Parameterless Integer Method Class")
+    public void testMethodIntegerParameterlessClass() {
+        testSuccess("/methods/parameterless/IntegerMethod.java", IntegerMethodClassResults.AST);
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Parameterless Char Method Class")
+    public void testMethodCharParameterlessClass() {
+        testSuccess("/methods/parameterless/CharMethod.java", CharMethodClassResults.AST);
     }
 
     @Test
