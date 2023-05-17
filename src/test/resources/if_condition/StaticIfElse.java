@@ -1,6 +1,6 @@
 public class StaticIfElse {
     public int method() {
-        if (true) {
+        if (false) {
             return 1;
         } else {
             return 2;

@@ -1,9 +1,7 @@
 package de.flyndre.flompiler.results.if_condition;
 
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Block;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Method;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 
 import java.util.ArrayList;
 
@@ -22,11 +20,33 @@ public class StaticIfResults {
         var program = new Program();
         program.classes = new ArrayList<>();
         {
-            var staticIfClass = new Class();
-            staticIfClass.access = "public";
-            staticIfClass.name = "StaticIf";
-            staticIfClass.fields = new ArrayList<>();
-            staticIfClass.methods = new ArrayList<>();
+            var clazz = new Class();
+            clazz.access = "public";
+            clazz.name = "StaticIf";
+            clazz.fields = new ArrayList<>();
+            clazz.methods = new ArrayList<>();
+            {
+                var method = new Method();
+                method.access = "public";
+                method.type = "int";
+                method.name = "method";
+                method.parameter = new ArrayList<>();
+                {
+                    var block = new Block();
+                    block.statements = new ArrayList<>();
+                    {
+                        var statement = new Return();
+                        {
+                            var expression = new BooleanConst();
+                            expression.value = true;
+                            statement.expression = expression;
+                        }
+                        block.statements.add(statement);
+                    }
+                    method.statement = block;
+                }
+                clazz.methods.add(method);
+            }
             {
                 var constructor = new Method();
                 constructor.type = "void";
@@ -38,22 +58,9 @@ public class StaticIfResults {
                     block.statements = new ArrayList<>();
                 }
                 constructor.statement = block;
-                staticIfClass.methods.add(constructor);
+                clazz.methods.add(constructor);
             }
-            {
-                var stringMethod = new Method();
-                stringMethod.access = "public";
-                stringMethod.type = "String";
-                stringMethod.name = "method";
-                stringMethod.parameter = new ArrayList<>();
-                var block = new Block();
-                {
-
-                }
-                stringMethod.statement = block;
-                staticIfClass.methods.add(stringMethod);
-            }
-            program.classes.add(staticIfClass);
+            program.classes.add(clazz);
         }
 
         return program;
@@ -63,12 +70,51 @@ public class StaticIfResults {
         var program = new Program();
         program.classes = new ArrayList<>();
         {
-            var emptyClass = new Class();
-            emptyClass.access = "public";
-            emptyClass.name = "EmptyClass";
-            emptyClass.fields = new ArrayList<>();
-            emptyClass.methods = new ArrayList<>();
-            program.classes.add(emptyClass);
+            var clazz = new Class();
+            clazz.access = "public";
+            clazz.name = "StaticIf";
+            clazz.fields = new ArrayList<>();
+            clazz.methods = new ArrayList<>();
+            {
+                var method = new Method();
+                method.access = "public";
+                method.type = "int";
+                method.name = "method";
+                method.parameter = new ArrayList<>();
+                {
+                    var block = new Block();
+                    block.type = "int";
+                    block.statements = new ArrayList<>();
+                    {
+                        var statement = new Return();
+                        statement.type = "int";
+                        {
+                            var expression = new BooleanConst();
+                            expression.value = true;
+                            expression.type = "int";
+                            statement.expression = expression;
+                        }
+                        block.statements.add(statement);
+                    }
+                    method.statement = block;
+                }
+                clazz.methods.add(method);
+            }
+            {
+                var constructor = new Method();
+                constructor.type = "void";
+                constructor.access = "public";
+                constructor.name = "<init>";
+                constructor.parameter = new ArrayList<>();
+                var block = new Block();
+                {
+                    block.statements = new ArrayList<>();
+                    block.type = "void";
+                }
+                constructor.statement = block;
+                clazz.methods.add(constructor);
+            }
+            program.classes.add(clazz);
         }
 
         return program;
