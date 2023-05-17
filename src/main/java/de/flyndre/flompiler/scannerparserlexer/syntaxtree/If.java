@@ -24,8 +24,13 @@ public class If extends Statement {
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         String ifType = ifStatement.typeCheck(fields,parameters);
-        String elseType = elseStatement.typeCheck(fields,parameters);
-        if(!ifType.equals(elseType)){
+        String elseType;
+        try{
+            elseType = elseStatement.typeCheck(fields,parameters);
+        }catch (NullPointerException e){
+            elseType="void";
+        }
+        if(!ifType.equals(elseType)||elseType.equals("void")){
             throw new Exception(String.format("The two statement have different return types. If has %s, Else has %s",ifType,elseType));
         }
         return type = ifType;

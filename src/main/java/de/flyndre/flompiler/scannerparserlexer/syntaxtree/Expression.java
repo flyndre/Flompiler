@@ -7,7 +7,7 @@ import java.util.List;
  */
 public abstract class Expression {
 
-    String type;
+    public String type;
 
     /**
      * Default constructor
