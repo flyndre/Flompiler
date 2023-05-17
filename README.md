@@ -6,12 +6,12 @@ Im Rahmen der Vorlesung "Compilerbau" an der DHBW Stuttgart Campus Horb entwicke
 
 ## Gruppenzusammenstellung
 
-| Name            | Aufgabenbereich | Dokumentation                   |
-|-----------------|-----------------|---------------------------------|
-| Ruben Kraft     | Parser          | [Parser](docs/parser.md)        |
-| Lukas Burkhardt | Typ-Check       | [Type-check](docs/typecheck.md) |
-| Paul Lehmann    | Bytecode        | [Bytecode](docs/bytecode.md)    |
-| David Maier     | Tests           | [Tests](docs/tests.md)          |
+| Name            | Aufgabenbereich | Benutzername | Dokumentation                   |
+|-----------------|-----------------|--------------|---------------------------------|
+| Ruben Kraft     | Parser          | Pereki       | [Parser](docs/parser.md)        |
+| Lukas Burkhardt | Typ-Check       | L4kiLuk      | [Type-check](docs/typecheck.md) |
+| Paul Lehmann    | Bytecode        | NoName11234  | [Bytecode](docs/bytecode.md)    |
+| David Maier     | Tests           | dasdawidt    | [Tests](docs/tests.md)          |
 
 ## Aufbau des Compilers
 
