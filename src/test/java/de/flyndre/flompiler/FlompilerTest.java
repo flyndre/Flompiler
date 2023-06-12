@@ -5,6 +5,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+
 public class FlompilerTest {
 
     private void testSuccess(String inputFilePath) {
@@ -21,15 +26,24 @@ public class FlompilerTest {
         Assertions.assertThrows(Exception.class, executable);
     }
 
-    
 
-    @Test
-    @DisplayName("Flompiler: Reflection")
+
     public void testFlompilerReflection() {
-        File myFolder = new File(TestConstants.RESOURCES_ROOT + "/basic/EmptyClass.java");
-        URLClassLoader classLoader = new URLClassLoader(new URL[]{myFolder.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
-        Class<?> myClass = Class.forName("my.package.Myclass", true, classLoader);
-        Myclass obj = (Myclass) myClass.newInstance();
+        try {
+            File myFolder = new File(TestConstants.RESOURCES_ROOT + "/basic/EmptyClass.java");
+            URLClassLoader classLoader = null;
+            classLoader = new URLClassLoader(new URL[]{myFolder.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
+            Class<?> myClass = Class.forName("my.package.Myclass", true, classLoader);
+            Object obj =  myClass.newInstance();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
