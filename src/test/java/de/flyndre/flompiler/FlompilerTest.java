@@ -21,6 +21,17 @@ public class FlompilerTest {
         Assertions.assertThrows(Exception.class, executable);
     }
 
+    
+
+    @Test
+    @DisplayName("Flompiler: Reflection")
+    public void testFlompilerReflection() {
+        File myFolder = new File(TestConstants.RESOURCES_ROOT + "/basic/EmptyClass.java");
+        URLClassLoader classLoader = new URLClassLoader(new URL[]{myFolder.toURI().toURL()}, Thread.currentThread().getContextClassLoader());
+        Class<?> myClass = Class.forName("my.package.Myclass", true, classLoader);
+        Myclass obj = (Myclass) myClass.newInstance();
+    }
+
 
 
     // EMPTY CLASS
