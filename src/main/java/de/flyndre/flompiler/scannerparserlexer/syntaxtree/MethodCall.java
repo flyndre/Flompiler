@@ -31,6 +31,6 @@ public class MethodCall extends StatementExpression {
     /**
      * 
      */
-    public List expressions;
+    public List<Expression> expressions;
 
 }
