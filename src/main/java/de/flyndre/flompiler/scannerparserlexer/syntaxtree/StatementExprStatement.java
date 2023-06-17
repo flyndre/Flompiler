@@ -25,4 +25,5 @@ public class StatementExprStatement extends Statement {
      */
     public String name;
 
+    public StatementExpression statementExpression;
 }
