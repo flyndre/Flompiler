@@ -491,7 +491,7 @@ public class BytecodeGenerator {
         }
     }
 
-    /*private static Expr generateByteCodeForBinary(MethodVisitor mv, Binary expression, HashMap<String, LocalVar> localVarScope){
+    private static Expr generateByteCodeForBinary(MethodVisitor mv, Binary expression, HashMap<String, LocalVar> localVarScope){
         Expr right = generateByteCodeForExpressions(mv, expression.expressionRight, localVarScope);
         Expr left = generateByteCodeForExpressions(mv, expression.expressionLeft, localVarScope);
 
@@ -614,38 +614,228 @@ public class BytecodeGenerator {
                             break;
                     }
                 }
-                Label second = new Label();
-                Label end = new Label();
+                Label secondEqual = new Label();
+                Label endEqual = new Label();
 
-                mv.visitJumpInsn(Opcodes.IF_ICMPEQ, second);
+                mv.visitJumpInsn(Opcodes.IF_ICMPEQ, secondEqual);
 
-                mv.visitInsn(Opcodes.ICONST_1);
-                mv.visitJumpInsn(Opcodes.GOTO, end);
-
-                mv.visitLabel(second);
                 mv.visitInsn(Opcodes.ICONST_0);
-                mv.visitLabel(end);
+                mv.visitJumpInsn(Opcodes.GOTO, endEqual);
+
+                mv.visitLabel(secondEqual);
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitLabel(endEqual);
 
                 mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
                 localVarScope.put("EqualLeftRight" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
                 return new Expr("EqualLeftRight" + (localVarScope.size()-1), ExprType.LocalVar);
-                break;
             case "!=":
-                break;
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    switch(localVarScope.get(right.name).type){
+                        case "int":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                            break;
+                        case "char":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "C");
+                            break;
+                        case "boolean":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "Z");
+                            break;
+                    }
+                }
+
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    switch(localVarScope.get(left.name).type){
+                        case "int":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                            break;
+                        case "char":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "C");
+                            break;
+                        case "boolean":
+                            mv.visitVarInsn(Opcodes.ALOAD, 0);
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "Z");
+                            break;
+                    }
+                }
+                Label secondNotEqual = new Label();
+                Label endNotEqual = new Label();
+
+                mv.visitJumpInsn(Opcodes.IF_ICMPNE, secondNotEqual);
+
+                mv.visitInsn(Opcodes.ICONST_0);
+                mv.visitJumpInsn(Opcodes.GOTO, endNotEqual);
+
+                mv.visitLabel(secondNotEqual);
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitLabel(endNotEqual);
+
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
+                localVarScope.put("EqualLeftRight" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("EqualLeftRight" + (localVarScope.size()-1), ExprType.LocalVar);
             case "<":
-                break;
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                }
+                Label secondSmaller = new Label();
+                Label endSmaller = new Label();
+
+                mv.visitJumpInsn(Opcodes.IF_ICMPLT, secondSmaller);
+
+                mv.visitInsn(Opcodes.ICONST_0);
+                mv.visitJumpInsn(Opcodes.GOTO, endSmaller);
+
+                mv.visitLabel(secondSmaller);
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitLabel(endSmaller);
+
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
+                localVarScope.put("SmallerLeftRight" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("SmallerLeftRight" + (localVarScope.size()-1), ExprType.LocalVar);
             case "<=":
-                break;
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                }
+                Label secondSmallerEqual = new Label();
+                Label endSmallerEqual = new Label();
+
+                mv.visitJumpInsn(Opcodes.IF_ICMPLE, secondSmallerEqual);
+
+                mv.visitInsn(Opcodes.ICONST_0);
+                mv.visitJumpInsn(Opcodes.GOTO, endSmallerEqual);
+
+                mv.visitLabel(secondSmallerEqual);
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitLabel(endSmallerEqual);
+
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
+                localVarScope.put("SmallerEqualLeftRight" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("SmallerEqualLeftRight" + (localVarScope.size()-1), ExprType.LocalVar);
             case ">":
-                break;
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                }
+                Label secondGreater = new Label();
+                Label endGreater = new Label();
+
+                mv.visitJumpInsn(Opcodes.IF_ICMPGT, secondGreater);
+
+                mv.visitInsn(Opcodes.ICONST_0);
+                mv.visitJumpInsn(Opcodes.GOTO, endGreater);
+
+                mv.visitLabel(secondGreater);
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitLabel(endGreater);
+
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
+                localVarScope.put("GreaterLeftRight" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("GreaterLeftRight" + (localVarScope.size()-1), ExprType.LocalVar);
             case ">=":
-                break;
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
+                }
+                Label secondGreaterEqual = new Label();
+                Label endGreaterEqual = new Label();
+
+                mv.visitJumpInsn(Opcodes.IF_ICMPGE, secondGreaterEqual);
+
+                mv.visitInsn(Opcodes.ICONST_0);
+                mv.visitJumpInsn(Opcodes.GOTO, endGreaterEqual);
+
+                mv.visitLabel(secondGreaterEqual);
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitLabel(endGreaterEqual);
+
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
+                localVarScope.put("GreaterEqualLeftRight" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("GreaterEqualLeftRight" + (localVarScope.size()-1), ExprType.LocalVar);
             case "&&":
-                break;
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "Z");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "Z");
+                }
+                mv.visitInsn(Opcodes.IAND);
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("AndOperator" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("AndOperator" + (localVarScope.size()-1), ExprType.LocalVar);
             case "||":
-                break;
+                if(left.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "Z");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "Z");
+                }
+                mv.visitInsn(Opcodes.IOR);
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("OrOperator" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("OrOperator" + (localVarScope.size()-1), ExprType.LocalVar);
             default:
                 return new Expr("AllesGingSchief" + "Hilfe", ExprType.LocalVar);
         }
-    }*/
+    }
 }
