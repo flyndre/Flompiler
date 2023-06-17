@@ -439,6 +439,10 @@ public class BytecodeGenerator {
             variable = generateByteCodeForStringConst(mv, s, localVarScope);
         }else if(expression instanceof LocalOrFieldVar l){
             variable = generateByteCodeForLocalOrFieldVar(mv, l, localVarScope);
+        }else if(expression instanceof Binary b){
+            variable = generateByteCodeForBinary(mv, b, localVarScope);
+        }else if(expression instanceof Unary u){
+            variable = generateByteCodeForUnary(mv, u, localVarScope);
         }
 
         return variable;
@@ -834,6 +838,57 @@ public class BytecodeGenerator {
                 mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
                 localVarScope.put("OrOperator" + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
                 return new Expr("OrOperator" + (localVarScope.size()-1), ExprType.LocalVar);
+            default:
+                return new Expr("AllesGingSchief" + "Hilfe", ExprType.LocalVar);
+        }
+    }
+
+    private static Expr generateByteCodeForUnary(MethodVisitor mv, Unary expression, HashMap<String, LocalVar> localVarScope) {
+        Expr only = generateByteCodeForExpressions(mv, expression.expression, localVarScope);
+
+        switch(expression.operator){
+            case "++":
+                if(only.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(only.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, only.name, "I");
+                }
+
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitInsn(Opcodes.IADD);
+
+                if(only.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(only.name).location);
+                    only.name = "IncrementOperator" + localVarScope.get(only.name).location;
+                    return only;
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.PUTFIELD, type, only.name, "I");
+                    only.name = "IncrementOperatorField" + only.name;
+                    return only;
+                }
+            case "--":
+                if(only.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(only.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, only.name, "I");
+                }
+
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitInsn(Opcodes.ISUB);
+
+                if(only.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(only.name).location);
+                    only.name = "DecrementOperator" + localVarScope.get(only.name).location;
+                    return only;
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.PUTFIELD, type, only.name, "I");
+                    only.name = "DecrementOperatorField" + only.name;
+                    return only;
+                }
             default:
                 return new Expr("AllesGingSchief" + "Hilfe", ExprType.LocalVar);
         }
