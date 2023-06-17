@@ -501,18 +501,18 @@ public class BytecodeGenerator {
 
         switch(expression.operator){
             case "+":
-                if(right.type == ExprType.LocalVar){
-                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
-                }else{
-                    mv.visitVarInsn(Opcodes.ALOAD, 0);
-                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
-                }
-
                 if(left.type == ExprType.LocalVar){
                     mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
                 }else{
                     mv.visitVarInsn(Opcodes.ALOAD, 0);
                     mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
                 }
 
                 mv.visitInsn(Opcodes.IADD);
@@ -521,18 +521,18 @@ public class BytecodeGenerator {
                 return new Expr("IntAddition" + (localVarScope.size()-1), ExprType.LocalVar);
 
             case "-":
-                if(right.type == ExprType.LocalVar){
-                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
-                }else{
-                    mv.visitVarInsn(Opcodes.ALOAD, 0);
-                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
-                }
-
                 if(left.type == ExprType.LocalVar){
                     mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
                 }else{
                     mv.visitVarInsn(Opcodes.ALOAD, 0);
                     mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
                 }
 
                 mv.visitInsn(Opcodes.ISUB);
@@ -541,18 +541,18 @@ public class BytecodeGenerator {
                 return new Expr("IntSubtraction" + (localVarScope.size()-1), ExprType.LocalVar);
 
             case "*":
-                if(right.type == ExprType.LocalVar){
-                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
-                }else{
-                    mv.visitVarInsn(Opcodes.ALOAD, 0);
-                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
-                }
-
                 if(left.type == ExprType.LocalVar){
                     mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
                 }else{
                     mv.visitVarInsn(Opcodes.ALOAD, 0);
                     mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
                 }
 
                 mv.visitInsn(Opcodes.IMUL);
@@ -561,18 +561,18 @@ public class BytecodeGenerator {
                 return new Expr("IntMultiplication" + (localVarScope.size()-1), ExprType.LocalVar);
 
             case "/":
-                if(right.type == ExprType.LocalVar){
-                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
-                }else{
-                    mv.visitVarInsn(Opcodes.ALOAD, 0);
-                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
-                }
-
                 if(left.type == ExprType.LocalVar){
                     mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(left.name).location);
                 }else{
                     mv.visitVarInsn(Opcodes.ALOAD, 0);
                     mv.visitFieldInsn(Opcodes.GETFIELD, type, left.name, "I");
+                }
+
+                if(right.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(right.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, right.name, "I");
                 }
 
                 mv.visitInsn(Opcodes.IDIV);
@@ -887,6 +887,56 @@ public class BytecodeGenerator {
                     mv.visitVarInsn(Opcodes.ALOAD, 0);
                     mv.visitFieldInsn(Opcodes.PUTFIELD, type, only.name, "I");
                     only.name = "DecrementOperatorField" + only.name;
+                    return only;
+                }
+            case "!":
+                if(only.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(only.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, only.name, "Z");
+                }
+
+                Label isZero = new Label();
+                Label isOne = new Label();
+
+                mv.visitJumpInsn(Opcodes.IFEQ, isZero);
+
+                mv.visitInsn(Opcodes.ICONST_0);
+                mv.visitJumpInsn(Opcodes.GOTO, isOne);
+
+                mv.visitLabel(isZero);
+                mv.visitInsn(Opcodes.ICONST_1);
+                mv.visitLabel(isOne);
+
+                if(only.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(only.name).location);
+                    only.name = "NegateBooleanOperator" + localVarScope.get(only.name).location;
+                    return only;
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.PUTFIELD, type, only.name, "Z");
+                    only.name = "NegateBooleanOperatorField" + only.name;
+                    return only;
+                }
+            case "-":
+                if(only.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(only.name).location);
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, only.name, "I");
+                }
+
+                mv.visitInsn(Opcodes.INEG);
+
+                if(only.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(only.name).location);
+                    only.name = "NegateIntOperator" + localVarScope.get(only.name).location;
+                    return only;
+                }else{
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.PUTFIELD, type, only.name, "I");
+                    only.name = "NegateIntOperatorField" + only.name;
                     return only;
                 }
             default:
