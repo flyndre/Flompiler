@@ -9792,7 +9792,7 @@
 											"top": 1196,
 											"width": 231.58154296875,
 											"height": 13,
-											"text": "+var: Expression",
+											"text": "+LocalOrFieldVar: Expression",
 											"horizontalAlignment": 0
 										}
 									],
@@ -10175,23 +10175,6 @@
 									"subViews": [
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGHuKlFTi3WZ70=",
-											"_parent": {
-												"$ref": "AAAAAAGHnyCXaopGPDo="
-											},
-											"model": {
-												"$ref": "AAAAAAGHuKlFPi2yOtQ="
-											},
-											"font": "Arial;13;0",
-											"left": 1997,
-											"top": 1166,
-											"width": 142,
-											"height": 13,
-											"text": "+expr: Expression",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGHuKlylC+xU2w=",
 											"_parent": {
 												"$ref": "AAAAAAGHnyCXaopGPDo="
@@ -10201,7 +10184,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1997,
-											"top": 1181,
+											"top": 1166,
 											"width": 142,
 											"height": 13,
 											"text": "+name: String",
@@ -10218,7 +10201,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 1997,
-											"top": 1196,
+											"top": 1181,
 											"width": 142,
 											"height": 13,
 											"text": "+expressions: List",
@@ -10229,7 +10212,7 @@
 									"left": 1992,
 									"top": 1161,
 									"width": 152,
-									"height": 53
+									"height": 38
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -10242,7 +10225,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 1992,
-									"top": 1214,
+									"top": 1199,
 									"width": 152,
 									"height": 10
 								},
@@ -13272,7 +13255,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGHmV4Do3za9cc="
 							},
-							"name": "type"
+							"name": "type",
+							"type": ""
 						}
 					]
 				},
@@ -13986,7 +13970,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGHmXHbmFMhF1o="
 							},
-							"name": "type"
+							"name": "type",
+							"type": ""
 						}
 					]
 				},
@@ -14261,7 +14246,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGHnyAtCX0nRmY="
 							},
-							"name": "var",
+							"name": "LocalOrFieldVar",
 							"type": {
 								"$ref": "AAAAAAGHmXHbmFMhF1o="
 							}
@@ -14334,17 +14319,6 @@
 						}
 					],
 					"attributes": [
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAGHuKlFPi2yOtQ=",
-							"_parent": {
-								"$ref": "AAAAAAGHnyCXaYo+0ik="
-							},
-							"name": "expr",
-							"type": {
-								"$ref": "AAAAAAGHmXHbmFMhF1o="
-							}
-						},
 						{
 							"_type": "UMLAttribute",
 							"_id": "AAAAAAGHuKlyhy+NKDc=",
