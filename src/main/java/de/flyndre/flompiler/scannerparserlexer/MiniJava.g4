@@ -1,5 +1,7 @@
 grammar MiniJava;
 
+
+// 1+1 = Statement?
 NEW                 : 'new';
 THIS                : 'this';
 WHILE               : 'while';
@@ -18,9 +20,16 @@ EQUALS              : '=';
 STRING              : '"' SEQUENCE* '"';
 CHAR                : '\'' [a-zA-Z0-9] '\'';
 JNULL               : 'null';
-
-INTEGER             : [1-9][0-9]*;
+EQUALSSTAT          : '==';
+INTEGER             : [0-9]+;
 COMMA               : ',';
+DECREMENT           : '--';
+INCREMENT           : '++';
+PLUS                : '+';
+MINUS               : '-';
+MUL                 : '*';
+DIV                 : '/';
+MOD                 : '%';
 
 PUBLIC              : 'public';
 PRIVATE             : 'private';
@@ -32,6 +41,10 @@ SEMICOLON           : ';';
 BROPEN              : '(';
 BRCLOSE             : ')';
 SEQUENCE            : [a-zA-Z0-9];
+TIMESEQUAL          : '*=';
+DIVIDEEQUAL         : '/=';
+PLUSEQUAL           : '+=';
+MINUSEQUAL          : '-=';
 
 class                           : accessMod CLASS NAME WAVEDBROPEN classbody WAVEDBRCLOSE;
 
@@ -39,6 +52,7 @@ accessMod                       : PUBLIC
                                 | PRIVATE
                                 | PROTECTED
                                 | ;
+
 program                         : classes;
 
 classes                         : class classes| ;
@@ -59,6 +73,10 @@ statement                       : returnstatement
                                 | ifstatement
                                 | ifelsestatement
                                 | while
+                                | intdeclaration
+                                | stringdeclaration
+                                | chardeclaration
+                                | booldeclaration
                                 | emptystatement
                                 | expressionstatement
                                 | returnstatement;
@@ -80,13 +98,17 @@ while                           : WHILE BROPEN expression BRCLOSE statement
                                 | WHILE BROPEN statementexpression BRCLOSE statement
                                 | WHILE BROPEN statementexpression BRCLOSE block;
 
+assignment                      :NAME assignmentoperator assignmentexpression;
 
-expression                      : BOOLEAN;
+assignmentexpression            : statementexpression | expression;
+
+expression                      : BOOLEAN | INTEGER | STRING | CHAR | NAME | statementexpression | equalityexpression;
 
 fieldaccess                     :  NAME DOT primary;
 
 argumentlist                    : expression
-		                        | argumentlist  COMMA  expression;
+		                        | argumentlist  COMMA  expression |
+		                        ;
 
 returnstatement                 : RETURN INTEGER SEMICOLON | RETURN STRING SEMICOLON | RETURN CHAR SEMICOLON |RETURN BOOLEAN SEMICOLON;
 
@@ -94,9 +116,9 @@ classbody                       : fielddeclaration classbody
                                 | methoddeclaration classbody
                                 | ;
 
-statementexpression             :   //      assignment
-                        //		| preincrementexpression
-                        //		| predecrementexpression
+statementexpression             : assignment
+                                | preincrementexpression
+                                | predecrementexpression
                         //		| postincrementexpression
                         //		| postdecrementexpression
 		                        | methodinvocation;
@@ -135,10 +157,16 @@ literal		                    : INTEGER
 		                        | STRING
 		                        | JNULL;
 
+assignmentoperator              : EQUALS
+		                        | TIMESEQUAL
+		                        | DIVIDEEQUAL
+		                        | PLUSEQUAL
+		                        | MINUSEQUAL;
+
 methodinvocation                : NAME BROPEN   BRCLOSE
 		                        | NAME BROPEN argumentlist BRCLOSE
 		                        | literal  DOT SEQUENCE BROPEN BRCLOSE
-		                        | THIS  DOT SEQUENCE BROPEN argumentlist  BRCLOSE
+		                        | THIS  DOT NAME BROPEN argumentlist  BRCLOSE
 		                        | BROPEN expression BRCLOSE DOT SEQUENCE BROPEN argumentlist  BRCLOSE
 		                        | classinstancecreationexpression  DOT SEQUENCE BROPEN argumentlist  BRCLOSE
 		                        | fieldaccess  DOT SEQUENCE BROPEN argumentlist  BRCLOSE
@@ -155,6 +183,37 @@ primarynonewarray               : literal
                                 | classinstancecreationexpression
 		                        | fieldaccess
 		                        | methodinvocation;
+
+equalityexpression              : relationalexpression
+		                        | equalityexpression EQUALSSTAT relationalexpression;
+
+relationalexpression            : shiftexpression;
+
+shiftexpression	                : additiveexpression;
+
+additiveexpression              : multiplicativeexpression
+		                        | additiveexpression PLUS multiplicativeexpression
+		                        | additiveexpression MINUS multiplicativeexpression;
+
+multiplicativeexpression        : unaryexpression
+		                        | multiplicativeexpression MUL unaryexpression
+		                        | multiplicativeexpression DIV unaryexpression
+		                        | multiplicativeexpression MOD unaryexpression;
+
+unaryexpression	                : preincrementexpression
+		                        | predecrementexpression
+		                        | PLUS unaryexpression
+		                        | MINUS unaryexpression
+		                        | unaryexpressionnotplusminus;
+
+preincrementexpression          : INCREMENT unaryexpression;
+
+predecrementexpression          : DECREMENT unaryexpression;
+
+unaryexpressionnotplusminus          : primary
+                              		 | name;
+                              		// | unaryexpression INCREMENT
+                              	//	 | unaryexpression DECREMENT;
 
 
 emptystatement	                : SEMICOLON;
@@ -227,7 +286,7 @@ TIMESEQUAL : '*=';
 DIVIDEEQUAL : '/=';
 MODULOEQUAL : '%=';
 PLUSEQUAL : '+=';
-MINUSEQUAL : '-=';
+MINUSEQUAL : '-=';e
 SHIFTLEFTEQUAL : 'asd';
 SIGNEDSHIFTRIGHTEQUAL : '<<';
 UNSIGNEDSHIFTRIGHTEQUAL : '>>';
