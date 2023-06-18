@@ -1,8 +1,11 @@
 grammar MiniJava;
 
+NEW                 : 'new';
+THIS                : 'this';
 WHILE               : 'while';
 IF                  : 'if';
 ELSE                : 'else';
+DOT                 : '.';
 RETURN              : 'return';
 CLASS               : 'class';
 BOOLEAN             : 'true' | 'false';
@@ -14,7 +17,7 @@ VOIDTYPE            : 'void';
 EQUALS              : '=';
 STRING              : '"' SEQUENCE* '"';
 CHAR                : '\'' [a-zA-Z0-9] '\'';
-
+JNULL               : 'null';
 
 INTEGER             : [1-9][0-9]*;
 COMMA               : ',';
@@ -30,72 +33,143 @@ BROPEN              : '(';
 BRCLOSE             : ')';
 SEQUENCE            : [a-zA-Z0-9];
 
+class                           : accessMod CLASS NAME WAVEDBROPEN classbody WAVEDBRCLOSE;
 
-program             : classes;
-classes             : class classes| ;
-class               : accessMod CLASS NAME WAVEDBROPEN classbody WAVEDBRCLOSE;
-block               : WAVEDBROPEN WAVEDBRCLOSE |
-                    | WAVEDBROPEN statements WAVEDBRCLOSE;
-accessMod           : PUBLIC
-                    | PRIVATE
-                    | PROTECTED
-                    | ;
-type                : BOOLEANTYPE
-                    | STRINGTYPE
-                    | CHARTYPE
-                    | VOIDTYPE
-                    | INTTYPE;
+accessMod                       : PUBLIC
+                                | PRIVATE
+                                | PROTECTED
+                                | ;
+program                         : classes;
 
-statements          : statement statements
-                    | ;
-statement           : returnstatement
-                    | ifstatement
-                    | ifelsestatement
-                    | while;
+classes                         : class classes| ;
 
-ifstatement         : IF BROPEN expression BRCLOSE statement SEMICOLON
-                    | IF BROPEN expression BRCLOSE block
-                    | IF BROPEN expression BRCLOSE;
+block                           : WAVEDBROPEN WAVEDBRCLOSE |
+                                | WAVEDBROPEN statements WAVEDBRCLOSE;
 
-ifelsestatement     : IF BROPEN expression BRCLOSE statement ELSE statement
-                    | IF BROPEN expression BRCLOSE block ELSE block;
+type                            : BOOLEANTYPE
+                                | STRINGTYPE
+                                | CHARTYPE
+                                | VOIDTYPE
+                                | INTTYPE;
 
-while               : WHILE BROPEN expression BRCLOSE statement
-                    | WHILE BROPEN expression BRCLOSE block;
+statements                      : statement statements
+                                | ;
 
-expression          : BOOLEAN;
+statement                       : returnstatement
+                                | ifstatement
+                                | ifelsestatement
+                                | while
+                                | emptystatement
+                                | expressionstatement
+                                | returnstatement;
+
+ifstatement                     : IF BROPEN expression BRCLOSE statement SEMICOLON
+                                | IF BROPEN expression BRCLOSE block
+                                | IF BROPEN expression BRCLOSE
+                                |IF BROPEN statementexpression BRCLOSE statement SEMICOLON
+                                | IF BROPEN statementexpression BRCLOSE block
+                                | IF BROPEN statementexpression BRCLOSE;
+
+ifelsestatement                 : IF BROPEN expression BRCLOSE statement ELSE statement
+                                | IF BROPEN statementexpression BRCLOSE statement ELSE statement
+                                | IF BROPEN expression BRCLOSE block ELSE block
+                                | IF BROPEN statementexpression BRCLOSE block ELSE block;
+
+while                           : WHILE BROPEN expression BRCLOSE statement
+                                | WHILE BROPEN expression BRCLOSE block
+                                | WHILE BROPEN statementexpression BRCLOSE statement
+                                | WHILE BROPEN statementexpression BRCLOSE block;
 
 
-returnstatement     : RETURN INTEGER SEMICOLON | RETURN STRING SEMICOLON | RETURN CHAR SEMICOLON |RETURN BOOLEAN SEMICOLON;
+expression                      : BOOLEAN;
 
-classbody           : fielddeclaration classbody
-                    | methoddeclaration classbody
-                    | ;
+fieldaccess                     :  NAME DOT primary;
 
-fielddeclaration    : booldeclaration
-                    | stringdeclaration
-                    | chardeclaration
-                    | intdeclaration;
+argumentlist                    : expression
+		                        | argumentlist  COMMA  expression;
 
-parameter           : accessMod BOOLEANTYPE NAME
-                    | accessMod STRINGTYPE NAME
-                    | accessMod CHARTYPE NAME
-                    | accessMod INTTYPE NAME;
+returnstatement                 : RETURN INTEGER SEMICOLON | RETURN STRING SEMICOLON | RETURN CHAR SEMICOLON |RETURN BOOLEAN SEMICOLON;
 
-booldeclaration     : accessMod BOOLEANTYPE NAME SEMICOLON
-                    | accessMod BOOLEANTYPE NAME EQUALS BOOLEAN SEMICOLON;
-stringdeclaration   : accessMod STRINGTYPE NAME SEMICOLON
-                    | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
-chardeclaration     : accessMod CHARTYPE NAME SEMICOLON
-                    | accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON;
-intdeclaration      : accessMod INTTYPE NAME SEMICOLON
-                    | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
+classbody                       : fielddeclaration classbody
+                                | methoddeclaration classbody
+                                | ;
 
-methoddeclaration   : accessMod  type NAME BROPEN parameters BRCLOSE block;
+statementexpression             :   //      assignment
+                        //		| preincrementexpression
+                        //		| predecrementexpression
+                        //		| postincrementexpression
+                        //		| postdecrementexpression
+		                        | methodinvocation;
 
-parameters          : parameter COMMA parameters | parameter | ;
+fielddeclaration                : booldeclaration
+                                | stringdeclaration
+                                | chardeclaration
+                                | intdeclaration;
 
-WS                  : [ \t\r\n]+ -> skip;
+parameter                       : accessMod BOOLEANTYPE NAME
+                                | accessMod STRINGTYPE NAME
+                                | accessMod CHARTYPE NAME
+                                | accessMod INTTYPE NAME;
+
+booldeclaration                 : accessMod BOOLEANTYPE NAME SEMICOLON
+                                | accessMod BOOLEANTYPE NAME EQUALS BOOLEAN SEMICOLON;
+
+stringdeclaration               : accessMod STRINGTYPE NAME SEMICOLON
+                                | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
+
+chardeclaration                 : accessMod CHARTYPE NAME SEMICOLON
+                                | accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON;
+
+intdeclaration                  : accessMod INTTYPE NAME SEMICOLON
+                                | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
+
+methoddeclaration               : accessMod  type NAME BROPEN parameters BRCLOSE block;
+
+expressionstatement             : statementexpression  SEMICOLON;
+
+parameters                      : parameter COMMA parameters | parameter | ;
+
+literal		                    : INTEGER
+		                        | BOOLEAN
+		                        | CHAR
+		                        | STRING
+		                        | JNULL;
+
+methodinvocation                : NAME BROPEN   BRCLOSE
+		                        | NAME BROPEN argumentlist BRCLOSE
+		                        | literal  DOT SEQUENCE BROPEN BRCLOSE
+		                        | THIS  DOT SEQUENCE BROPEN argumentlist  BRCLOSE
+		                        | BROPEN expression BRCLOSE DOT SEQUENCE BROPEN argumentlist  BRCLOSE
+		                        | classinstancecreationexpression  DOT SEQUENCE BROPEN argumentlist  BRCLOSE
+		                        | fieldaccess  DOT SEQUENCE BROPEN argumentlist  BRCLOSE
+		                        | methodinvocation  DOT SEQUENCE BROPEN argumentlist  BRCLOSE;
+
+classinstancecreationexpression : NEW classtype BROPEN   BRCLOSE
+                                | NEW classtype BROPEN  argumentlist  BRCLOSE;
+
+primary		                    : primarynonewarray;
+
+primarynonewarray               : literal
+		                        | THIS
+		                        | BROPEN expression BRCLOSE
+                                | classinstancecreationexpression
+		                        | fieldaccess
+		                        | methodinvocation;
+
+
+emptystatement	                : SEMICOLON;
+
+classtype                       : name;
+
+simplename                      : NAME;
+
+name                            : qualifiedname
+                                | simplename;
+
+qualifiedname                   : NAME DOT name ;
+
+
+WS                              : [ \t\r\n]+ -> skip;
 
 
 /*
