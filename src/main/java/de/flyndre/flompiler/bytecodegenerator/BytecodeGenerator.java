@@ -40,21 +40,26 @@ public class BytecodeGenerator {
             cw.visit(Opcodes.V1_8,visibility, thisClass.name, null, "java/lang/Object", null);
             type = thisClass.name;
 
-            //generate fields
-            cw = generateByteCodeFields(cw, thisClass.fields);
+            try{
+                //generate fields
+                cw = generateByteCodeFields(cw, thisClass.fields);
 
-            //generate constructors
-            cw = generateByteCodeForConstructors(cw, thisClass.methods, thisClass.fields);
+                //generate constructors
+                cw = generateByteCodeForConstructors(cw, thisClass.methods, thisClass.fields);
 
-            //generate methods
-            cw = generateByteCodeForMethods(cw, thisClass.methods);
+                //generate methods
+                cw = generateByteCodeForMethods(cw, thisClass.methods);
 
-            cw.visitEnd();
+                cw.visitEnd();
 
-            //print code
-            byte[] b = cw.toByteArray();
+            }catch(Exception e){
+                System.out.println(e);
+                break;
+            }
 
             try{
+                //print code
+                byte[] b = cw.toByteArray();
                 FileOutputStream f = new FileOutputStream(outputFile);
                 f.write(b);
                 f.close();
@@ -108,7 +113,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    private static ClassWriter generateByteCodeForMethods(ClassWriter cw, List<Method> methods){
+    private static ClassWriter generateByteCodeForMethods(ClassWriter cw, List<Method> methods) throws Exception {
         //get all methods without constructors
         List<Method> methodsWithoutConstructors = new ArrayList<>();
         //hashmap of local variables
@@ -204,7 +209,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    private static ClassWriter generateByteCodeForConstructors(ClassWriter cw, List<Method> methods, List<Field> fields){
+    private static ClassWriter generateByteCodeForConstructors(ClassWriter cw, List<Method> methods, List<Field> fields) throws Exception {
         //hashmap of local variables
         HashMap<String, LocalVar> localVarScope = new HashMap<>();//key is the name of the variable, LocalVar contains type and save location
 
@@ -294,7 +299,7 @@ public class BytecodeGenerator {
         return cw;
     }
 
-    private static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statement, HashMap<String, LocalVar> localVarScope){
+    private static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statement, HashMap<String, LocalVar> localVarScope) throws Exception {
         if(statement instanceof Return){
             Expr ergebnisExpression = generateByteCodeForExpressions(mv, ((Return) statement).expression, localVarScope);
 
@@ -538,6 +543,10 @@ public class BytecodeGenerator {
                 boolean isLocalVar = localVarScope.containsKey(assign.var.name);
 
                 if(isLocalVar){
+                    if(localVarScope.get(assign.var.name).location == -1){
+                        localVarScope.get(assign.var.name).location = localVarScope.size();
+                    }
+
                     switch(localVarScope.get(assign.var.name).type){
                         case "int":
                             mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(assign.var.name).location);
@@ -572,7 +581,7 @@ public class BytecodeGenerator {
         return mv;
     }
 
-    private static Expr generateByteCodeForExpressions(MethodVisitor mv, Expression expression, HashMap<String, LocalVar> localVarScope){
+    private static Expr generateByteCodeForExpressions(MethodVisitor mv, Expression expression, HashMap<String, LocalVar> localVarScope) throws Exception {
         Expr variable = new Expr("", ExprType.LocalVar);//name of the variable in localVarScope which has been added in the expression
 
         if(expression instanceof IntConst i){
@@ -635,15 +644,19 @@ public class BytecodeGenerator {
         return new Expr("StringConst" + (localVarScope.size()-1), ExprType.LocalVar);
     }
 
-    private static Expr generateByteCodeForLocalOrFieldVar(MethodVisitor mv, LocalOrFieldVar expression, HashMap<String, LocalVar> localVarScope){
+    private static Expr generateByteCodeForLocalOrFieldVar(MethodVisitor mv, LocalOrFieldVar expression, HashMap<String, LocalVar> localVarScope) throws Exception {
         if(classFields.containsKey(expression.name)){
             return new Expr(expression.name, ExprType.FieldVar);
         }else{
-            return new Expr(expression.name, ExprType.LocalVar);
+            if(localVarScope.get(expression.name).location != -1){
+                return new Expr(expression.name, ExprType.LocalVar);
+            }else{
+                throw new Exception("Local variable " + expression.name + " not initialised!");
+            }
         }
     }
 
-    private static Expr generateByteCodeForBinary(MethodVisitor mv, Binary expression, HashMap<String, LocalVar> localVarScope){
+    private static Expr generateByteCodeForBinary(MethodVisitor mv, Binary expression, HashMap<String, LocalVar> localVarScope) throws Exception {
         Expr right = generateByteCodeForExpressions(mv, expression.expressionRight, localVarScope);
         Expr left = generateByteCodeForExpressions(mv, expression.expressionLeft, localVarScope);
 
@@ -991,7 +1004,7 @@ public class BytecodeGenerator {
         }
     }
 
-    private static Expr generateByteCodeForUnary(MethodVisitor mv, Unary expression, HashMap<String, LocalVar> localVarScope) {
+    private static Expr generateByteCodeForUnary(MethodVisitor mv, Unary expression, HashMap<String, LocalVar> localVarScope) throws Exception {
         Expr only = generateByteCodeForExpressions(mv, expression.expression, localVarScope);
 
         switch(expression.operator){
@@ -1092,7 +1105,7 @@ public class BytecodeGenerator {
         }
     }
 
-    public static Expr generateByteCodeForMethodCallExpr(MethodVisitor mv, MethodCall mc, HashMap<String, LocalVar> localVarScope){
+    public static Expr generateByteCodeForMethodCallExpr(MethodVisitor mv, MethodCall mc, HashMap<String, LocalVar> localVarScope) throws Exception {
         List<Expr> methodExpressions = new ArrayList<>();
         String methodDescriptor = "";
 
