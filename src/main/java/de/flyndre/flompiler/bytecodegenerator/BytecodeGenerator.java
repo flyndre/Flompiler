@@ -601,6 +601,8 @@ public class BytecodeGenerator {
         }else if(expression instanceof StatemenExpressionExpression see)
             if(see.statementExpression instanceof MethodCall mc){
                 variable = generateByteCodeForMethodCallExpr(mv, mc, localVarScope);
+            }else if(see.statementExpression instanceof New n){
+                variable = generateByteCodeForNewExpr(mv, n, localVarScope);
             }
         return variable;
     }
@@ -1196,6 +1198,104 @@ public class BytecodeGenerator {
                 mv.visitVarInsn(Opcodes.ALOAD, localVarScope.size());
                 localVarScope.put("MethodCall" + mc.name + (localVarScope.size()), new LocalVar(mc.type, (localVarScope.size())));
                 return new Expr("MethodCall" + mc.name + (localVarScope.size()-1), ExprType.LocalVar);
+        }
+    }
+
+    public static Expr generateByteCodeForNewExpr(MethodVisitor mv, New newExpr, HashMap<String, LocalVar> localVarScope) throws Exception {
+        List<Expr> methodExpressions = new ArrayList<>();
+        String methodDescriptor = "";
+
+        //calculate all expressions which are needed for the parameters of the constructor
+        for(int i = 0; i<newExpr.constructorParams.size();i++){
+            Expr expression = generateByteCodeForExpressions(mv, newExpr.constructorParams.get(i), localVarScope);
+            methodExpressions.add(expression);
+        }
+
+        //generate new object
+        mv.visitTypeInsn(Opcodes.NEW, newExpr.type);
+
+        for(int i = 0;i<methodExpressions.size(); i++){
+            Expr exprParam = methodExpressions.get(i);
+
+            if(exprParam.type == ExprType.LocalVar){
+                switch(localVarScope.get(exprParam.name).type){
+                    case "int":
+                        mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(exprParam.name).location);
+                        methodDescriptor += "I";
+                        break;
+                    case "boolean":
+                        mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(exprParam.name).location);
+                        methodDescriptor += "Z";
+                        break;
+                    case "char":
+                        mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(exprParam.name).location);
+                        methodDescriptor += "C";
+                        break;
+                    default:
+                        mv.visitVarInsn(Opcodes.ALOAD, localVarScope.get(exprParam.name).location);
+                        methodDescriptor += "L" + localVarScope.get(exprParam.name).type + ";";
+                }
+
+            }else{
+                mv.visitVarInsn(Opcodes.ALOAD, 0);
+
+                switch (classFields.get(exprParam.name)){
+                    case "int":
+                        mv.visitFieldInsn(Opcodes.GETFIELD, type, exprParam.name, "I");
+                        methodDescriptor += "I";
+                        break;
+                    case "boolean":
+                        mv.visitFieldInsn(Opcodes.GETFIELD, type, exprParam.name, "Z");
+                        methodDescriptor += "Z";
+                        break;
+                    case "char":
+                        mv.visitFieldInsn(Opcodes.GETFIELD, type, exprParam.name, "C");
+                        methodDescriptor += "C";
+                        break;
+                    default:
+                        mv.visitFieldInsn(Opcodes.GETFIELD, type, exprParam.name, classFields.get(exprParam.name));
+                        methodDescriptor += "L" + localVarScope.get(exprParam.name).type + ";";
+                }
+            }
+        }
+
+        //calculate method descriptor
+        methodDescriptor = "(" + methodDescriptor + ")";
+        switch(newExpr.type){
+            case "int":
+                methodDescriptor = methodDescriptor + "I";
+                break;
+            case "boolean":
+                methodDescriptor = methodDescriptor + "Z";
+                break;
+            case "char":
+                methodDescriptor = methodDescriptor + "C";
+                break;
+            default:
+                methodDescriptor = methodDescriptor + "L" + newExpr.type + ";";
+        }
+
+        //call the constructor
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, newExpr.type, "<init>", methodDescriptor, false);
+
+        //create new expression with return value
+        switch (newExpr.type){
+            case "int":
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
+                return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
+            case "boolean":
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
+                return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
+            case "char":
+                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar("char", (localVarScope.size())));
+                return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
+            default:
+                mv.visitVarInsn(Opcodes.ALOAD, localVarScope.size());
+                localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar(newExpr.type, (localVarScope.size())));
+                return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
         }
     }
 }
