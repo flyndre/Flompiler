@@ -78,8 +78,7 @@ statement                       : returnstatement
                                 | chardeclaration
                                 | booldeclaration
                                 | emptystatement
-                                | expressionstatement
-                                | returnstatement;
+                                | expressionstatement;
 
 ifstatement                     : IF BROPEN expression BRCLOSE statement SEMICOLON
                                 | IF BROPEN expression BRCLOSE block
