@@ -134,16 +134,20 @@ parameter                       : accessMod BOOLEANTYPE NAME
                                 | accessMod INTTYPE NAME;
 
 booldeclaration                 : accessMod BOOLEANTYPE NAME SEMICOLON
-                                | accessMod BOOLEANTYPE NAME EQUALS BOOLEAN SEMICOLON;
+                                | accessMod BOOLEANTYPE NAME EQUALS BOOLEAN SEMICOLON
+                                | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 stringdeclaration               : accessMod STRINGTYPE NAME SEMICOLON
-                                | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
+                                | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON
+                                | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 chardeclaration                 : accessMod CHARTYPE NAME SEMICOLON
-                                | accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON;
+                                | accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON
+                                | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 intdeclaration                  : accessMod INTTYPE NAME SEMICOLON
-                                | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
+                                | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON
+                                | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 methoddeclaration               : accessMod  type NAME BROPEN parameters BRCLOSE block;
 
@@ -212,8 +216,8 @@ predecrementexpression          : DECREMENT unaryexpression;
 
 unaryexpressionnotplusminus          : primary
                               		 | name;
-                              		// | unaryexpression INCREMENT
-                              	//	 | unaryexpression DECREMENT;
+                              	  // | unaryexpression INCREMENT
+                              	  // | unaryexpression DECREMENT;
 
 
 emptystatement	                : SEMICOLON;
