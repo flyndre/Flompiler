@@ -329,130 +329,14 @@ public class BytecodeGenerator {
     }
 
     private static MethodVisitor generateByteCodeForStatements(MethodVisitor mv, Statement statement, HashMap<String, LocalVar> localVarScope) throws Exception {
-        if(statement instanceof Return){
-            Expr ergebnisExpression = generateByteCodeForExpressions(mv, ((Return) statement).expression, localVarScope);
-
-            if(ergebnisExpression.type == ExprType.LocalVar){
-                switch(localVarScope.get(ergebnisExpression.name).type){
-                    case "int":
-                        mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
-                        mv.visitInsn(Opcodes.IRETURN);
-                        break;
-                    case "boolean":
-                        mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
-                        mv.visitInsn(Opcodes.IRETURN);
-                        break;
-                    case "char":
-                        mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
-                        mv.visitInsn(Opcodes.IRETURN);
-                        break;
-                    default:
-                        mv.visitVarInsn(Opcodes.ALOAD, localVarScope.get(ergebnisExpression.name).location);
-                        mv.visitInsn(Opcodes.ARETURN);
-                        break;
-                }
-            }else{
-                switch(classFields.get(ergebnisExpression.name)){
-                    case "int":
-                        mv.visitVarInsn(Opcodes.ALOAD, 0);
-                        mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, "I");
-                        mv.visitInsn(Opcodes.IRETURN);
-                        break;
-                    case "boolean":
-                        mv.visitVarInsn(Opcodes.ALOAD,0);
-                        mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, "Z");
-                        mv.visitInsn(Opcodes.IRETURN);
-                        break;
-                    case "char":
-                        mv.visitVarInsn(Opcodes.ALOAD,0);
-                        mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, "C");
-                        mv.visitInsn(Opcodes.IRETURN);
-                        break;
-                    default:
-                        mv.visitVarInsn(Opcodes.ALOAD,0);
-                        mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, classFields.get(ergebnisExpression.name));// "L" and ";" already part of the name
-                        mv.visitInsn(Opcodes.ARETURN);
-                        break;
-                }
-            }
-
-        }else if(statement instanceof Block){
-            List<Statement> statementList = ((Block) statement).statements;
-
-            for(int i=0;i<statementList.size();i++){
-                generateByteCodeForStatements(mv, statementList.get(i), localVarScope);
-            }
-        }else if(statement instanceof While){
-            Label loop = new Label();
-            Label end = new Label();
-
-            mv.visitLabel(loop);
-            Expr ergebnisExpression = generateByteCodeForExpressions(mv, ((While) statement).condition, localVarScope);
-
-            if(ergebnisExpression.type == ExprType.LocalVar){
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression).location);
-                mv.visitInsn(Opcodes.ICONST_0);
-                mv.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
-
-                mv = generateByteCodeForStatements(mv, ((While) statement).statement, localVarScope);
-
-                mv.visitJumpInsn(Opcodes.GOTO, loop);
-
-                mv.visitLabel(end);
-            }else{
-                mv.visitVarInsn(Opcodes.ALOAD, 0);
-                mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, classFields.get(ergebnisExpression.name));
-                mv.visitInsn(Opcodes.ICONST_0);
-                mv.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
-
-                mv = generateByteCodeForStatements(mv, ((While) statement).statement, localVarScope);
-
-                mv.visitJumpInsn(Opcodes.GOTO, loop);
-                mv.visitLabel(end);
-            }
-
-
-        }else if(statement instanceof If){
-            Label elseKeyWord = new Label();
-            Label end = new Label();
-
-            Expr ergebnisExpression = generateByteCodeForExpressions(mv, ((If) statement).condition, localVarScope);
-
-            if(ergebnisExpression.type == ExprType.LocalVar) {
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
-                mv.visitInsn(Opcodes.ICONST_0);
-                mv.visitJumpInsn(Opcodes.IF_ICMPEQ, elseKeyWord);
-
-                mv = generateByteCodeForStatements(mv, ((If) statement).ifStatement, localVarScope);
-                mv.visitJumpInsn(Opcodes.GOTO, end);
-
-                mv.visitLabel(elseKeyWord);
-
-                if(!(((If) statement).elseStatement == null)){
-                    mv = generateByteCodeForStatements(mv, ((If) statement).elseStatement, localVarScope);
-                }
-
-                mv.visitLabel(end);
-            }else{
-                mv.visitVarInsn(Opcodes.ALOAD, 0);
-                mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, classFields.get(ergebnisExpression.name));
-                mv.visitInsn(Opcodes.ICONST_0);
-                mv.visitJumpInsn(Opcodes.IF_ICMPEQ, elseKeyWord);
-
-                mv = generateByteCodeForStatements(mv, ((If) statement).ifStatement, localVarScope);
-                mv.visitJumpInsn(Opcodes.GOTO, end);
-
-                mv.visitLabel(elseKeyWord);
-
-                if(!(((If) statement).elseStatement == null)){
-                    mv = generateByteCodeForStatements(mv, ((If) statement).elseStatement, localVarScope);
-                }
-
-                mv.visitLabel(end);
-            }
-
-
-
+        if(statement instanceof Return r){
+            generateByteCodeForReturnStatement(mv, r, localVarScope);
+        }else if(statement instanceof Block b){
+            generateByteCodeForBlockStatement(mv, b, localVarScope);
+        }else if(statement instanceof While w){
+            generateByteCodeForWhileStatement(mv, w, localVarScope);
+        }else if(statement instanceof If i){
+            generateByteCodeForIfStatement(mv, i, localVarScope);
         }else if(statement instanceof LocalVarDecl){
             localVarScope.put(((LocalVarDecl) statement).name, new LocalVar(statement.type, -1));
         }else if(statement instanceof StatementExprStatement ses){
@@ -608,6 +492,132 @@ public class BytecodeGenerator {
         }
 
         return mv;
+    }
+
+    private static void generateByteCodeForReturnStatement(MethodVisitor mv, Return statement, HashMap<String, LocalVar> localVarScope) throws Exception {
+        Expr ergebnisExpression = generateByteCodeForExpressions(mv, ((Return) statement).expression, localVarScope);
+
+        if(ergebnisExpression.type == ExprType.LocalVar){
+            switch(localVarScope.get(ergebnisExpression.name).type){
+                case "int":
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                case "boolean":
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                case "char":
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                default:
+                    mv.visitVarInsn(Opcodes.ALOAD, localVarScope.get(ergebnisExpression.name).location);
+                    mv.visitInsn(Opcodes.ARETURN);
+                    break;
+            }
+        }else{
+            switch(classFields.get(ergebnisExpression.name)){
+                case "int":
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, "I");
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                case "boolean":
+                    mv.visitVarInsn(Opcodes.ALOAD,0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, "Z");
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                case "char":
+                    mv.visitVarInsn(Opcodes.ALOAD,0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, "C");
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                default:
+                    mv.visitVarInsn(Opcodes.ALOAD,0);
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, classFields.get(ergebnisExpression.name));// "L" and ";" already part of the name
+                    mv.visitInsn(Opcodes.ARETURN);
+                    break;
+            }
+        }
+    }
+
+    private static void generateByteCodeForBlockStatement(MethodVisitor mv, Block statement, HashMap<String, LocalVar> localVarScope) throws Exception {
+        List<Statement> statementList = ((Block) statement).statements;
+
+        for(int i=0;i<statementList.size();i++){
+            generateByteCodeForStatements(mv, statementList.get(i), localVarScope);
+        }
+    }
+
+    private static void generateByteCodeForWhileStatement(MethodVisitor mv, While statement, HashMap<String, LocalVar> localVarScope) throws Exception {
+        Label loop = new Label();
+        Label end = new Label();
+
+        mv.visitLabel(loop);
+        Expr ergebnisExpression = generateByteCodeForExpressions(mv, ((While) statement).condition, localVarScope);
+
+        if(ergebnisExpression.type == ExprType.LocalVar){
+            mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression).location);
+            mv.visitInsn(Opcodes.ICONST_0);
+            mv.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
+
+            mv = generateByteCodeForStatements(mv, ((While) statement).statement, localVarScope);
+
+            mv.visitJumpInsn(Opcodes.GOTO, loop);
+
+            mv.visitLabel(end);
+        }else{
+            mv.visitVarInsn(Opcodes.ALOAD, 0);
+            mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, classFields.get(ergebnisExpression.name));
+            mv.visitInsn(Opcodes.ICONST_0);
+            mv.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
+
+            mv = generateByteCodeForStatements(mv, ((While) statement).statement, localVarScope);
+
+            mv.visitJumpInsn(Opcodes.GOTO, loop);
+            mv.visitLabel(end);
+        }
+    }
+
+    private static void generateByteCodeForIfStatement(MethodVisitor mv, If statement, HashMap<String, LocalVar> localVarScope) throws Exception {
+        Label elseKeyWord = new Label();
+        Label end = new Label();
+
+        Expr ergebnisExpression = generateByteCodeForExpressions(mv, ((If) statement).condition, localVarScope);
+
+        if(ergebnisExpression.type == ExprType.LocalVar) {
+            mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(ergebnisExpression.name).location);
+            mv.visitInsn(Opcodes.ICONST_0);
+            mv.visitJumpInsn(Opcodes.IF_ICMPEQ, elseKeyWord);
+
+            mv = generateByteCodeForStatements(mv, ((If) statement).ifStatement, localVarScope);
+            mv.visitJumpInsn(Opcodes.GOTO, end);
+
+            mv.visitLabel(elseKeyWord);
+
+            if(!(((If) statement).elseStatement == null)){
+                mv = generateByteCodeForStatements(mv, ((If) statement).elseStatement, localVarScope);
+            }
+
+            mv.visitLabel(end);
+        }else{
+            mv.visitVarInsn(Opcodes.ALOAD, 0);
+            mv.visitFieldInsn(Opcodes.GETFIELD, type, ergebnisExpression.name, classFields.get(ergebnisExpression.name));
+            mv.visitInsn(Opcodes.ICONST_0);
+            mv.visitJumpInsn(Opcodes.IF_ICMPEQ, elseKeyWord);
+
+            mv = generateByteCodeForStatements(mv, ((If) statement).ifStatement, localVarScope);
+            mv.visitJumpInsn(Opcodes.GOTO, end);
+
+            mv.visitLabel(elseKeyWord);
+
+            if(!(((If) statement).elseStatement == null)){
+                mv = generateByteCodeForStatements(mv, ((If) statement).elseStatement, localVarScope);
+            }
+
+            mv.visitLabel(end);
+        }
     }
 
     private static Expr generateByteCodeForExpressions(MethodVisitor mv, Expression expression, HashMap<String, LocalVar> localVarScope) throws Exception {
