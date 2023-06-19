@@ -13,7 +13,6 @@ public class BlockAdapter {
     public static Block adapt(MiniJavaParser.BlockContext ctx){
 
         List<Statement> stats = new ArrayList<>();
-
         if(ctx.statements() != null){
             stats.addAll(StatementAdapter.adapt(ctx.statements()));
         }

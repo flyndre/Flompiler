@@ -9,6 +9,24 @@ public class ExpressionAdapter {
         if(ctx.BOOLEAN() != null){
             return new BooleanConst(Boolean.valueOf(ctx.BOOLEAN().getText()));
         }
+        else if(ctx.NAME() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.CHAR() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.STRING() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.INTEGER() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.statementexpression() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.equalityexpression() != null){
+            //TODO IMPLEMENT
+        }
         throw new RuntimeException();
     }
 }

@@ -50,6 +50,24 @@ public class StatementAdapter {
         else if(ctx.while_() != null){
             return adaptWhile(ctx.while_());
         }
+        else if(ctx.booldeclaration() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.chardeclaration() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.stringdeclaration() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.intdeclaration() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.expressionstatement() != null){
+            //TODO IMPLEMENT
+        }
+        else if(ctx.emptystatement() != null){
+            //TODO IMPLEMENT
+        }
         throw new RuntimeException();
     }
 
@@ -117,6 +135,5 @@ public class StatementAdapter {
             fields.addAll(adaptFields(ctx.classbody()));
         }
         return fields;
-        }
-
     }
+}
