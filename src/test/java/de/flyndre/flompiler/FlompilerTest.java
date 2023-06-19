@@ -13,6 +13,10 @@ import java.net.URLClassLoader;
 
 public class FlompilerTest {
 
+
+
+    // HELPER-METHODS
+
     /**
      * Prepares the compilation of the given file.
      * @param inputFilePath the path to the .java file
@@ -80,7 +84,7 @@ public class FlompilerTest {
     public void testFlompilerEmptyClass() {
         testParsingSuccess("/basic/EmptyClass.java");
         Object instance = getReflectionInstance("/basic", "EmptyClass");
-        Assertions.assertEquals(instance.getClass().getName(), "EmptyClass");
+        Flassertions.assertClassNameEquals(instance, "EmptyClass");
     }
 
     @Test
@@ -97,6 +101,8 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Boolean Attribute Class")
     public void testFlompilerBooleanAttributeClass() {
         testParsingSuccess("/attributes/BooleanClass.java");
+        Object instance = getReflectionInstance("/attributes", "BooleanClass");
+        Flassertions.assertClassNameEquals(instance, "BooleanClass");
     }
 
     @Test
@@ -113,6 +119,8 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Boolean Method Class")
     public void testFlompilerBooleanMethodClass() {
         testParsingSuccess("/methods/parameterless/BooleanMethod.java");
+        Object instance = getReflectionInstance("/methods/parameterless", "BooleanMethod");
+        Flassertions.assertClassNameEquals(instance, "BooleanMethod");
     }
 
     @Test
@@ -129,24 +137,32 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Boolean Method Class with Boolean Parameter")
     public void testFlompilerBooleanMethodParametersClass() {
         testParsingSuccess("/methods/parameters/BooleanMethod.java");
+        Object instance = getReflectionInstance("/methods/parameters", "BooleanMethod");
+        Flassertions.assertClassNameEquals(instance, "BooleanMethod");
     }
 
     @Test
     @DisplayName("Flompiler: Boolean Method Class with returned Boolean Parameter")
     public void testFlompilerBooleanMethodReturnedParametersClass() {
         testParsingSuccess("/methods/parameters/BooleanMethodReturn.java");
+        Object instance = getReflectionInstance("/methods/parameters", "BooleanMethodReturn");
+        Flassertions.assertClassNameEquals(instance, "BooleanMethodReturn");
     }
 
     @Test
     @DisplayName("Flompiler: Integer Method Class with increased Integer Parameter")
     public void testFlompilerIntegerMethodParametersClass() {
         testParsingSuccess("/methods/parameters/IntegerMethod.java");
+        Object instance = getReflectionInstance("/methods/parameters", "IntegerMethod");
+        Flassertions.assertClassNameEquals(instance, "IntegerMethod");
     }
 
     @Test
     @DisplayName("Flompiler: Char Method Class with returned Char Parameter")
     public void testFlompilerCharMethodParametersClass() {
         testParsingSuccess("/methods/parameters/CharMethod.java");
+        Object instance = getReflectionInstance("/methods/parameters", "CharMethod");
+        Flassertions.assertClassNameEquals(instance, "CharMethod");
     }
 
 
@@ -157,12 +173,16 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Static If Condition")
     public void testFlompilerStaticIf() {
         testParsingSuccess("/if_condition/StaticIf.java");
+        Object instance = getReflectionInstance("/if_condition", "StaticIf");
+        Flassertions.assertClassNameEquals(instance, "StaticIf");
     }
 
     @Test
     @DisplayName("Flompiler: Static If-Else Condition")
     public void testFlompilerStaticIfElse() {
         testParsingSuccess("/if_condition/StaticIfElse.java");
+        Object instance = getReflectionInstance("/if_condition", "StaticIfElse");
+        Flassertions.assertClassNameEquals(instance, "StaticIfElse");
     }
 
 
@@ -173,11 +193,15 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Dynamic If Condition")
     public void testFlompilerDynamicIf() {
         testParsingSuccess("/if_condition/DynamicIf.java");
+        Object instance = getReflectionInstance("/if_condition", "DynamicIf");
+        Flassertions.assertClassNameEquals(instance, "DynamicIf");
     }
 
     @Test
     @DisplayName("Flompiler: Dynamic If-Else Condition")
     public void testFlompilerDynamicIfElse() {
         testParsingSuccess("/if_condition/DynamicIfElse.java");
+        Object instance = getReflectionInstance("/if_condition", "DynamicIfElse");
+        Flassertions.assertClassNameEquals(instance, "DynamicIfElse");
     }
 }
