@@ -499,6 +499,73 @@ public class BytecodeGenerator {
                 mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type, mc.name, methodDescriptor, false);
                 //discard return value
                 mv.visitInsn(Opcodes.POP);
+            }else if(se instanceof Assign assign){
+                //generate code for expression calculation
+                Expr expression = generateByteCodeForExpressions(mv, assign.expression, localVarScope);
+
+                //load the value of the generated expression
+                if(expression.type == ExprType.LocalVar){
+                    switch(localVarScope.get(expression.name).type){
+                        case "int":
+                            mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(expression.name).location);
+                            break;
+                        case "boolean":
+                            mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(expression.name).location);
+                            break;
+                        case "char":
+                            mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(expression.name).location);
+                            break;
+                        default:
+                            mv.visitVarInsn(Opcodes.ALOAD, localVarScope.get(expression.name).location);
+                    }
+                }else{
+                    switch(classFields.get(expression.name)){
+                        case "int":
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, expression.name, "I");
+                            break;
+                        case "boolean":
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, expression.name, "Z");
+                            break;
+                        case "char":
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, expression.name, "C");
+                            break;
+                        default:
+                            mv.visitFieldInsn(Opcodes.GETFIELD, type, expression.name, classFields.get(expression.name));
+                    }
+                }
+
+                //save the loaded value in the specified var or field
+                boolean isLocalVar = localVarScope.containsKey(assign.var.name);
+
+                if(isLocalVar){
+                    switch(localVarScope.get(assign.var.name).type){
+                        case "int":
+                            mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(assign.var.name).location);
+                            break;
+                        case "boolean":
+                            mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(assign.var.name).location);
+                            break;
+                        case "char":
+                            mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(assign.var.name).location);
+                            break;
+                        default:
+                            mv.visitVarInsn(Opcodes.ASTORE, localVarScope.get(assign.var.name).location);
+                    }
+                }else{
+                    switch(classFields.get(assign.var.name)){
+                        case "int":
+                            mv.visitFieldInsn(Opcodes.PUTFIELD, type, assign.var.name, "I");
+                            break;
+                        case "boolean":
+                            mv.visitFieldInsn(Opcodes.PUTFIELD, type, assign.var.name, "Z");
+                            break;
+                        case "char":
+                            mv.visitFieldInsn(Opcodes.PUTFIELD, type, assign.var.name, "C");
+                            break;
+                        default:
+                            mv.visitFieldInsn(Opcodes.PUTFIELD, type, assign.var.name, classFields.get(expression.name));
+                    }
+                }
             }
         }
 
