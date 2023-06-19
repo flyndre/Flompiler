@@ -214,12 +214,12 @@ public class BytecodeGenerator {
         HashMap<String, LocalVar> localVarScope = new HashMap<>();//key is the name of the variable, LocalVar contains type and save location
 
         //get all fields with default values
-        /*List<Field> defaultFields = new ArrayList<>();
+        List<Field> defaultFields = new ArrayList<>();
         for(int i=0;i<fields.size();i++){
             if(!fields.get(i).standardValue.equals(null)){
                 defaultFields.add(fields.get(i));
             }
-        }*/
+        }
 
         //get all constructors out of the methods
         List<Method> constructors = new ArrayList<>();
@@ -282,6 +282,35 @@ public class BytecodeGenerator {
             //hier kommt der code für initialisierung im Kontruktor
             consMeth.visitVarInsn(Opcodes.ALOAD, 0);
             consMeth.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+
+            for(int a=0; a<defaultFields.size();a++){
+                switch (defaultFields.get(a).type){
+                    case "int":
+                        consMeth.visitLdcInsn(Integer.valueOf(defaultFields.get(a).standardValue));
+                        consMeth.visitFieldInsn(Opcodes.PUTFIELD, type, defaultFields.get(a).name, "I");
+                        break;
+                    case "boolean":
+                        if(defaultFields.get(a).standardValue == "true"){
+                            consMeth.visitInsn(Opcodes.ICONST_1);
+                        }else{
+                            consMeth.visitInsn(Opcodes.ICONST_0);
+                        }
+                        consMeth.visitFieldInsn(Opcodes.PUTFIELD, type, defaultFields.get(a).name, "Z");
+                        break;
+                    case "char":
+                        int charToInt = Character.getNumericValue(defaultFields.get(a).standardValue.charAt(0));
+                        consMeth.visitLdcInsn(Integer.valueOf(charToInt));
+                        consMeth.visitFieldInsn(Opcodes.PUTFIELD, type, defaultFields.get(a).name, "C");
+                        break;
+                    default:
+                        /*HashMap<String, LocalVar> scope = new HashMap<>();
+                        New n = new New();
+                        n.type = defaultFields.get(a).type;
+                        n.constructorParams = defaultFields.get(a).
+                        Expr e = generateByteCodeForNewExpr(consMeth, n, scope);
+                        consMeth.visitFieldInsn(Opcodes.PUTFIELD, type, defaultFields.get(a).name, defaultFields.get(a).type);*/
+                }
+            }
 
             //save all params to local variables
             for(int a = 0; a<thisConstructor.parameter.size();a++){
