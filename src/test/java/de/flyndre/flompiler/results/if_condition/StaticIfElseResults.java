@@ -72,7 +72,7 @@ public class StaticIfElseResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "StaticIf";
+            clazz.name = "StaticIfElse";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
