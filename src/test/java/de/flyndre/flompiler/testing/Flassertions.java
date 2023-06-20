@@ -30,7 +30,7 @@ public class Flassertions {
     }
 
     public static void assertClassNameEquals(Object instance, String className) {
-        Assertions.assertEquals(instance.getClass().getName(), className);
+        Assertions.assertEquals(className, instance.getClass().getName());
     }
 
     public static void assertClassDeclaresField(Object instance, Field field) {
