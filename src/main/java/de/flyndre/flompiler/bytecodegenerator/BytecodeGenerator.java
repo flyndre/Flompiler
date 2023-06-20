@@ -490,6 +490,34 @@ public class BytecodeGenerator {
                             mv.visitFieldInsn(Opcodes.PUTFIELD, type, assign.var.name, classFields.get(expression.name));
                     }
                 }
+            }else if(se instanceof Unary u){
+                //generate code for unary expression
+                Expr expression = generateByteCodeForExpressions(mv, u.expression, localVarScope);
+
+                //load the expression value (only int possible in unary)
+                if(expression.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ILOAD, localVarScope.get(expression.name).location);
+                }else{
+                    mv.visitFieldInsn(Opcodes.GETFIELD, type, expression.name, "I");
+                }
+
+                //execute the operator
+                mv.visitInsn(Opcodes.ICONST_1);
+                if(u.operator == "++"){
+                    //inkrement the value
+                    mv.visitInsn(Opcodes.IADD);
+                }else{
+                    //dekrement the value
+                    mv.visitInsn(Opcodes.ISUB);
+                }
+
+
+                //save the value
+                if(expression.type == ExprType.LocalVar){
+                    mv.visitVarInsn(Opcodes.ISTORE, localVarScope.get(expression.name).location);
+                }else{
+                    mv.visitFieldInsn(Opcodes.PUTFIELD, type, expression.name, "I");
+                }
             }
         }
 
