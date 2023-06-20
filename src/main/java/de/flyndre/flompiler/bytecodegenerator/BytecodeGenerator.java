@@ -284,6 +284,8 @@ public class BytecodeGenerator {
             consMeth.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
 
             for(int a=0; a<defaultFields.size();a++){
+                consMeth.visitVarInsn(Opcodes.ALOAD,0);
+
                 switch (defaultFields.get(a).type){
                     case "int":
                         consMeth.visitLdcInsn(Integer.valueOf(defaultFields.get(a).standardValue));
