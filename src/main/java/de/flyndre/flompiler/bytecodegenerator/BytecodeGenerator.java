@@ -637,13 +637,13 @@ public class BytecodeGenerator {
             variable = generateByteCodeForLocalOrFieldVar(mv, l, localVarScope);
         }else if(expression instanceof Binary b){
             variable = generateByteCodeForBinary(mv, b, localVarScope);
-        }else if(expression instanceof Unary u){
-            variable = generateByteCodeForUnary(mv, u, localVarScope);
         }else if(expression instanceof StatemenExpressionExpression see)
             if(see.statementExpression instanceof MethodCall mc){
                 variable = generateByteCodeForMethodCallExpr(mv, mc, localVarScope);
             }else if(see.statementExpression instanceof New n){
                 variable = generateByteCodeForNewExpr(mv, n, localVarScope);
+            }else if(see.statementExpression instanceof Unary u){
+                variable = generateByteCodeForUnary(mv, u, localVarScope);
             }
         return variable;
     }
