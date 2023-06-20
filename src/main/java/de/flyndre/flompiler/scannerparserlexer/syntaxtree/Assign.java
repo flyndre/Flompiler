@@ -18,6 +18,12 @@ public class Assign extends StatementExpression {
         return null;
     }
 
+
+    public Assign( LocalOrFieldVar var, String operator, Expression expression) {
+        this.var = var;
+        this.operator = operator;
+        this.expression = expression;
+    }
     /**
      * 
      */

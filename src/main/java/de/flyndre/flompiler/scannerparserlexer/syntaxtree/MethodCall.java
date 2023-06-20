@@ -18,6 +18,12 @@ public class MethodCall extends StatementExpression {
         return expr.typeCheck(fields,parameters);
     }
 
+    public MethodCall(Expression expr, String name, List<Expression> expressions) {
+        this.expr = expr;
+        this.name = name;
+        this.expressions = expressions;
+    }
+
     /**
      * 
      */

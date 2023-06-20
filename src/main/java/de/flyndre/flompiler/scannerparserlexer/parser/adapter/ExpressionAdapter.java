@@ -1,28 +1,27 @@
 package de.flyndre.flompiler.scannerparserlexer.parser.adapter;
 
 import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaParser;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.BooleanConst;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Expression;
+import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 
 public class ExpressionAdapter {
-    public static Expression adapt(MiniJavaParser.ExpressionContext ctx){
+    public static Expression adapt(MiniJavaParser.ExpressionContext ctx) throws Exception {
         if(ctx.BOOLEAN() != null){
             return new BooleanConst(Boolean.valueOf(ctx.BOOLEAN().getText()));
         }
         else if(ctx.NAME() != null){
-            //TODO IMPLEMENT
+            return new LocalOrFieldVar(ctx.NAME().getText());
         }
         else if(ctx.CHAR() != null){
-            //TODO IMPLEMENT
+            return new CharConst(ctx.CHAR().getText().charAt(0));
         }
         else if(ctx.STRING() != null){
-            //TODO IMPLEMENT
+            return new StringConst(ctx.STRING().getText());
         }
         else if(ctx.INTEGER() != null){
-            //TODO IMPLEMENT
+            return new IntConst(Integer.parseInt(ctx.INTEGER().getText()));
         }
         else if(ctx.statementexpression() != null){
-            //TODO IMPLEMENT
+            return new StatemenExpressionExpression(StatementExpressionAdapter.adapt(ctx.statementexpression()));
         }
         else if(ctx.equalityexpression() != null){
             //TODO IMPLEMENT

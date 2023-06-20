@@ -13,6 +13,10 @@ public class StatemenExpressionExpression extends Expression {
     public StatemenExpressionExpression() {
     }
 
+    public StatemenExpressionExpression(StatementExpression statementExpression) {
+        this.statementExpression = statementExpression;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return type = statementExpression.typeCheck(fields,parameters);

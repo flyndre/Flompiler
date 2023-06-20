@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 
  */
-public class Unary extends Expression {
+public class Unary extends StatementExpression {
 
     /**
      * Default constructor
@@ -27,5 +27,10 @@ public class Unary extends Expression {
      * 
      */
     public Expression expression;
+
+    public Unary(String operator, Expression expression){
+        this.operator = operator;
+        this.expression = expression;
+    }
 
 }

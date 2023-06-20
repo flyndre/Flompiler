@@ -3,6 +3,7 @@ package de.flyndre.flompiler.scannerparserlexer.parser.adapter;
 import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaParser;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
+import de.flyndre.flompiler.typecheker.utils.LocalVar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class StatementAdapter {
         return new Return(new Null());
     }
 
-    public static List<Statement> adapt(MiniJavaParser.StatementsContext ctx){
+    public static List<Statement> adapt(MiniJavaParser.StatementsContext ctx) throws Exception {
         List<Statement> statements = new ArrayList<>();
         if(ctx.statement() != null){
             statements.add(adaptStatement(ctx.statement()));
@@ -37,7 +38,7 @@ public class StatementAdapter {
         return statements;
     }
 
-    public static Statement adaptStatement(MiniJavaParser.StatementContext ctx){
+    public static Statement adaptStatement(MiniJavaParser.StatementContext ctx) throws Exception {
         if(ctx.returnstatement() != null){
             return adaptReturn(ctx.returnstatement());
         }
@@ -51,27 +52,46 @@ public class StatementAdapter {
             return adaptWhile(ctx.while_());
         }
         else if(ctx.booldeclaration() != null){
-            //TODO IMPLEMENT
+            return adaptBoolDecl(ctx.booldeclaration());
+            //TODO IMPLEMENT ZUWEISUNG
         }
         else if(ctx.chardeclaration() != null){
-            //TODO IMPLEMENT
+            return adaptCharDecl(ctx.chardeclaration());
+            //TODO IMPLEMENT ZUWEISUNG
         }
         else if(ctx.stringdeclaration() != null){
-            //TODO IMPLEMENT
+            return adaptStringDecl(ctx.stringdeclaration());
+            //TODO IMPLEMENT ZUWEISUNG
         }
         else if(ctx.intdeclaration() != null){
-            //TODO IMPLEMENT
+            return adaptIntDecl(ctx.intdeclaration());
+            //TODO IMPLEMENT ZUWEISUNG
         }
         else if(ctx.expressionstatement() != null){
-            //TODO IMPLEMENT
+            //return adaptExpressionStatement(ctx.booldeclaration());
+            //TODO IMPLEMENT ZUWEISUNG
         }
         else if(ctx.emptystatement() != null){
-            //TODO IMPLEMENT
+            //return adaptEmptyStatement(ctx.booldeclaration());
+            //TODO IMPLEMENT ZUWEISUNG
         }
         throw new RuntimeException();
     }
 
-    public static While adaptWhile(MiniJavaParser.WhileContext ctx){
+
+    public static LocalVarDecl adaptBoolDecl(MiniJavaParser.BooldeclarationContext ctx){
+        return new LocalVarDecl(ctx.NAME().getText(), "boolean");
+    }
+    public static LocalVarDecl adaptCharDecl(MiniJavaParser.ChardeclarationContext ctx){
+        return new LocalVarDecl(ctx.NAME().getText(), "char");
+    }
+    public static LocalVarDecl adaptStringDecl(MiniJavaParser.StringdeclarationContext ctx){
+        return new LocalVarDecl(ctx.NAME().getText(), "String");
+    }
+    public static LocalVarDecl adaptIntDecl(MiniJavaParser.IntdeclarationContext ctx){
+        return new LocalVarDecl(ctx.NAME().getText(), "int");
+    }
+    public static While adaptWhile(MiniJavaParser.WhileContext ctx) throws Exception {
         if(ctx.expression() != null && ctx.statement() != null){
             Expression exp = ExpressionAdapter.adapt(ctx.expression());
             Statement statement = adaptStatement(ctx.statement());
@@ -85,7 +105,7 @@ public class StatementAdapter {
         throw new RuntimeException();
     }
 
-    public static If adaptIf(MiniJavaParser.IfstatementContext ctx){
+    public static If adaptIf(MiniJavaParser.IfstatementContext ctx) throws Exception {
         if(ctx.statement() != null && ctx.expression() != null){
             Expression e = ExpressionAdapter.adapt(ctx.expression());
             Statement ifSatement =  adaptStatement(ctx.statement());
@@ -99,7 +119,7 @@ public class StatementAdapter {
         throw new RuntimeException();
     }
 
-    public static If adaptIfElse(MiniJavaParser.IfelsestatementContext ctx){
+    public static If adaptIfElse(MiniJavaParser.IfelsestatementContext ctx) throws Exception {
         if(ctx.statement().size() != 0 && ctx.expression() != null){
             Expression e = ExpressionAdapter.adapt(ctx.expression());
             Statement ifSatement =  adaptStatement(ctx.statement(0));

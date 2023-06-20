@@ -25,4 +25,9 @@ public class LocalVarDecl extends Statement {
      */
     public String name;
 
+    public LocalVarDecl( String name, String type){
+        this.name = name;
+        this.type = type;
+    }
+
 }

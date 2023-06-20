@@ -3,9 +3,8 @@ package de.flyndre.flompiler.scannerparserlexer.parser.adapter;
 import de.flyndre.flompiler.scannerparserlexer.parser.MiniJavaParser;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Assign;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.LocalOrFieldVar;
-import de.flyndre.flompiler.scannerparserlexer.syntaxtree.StatementExpression;
 
-public class AssignmentAdapter {
+public class AssignmentContextAdapter {
     public static Assign adapt(MiniJavaParser.AssignmentContext assignment) throws Exception {
 
         String operator = "";
@@ -25,7 +24,6 @@ public class AssignmentAdapter {
         else if(assignment.assignmentoperator().TIMESEQUAL() != null){
             operator = "*=";
         }
-
 
         return new Assign(new LocalOrFieldVar(assignment.NAME().getText()), operator, AssignmentExpressionAdapter.adapt(assignment.assignmentexpression()));
     }

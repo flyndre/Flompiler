@@ -13,6 +13,10 @@ public class LocalOrFieldVar extends Expression {
     public LocalOrFieldVar() {
     }
 
+    public LocalOrFieldVar(String name) {
+        this.name = name;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         return type;
