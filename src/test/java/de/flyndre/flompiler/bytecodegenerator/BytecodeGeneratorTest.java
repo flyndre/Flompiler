@@ -97,7 +97,7 @@ public class BytecodeGeneratorTest {
 
     @Test
     @DisplayName("TypeChecker: Boolean Method Class with Boolean Parameter")
-    public void testFlompilerBooleanMethodParametersClass() {
+    public void testBooleanMethodParametersClass() {
         testBytecodeGenerationSuccess(BooleanMethodClassResults.TYPED_AST, "/methods/parameters/BooleanMethod.class");
         Object instance = Fleflection.getReflectionInstance("/methods/parameters", "BooleanMethod");
         Flassertions.assertClassNameEquals(instance, "BooleanMethod");
@@ -105,7 +105,7 @@ public class BytecodeGeneratorTest {
 
     @Test
     @DisplayName("TypeChecker: Boolean Method Class with returned Boolean Parameter")
-    public void testFlompilerBooleanMethodReturnedParametersClass() {
+    public void testBooleanMethodReturnedParametersClass() {
         testBytecodeGenerationSuccess(BooleanMethodReturnClassResults.TYPED_AST, "/methods/parameters/BooleanMethodReturn.class");
         Object instance = Fleflection.getReflectionInstance("/methods/parameters", "BooleanMethodReturn");
         Flassertions.assertClassNameEquals(instance, "BooleanMethodReturn");
@@ -113,7 +113,7 @@ public class BytecodeGeneratorTest {
 
     @Test
     @DisplayName("TypeChecker: Integer Method Class with increased Integer Parameter")
-    public void testFlompilerIntegerMethodParametersClass() {
+    public void testIntegerMethodParametersClass() {
         testBytecodeGenerationSuccess(IntegerMethodClassResults.TYPED_AST, "/methods/parameters/IntegerMethod.class");
         Object instance = Fleflection.getReflectionInstance("/methods/parameters", "IntegerMethod");
         Flassertions.assertClassNameEquals(instance, "IntegerMethod");
@@ -121,7 +121,7 @@ public class BytecodeGeneratorTest {
 
     @Test
     @DisplayName("TypeChecker: Char Method Class with returned Char Parameter")
-    public void testFlompilerCharMethodParametersClass() {
+    public void testCharMethodParametersClass() {
         testBytecodeGenerationSuccess(CharMethodClassResults.TYPED_AST, "/methods/parameters/CharMethod.class");
         Object instance = Fleflection.getReflectionInstance("/methods/parameters", "CharMethod");
         Flassertions.assertClassNameEquals(instance, "CharMethod");
@@ -132,8 +132,8 @@ public class BytecodeGeneratorTest {
     // STATIC IF AND IF-ELSE
 
     @Test
-    @DisplayName("Flompiler: Static If Condition")
-    public void testFlompilerStaticIf() {
+    @DisplayName("TypeChecker: Static If Condition")
+    public void testStaticIf() {
         testBytecodeGenerationSuccess(StaticIfResults.TYPED_AST, "/if_condition/StaticIf.class");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "StaticIf");
         Flassertions.assertClassNameEquals(instance, "StaticIf");
@@ -150,8 +150,8 @@ public class BytecodeGeneratorTest {
     }
 
     @Test
-    @DisplayName("Flompiler: Static If-Else Condition")
-    public void testFlompilerStaticIfElse() {
+    @DisplayName("TypeChecker: Static If-Else Condition")
+    public void testStaticIfElse() {
         testBytecodeGenerationSuccess(StaticIfElseResults.TYPED_AST, "/if_condition/StaticIfElse.class");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "StaticIfElse");
         Flassertions.assertClassNameEquals(instance, "StaticIfElse");
@@ -162,8 +162,8 @@ public class BytecodeGeneratorTest {
     // DYNAMIC IF AND IF-ELSE
 
     @Test
-    @DisplayName("Flompiler: Dynamic If Condition")
-    public void testFlompilerDynamicIf() {
+    @DisplayName("TypeChecker: Dynamic If Condition")
+    public void testDynamicIf() {
         testBytecodeGenerationSuccess(DynamicIfResults.TYPED_AST, "/if_condition/DynamicIf.class");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIf");
         Flassertions.assertClassNameEquals(instance, "DynamicIf");
@@ -171,7 +171,7 @@ public class BytecodeGeneratorTest {
 
 //    @Test
 //    @DisplayName("Flompiler: Dynamic If-Else Condition")
-//    public void testFlompilerDynamicIfElse() {
+//    public void testDynamicIfElse() {
 //        testBytecodeGenerationSuccess(DynamicIfElseResults.TYPED_AST, "/if_condition/DynamicIfElse.class");
 //        Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIfElse");
 //        Flassertions.assertClassNameEquals(instance, "DynamicIfElse");
