@@ -1,15 +1,12 @@
 package de.flyndre.flompiler;
 
+import de.flyndre.flompiler.testing.Flassertions;
+import de.flyndre.flompiler.testing.Fleflection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 public class FlompilerTest {
 
@@ -45,36 +42,6 @@ public class FlompilerTest {
         Assertions.assertThrows(Exception.class, createCompilationExecutable(inputFilePath));
     }
 
-    /**
-     * Creates an instance of the given class.
-     * @param inputFileFolder the folder in which the class' class file lays
-     * @param inputClassName the name of the class (not the class file!)
-     * @return an instance of the class
-     */
-    public Object getReflectionInstance(String inputFileFolder, String inputClassName) {
-        try {
-            File inputFolder = new File( TestConstants.RESOURCES_ROOT + inputFileFolder);
-            URLClassLoader classLoader = new URLClassLoader(
-                    new URL[]{ inputFolder.toURI().toURL() },
-                    Thread.currentThread().getContextClassLoader()
-            );
-            Class<?> clazz = Class.forName(inputClassName, true, classLoader);
-            return clazz.getDeclaredConstructor().newInstance();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("The folder path is malformed.", e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("There is no class with name " + inputClassName + ".", e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException("The given class cannot be instanced (is abstract).", e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("The given class cannot be instanced (constructor is not public).", e);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("The given class cannot be instanced (no matching constructor).", e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException("The given class cannot be instanced (its constructor threw an exception).", e);
-        }
-    }
-
 
 
     // EMPTY CLASS
@@ -83,7 +50,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Empty Class")
     public void testFlompilerEmptyClass() {
         testParsingSuccess("/basic/EmptyClass.java");
-        Object instance = getReflectionInstance("/basic", "EmptyClass");
+        Object instance = Fleflection.getReflectionInstance("/basic", "EmptyClass");
         Flassertions.assertClassNameEquals(instance, "EmptyClass");
     }
 
@@ -101,7 +68,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Boolean Attribute Class")
     public void testFlompilerBooleanAttributeClass() {
         testParsingSuccess("/attributes/BooleanClass.java");
-        Object instance = getReflectionInstance("/attributes", "BooleanClass");
+        Object instance = Fleflection.getReflectionInstance("/attributes", "BooleanClass");
         Flassertions.assertClassNameEquals(instance, "BooleanClass");
     }
 
@@ -119,7 +86,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Boolean Method Class")
     public void testFlompilerBooleanMethodClass() {
         testParsingSuccess("/methods/parameterless/BooleanMethod.java");
-        Object instance = getReflectionInstance("/methods/parameterless", "BooleanMethod");
+        Object instance = Fleflection.getReflectionInstance("/methods/parameterless", "BooleanMethod");
         Flassertions.assertClassNameEquals(instance, "BooleanMethod");
     }
 
@@ -137,7 +104,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Boolean Method Class with Boolean Parameter")
     public void testFlompilerBooleanMethodParametersClass() {
         testParsingSuccess("/methods/parameters/BooleanMethod.java");
-        Object instance = getReflectionInstance("/methods/parameters", "BooleanMethod");
+        Object instance = Fleflection.getReflectionInstance("/methods/parameters", "BooleanMethod");
         Flassertions.assertClassNameEquals(instance, "BooleanMethod");
     }
 
@@ -145,7 +112,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Boolean Method Class with returned Boolean Parameter")
     public void testFlompilerBooleanMethodReturnedParametersClass() {
         testParsingSuccess("/methods/parameters/BooleanMethodReturn.java");
-        Object instance = getReflectionInstance("/methods/parameters", "BooleanMethodReturn");
+        Object instance = Fleflection.getReflectionInstance("/methods/parameters", "BooleanMethodReturn");
         Flassertions.assertClassNameEquals(instance, "BooleanMethodReturn");
     }
 
@@ -153,7 +120,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Integer Method Class with increased Integer Parameter")
     public void testFlompilerIntegerMethodParametersClass() {
         testParsingSuccess("/methods/parameters/IntegerMethod.java");
-        Object instance = getReflectionInstance("/methods/parameters", "IntegerMethod");
+        Object instance = Fleflection.getReflectionInstance("/methods/parameters", "IntegerMethod");
         Flassertions.assertClassNameEquals(instance, "IntegerMethod");
     }
 
@@ -161,7 +128,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Char Method Class with returned Char Parameter")
     public void testFlompilerCharMethodParametersClass() {
         testParsingSuccess("/methods/parameters/CharMethod.java");
-        Object instance = getReflectionInstance("/methods/parameters", "CharMethod");
+        Object instance = Fleflection.getReflectionInstance("/methods/parameters", "CharMethod");
         Flassertions.assertClassNameEquals(instance, "CharMethod");
     }
 
@@ -173,7 +140,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Static If Condition")
     public void testFlompilerStaticIf() {
         testParsingSuccess("/if_condition/StaticIf.java");
-        Object instance = getReflectionInstance("/if_condition", "StaticIf");
+        Object instance = Fleflection.getReflectionInstance("/if_condition", "StaticIf");
         Flassertions.assertClassNameEquals(instance, "StaticIf");
     }
 
@@ -181,7 +148,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Static If-Else Condition")
     public void testFlompilerStaticIfElse() {
         testParsingSuccess("/if_condition/StaticIfElse.java");
-        Object instance = getReflectionInstance("/if_condition", "StaticIfElse");
+        Object instance = Fleflection.getReflectionInstance("/if_condition", "StaticIfElse");
         Flassertions.assertClassNameEquals(instance, "StaticIfElse");
     }
 
@@ -193,7 +160,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Dynamic If Condition")
     public void testFlompilerDynamicIf() {
         testParsingSuccess("/if_condition/DynamicIf.java");
-        Object instance = getReflectionInstance("/if_condition", "DynamicIf");
+        Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIf");
         Flassertions.assertClassNameEquals(instance, "DynamicIf");
     }
 
@@ -201,7 +168,7 @@ public class FlompilerTest {
     @DisplayName("Flompiler: Dynamic If-Else Condition")
     public void testFlompilerDynamicIfElse() {
         testParsingSuccess("/if_condition/DynamicIfElse.java");
-        Object instance = getReflectionInstance("/if_condition", "DynamicIfElse");
+        Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIfElse");
         Flassertions.assertClassNameEquals(instance, "DynamicIfElse");
     }
 }

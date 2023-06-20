@@ -1,4 +1,4 @@
-package de.flyndre.flompiler;
+package de.flyndre.flompiler.testing;
 
 import com.google.gson.Gson;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Method;

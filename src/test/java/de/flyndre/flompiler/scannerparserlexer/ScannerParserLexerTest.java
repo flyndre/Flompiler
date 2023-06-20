@@ -1,6 +1,6 @@
 package de.flyndre.flompiler.scannerparserlexer;
 
-import de.flyndre.flompiler.Flassertions;
+import de.flyndre.flompiler.testing.Flassertions;
 import de.flyndre.flompiler.TestConstants;
 import de.flyndre.flompiler.results.attribute_assignments.BooleanAssignmentResults;
 import de.flyndre.flompiler.results.attribute_assignments.CharAssignmentResults;

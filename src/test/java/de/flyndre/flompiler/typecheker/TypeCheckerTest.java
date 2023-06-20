@@ -1,6 +1,6 @@
 package de.flyndre.flompiler.typecheker;
 
-import de.flyndre.flompiler.Flassertions;
+import de.flyndre.flompiler.testing.Flassertions;
 import de.flyndre.flompiler.results.attributes.BooleanClassResults;
 import de.flyndre.flompiler.results.attributes.CharClassResults;
 import de.flyndre.flompiler.results.attributes.IntegerClassResults;
