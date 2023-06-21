@@ -32,14 +32,22 @@ public class CharMethodClassResults {
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
+                    var parameter = new Parameter();
+                    parameter.name = "symbol";
+                    parameter.type = "char";
+                    method.parameter.add(parameter);
+                }
+                {
                     var block = new Block();
                     block.statements = new ArrayList<>();
                     {
                         var statement = new Return();
                         {
-                            var expression = new CharConst();
-                            expression.value = 'X';
-                            statement.expression = expression;
+                            var parameterVar = new LocalOrFieldVar();
+                            parameterVar.name = "symbol";
+                            // TODO: Remove because typecheck is responsible for this
+                            parameterVar.type = "char";
+                            statement.expression = parameterVar;
                         }
                         block.statements.add(statement);
                     }
@@ -56,6 +64,7 @@ public class CharMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);
@@ -82,6 +91,12 @@ public class CharMethodClassResults {
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
+                    var parameter = new Parameter();
+                    parameter.name = "symbol";
+                    parameter.type = "char";
+                    method.parameter.add(parameter);
+                }
+                {
                     var block = new Block();
                     block.type = "char";
                     block.statements = new ArrayList<>();
@@ -89,10 +104,10 @@ public class CharMethodClassResults {
                         var statement = new Return();
                         statement.type = "char";
                         {
-                            var expression = new CharConst();
-                            expression.value = 'X';
-                            expression.type = "char";
-                            statement.expression = expression;
+                            var parameterVar = new LocalOrFieldVar();
+                            parameterVar.name = "symbol";
+                            parameterVar.type = "char";
+                            statement.expression = parameterVar;
                         }
                         block.statements.add(statement);
                     }

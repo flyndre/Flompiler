@@ -102,7 +102,7 @@ public class BooleanMethodReturnClassResults {
                         var statement = new Return();
                         statement.type = "boolean";
                         {
-                            var expression = new InstVar();
+                            var expression = new LocalOrFieldVar();
                             expression.type = "boolean";
                             expression.name = "isTrue";
                             statement.expression = expression;

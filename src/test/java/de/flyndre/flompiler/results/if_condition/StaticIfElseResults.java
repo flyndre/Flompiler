@@ -35,13 +35,44 @@ public class StaticIfElseResults {
                     var block = new Block();
                     block.statements = new ArrayList<>();
                     {
-                        var statement = new Return();
+                        var statement = new If();
                         {
-                            var expression = new BooleanConst();
-                            expression.value = true;
-                            statement.expression = expression;
+                            var ifCondition = new BooleanConst();
+                            ifCondition.value = false;
+                            ifCondition.type = "int";
+                            statement.condition = ifCondition;
+                        }
+                        {
+                            var ifBlock = new Return();
+                            {
+                                var returnValue = new IntConst();
+                                returnValue.value = 1;
+                                returnValue.type = "int";
+                                ifBlock.expression = returnValue;
+                            }
+                            statement.ifStatement = ifBlock;
+                        }
+                        {
+                            var elseBlock = new Return();
+                            {
+                                var returnValue = new IntConst();
+                                returnValue.value = 2;
+                                returnValue.type = "int";
+                                elseBlock.expression = returnValue;
+                            }
+                            statement.elseStatement = elseBlock;
                         }
                         block.statements.add(statement);
+                    }
+                    {
+                        var returnStatement = new Return();
+                        {
+                            var returnValue = new IntConst();
+                            returnValue.value = 3;
+                            returnValue.type = "int";
+                            returnStatement.expression = returnValue;
+                        }
+                        block.statements.add(returnStatement);
                     }
                     method.statement = block;
                 }
@@ -86,15 +117,48 @@ public class StaticIfElseResults {
                     block.type = "int";
                     block.statements = new ArrayList<>();
                     {
-                        var statement = new Return();
+                        var statement = new If();
                         statement.type = "int";
                         {
-                            var expression = new BooleanConst();
-                            expression.value = true;
-                            expression.type = "int";
-                            statement.expression = expression;
+                            var ifCondition = new BooleanConst();
+                            ifCondition.value = false;
+                            ifCondition.type = "int";
+                            statement.condition = ifCondition;
+                        }
+                        {
+                            var ifBlock = new Return();
+                            ifBlock.type = "int";
+                            {
+                                var returnValue = new IntConst();
+                                returnValue.value = 1;
+                                returnValue.type = "int";
+                                ifBlock.expression = returnValue;
+                            }
+                            statement.ifStatement = ifBlock;
+                        }
+                        {
+                            var elseBlock = new Return();
+                            elseBlock.type = "int";
+                            {
+                                var returnValue = new IntConst();
+                                returnValue.value = 2;
+                                returnValue.type = "int";
+                                elseBlock.expression = returnValue;
+                            }
+                            statement.elseStatement = elseBlock;
                         }
                         block.statements.add(statement);
+                    }
+                    {
+                        var returnStatement = new Return();
+                        returnStatement.type = "int";
+                        {
+                            var returnValue = new IntConst();
+                            returnValue.value = 3;
+                            returnValue.type = "int";
+                            returnStatement.expression = returnValue;
+                        }
+                        block.statements.add(returnStatement);
                     }
                     method.statement = block;
                 }
@@ -109,7 +173,6 @@ public class StaticIfElseResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
-                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);

@@ -160,6 +160,8 @@ public class FlompilerTest {
         testParsingSuccess("/if_condition/StaticIf.java");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "StaticIf");
         Flassertions.assertClassNameEquals(instance, "StaticIf");
+        // Method should return 1
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1);
     }
 
     @Test
@@ -168,6 +170,8 @@ public class FlompilerTest {
         testParsingSuccess("/if_condition/StaticIfElse.java");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "StaticIfElse");
         Flassertions.assertClassNameEquals(instance, "StaticIfElse");
+        // Method should return 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2);
     }
 
 
@@ -180,6 +184,9 @@ public class FlompilerTest {
         testParsingSuccess("/if_condition/DynamicIf.java");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIf");
         Flassertions.assertClassNameEquals(instance, "DynamicIf");
+        // Function arg is "returnOne"
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, true);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2, false);
     }
 
     @Test
@@ -188,6 +195,9 @@ public class FlompilerTest {
         testParsingSuccess("/if_condition/DynamicIfElse.java");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIfElse");
         Flassertions.assertClassNameEquals(instance, "DynamicIfElse");
+        // Function arg is "returnOne", but with else
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, true);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2, false);
     }
 
 

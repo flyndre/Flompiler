@@ -30,12 +30,12 @@ public final class BooleanClassResults {
             booleanClass.name = "BooleanClass";
             booleanClass.fields = new ArrayList<>();
             {
-                var isTrueField = new Field();
-                isTrueField.access = "public";
-                isTrueField.type = "boolean";
-                isTrueField.name = "isTrue";
-                isTrueField.standardValue = "false";
-                booleanClass.fields.add(isTrueField);
+                var isFalseField = new Field();
+                isFalseField.access = "public";
+                isFalseField.type = "boolean";
+                isFalseField.name = "isFalse";
+                isFalseField.standardValue = "false";
+                booleanClass.fields.add(isFalseField);
             }
             booleanClass.methods = new ArrayList<>();
             {

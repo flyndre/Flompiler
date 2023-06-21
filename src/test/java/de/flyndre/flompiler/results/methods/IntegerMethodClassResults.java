@@ -32,14 +32,61 @@ public class IntegerMethodClassResults {
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
+                    var parameter = new Parameter();
+                    parameter.name = "number";
+                    parameter.type = "int";
+                    method.parameter.add(parameter);
+                }
+                {
                     var block = new Block();
                     block.statements = new ArrayList<>();
                     {
+                        // int returnValue;
+
+                        var statement = new LocalVarDecl();
+                        statement.type = "int";
+                        statement.name = "returnValue";
+                        block.statements.add(statement);
+                    }
+                    {
+                        // returnValue = number + 2;
+
+                        var statement = new Assign();
+                        statement.type = "void";
+                        statement.operator = "=";
+                        {
+                            var variable = new LocalOrFieldVar();
+                            variable.name = "returnValue";
+                            statement.var = variable;
+                        }
+                        {
+                            var addition = new Binary();
+                            addition.operator = "+";
+                            {
+                                var parameterVar = new LocalOrFieldVar();
+                                parameterVar.name = "number";
+                                parameterVar.type = "int";
+                                addition.expressionLeft = parameterVar;
+                            }
+                            {
+                                var intConst = new IntConst();
+                                intConst.value = 2;
+                                intConst.type = "int";
+                                addition.expressionRight = intConst;
+                            }
+                            statement.expression = addition;
+                        }
+                        block.statements.add(new StatementExprStatement(statement));
+                    }
+                    {
+                        // return returnValue;
+
                         var statement = new Return();
                         {
-                            var expression = new IntConst();
-                            expression.value = 1;
-                            statement.expression = expression;
+                            var returnVar = new LocalOrFieldVar();
+                            returnVar.name = "returnValue";
+                            returnVar.type = "int";
+                            statement.expression = returnVar;
                         }
                         block.statements.add(statement);
                     }
@@ -56,6 +103,7 @@ public class IntegerMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);
@@ -82,17 +130,65 @@ public class IntegerMethodClassResults {
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
+                    var parameter = new Parameter();
+                    parameter.name = "number";
+                    parameter.type = "int";
+                    method.parameter.add(parameter);
+                }
+                {
                     var block = new Block();
                     block.type = "int";
                     block.statements = new ArrayList<>();
                     {
+                        // int returnValue;
+
+                        var statement = new LocalVarDecl();
+                        statement.type = "int";
+                        statement.name = "returnValue";
+                        block.statements.add(statement);
+                    }
+                    {
+                        // returnValue = number + 2;
+
+                        var statement = new Assign();
+                        statement.type = "int";
+                        statement.operator = "=";
+                        {
+                            var variable = new LocalOrFieldVar();
+                            variable.type = "int";
+                            variable.name = "returnValue";
+                            statement.var = variable;
+                        }
+                        {
+                            var addition = new Binary();
+                            addition.operator = "+";
+                            addition.type = "int";
+                            {
+                                var parameterVar = new LocalOrFieldVar();
+                                parameterVar.name = "number";
+                                parameterVar.type = "int";
+                                addition.expressionLeft = parameterVar;
+                            }
+                            {
+                                var intConst = new IntConst();
+                                intConst.value = 2;
+                                intConst.type = "int";
+                                addition.expressionRight = intConst;
+                            }
+                            statement.expression = addition;
+                        }
+                        block.statements.add(new StatementExprStatement(statement));
+                    }
+                    {
+                        // return returnValue;
+
                         var statement = new Return();
                         statement.type = "int";
                         {
-                            var expression = new IntConst();
-                            expression.value = 1;
-                            expression.type = "int";
-                            statement.expression = expression;
+                            var returnVar = new LocalOrFieldVar();
+                            returnVar.name = "returnValue";
+                            returnVar.type = "int";
+                            statement.expression = returnVar;
                         }
                         block.statements.add(statement);
                     }
