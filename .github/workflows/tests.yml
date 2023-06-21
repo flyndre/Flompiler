@@ -49,4 +49,4 @@
         
        #Test the application using Maven - all Tests
        - name: Test with Maven - all
-         run: mvn -DfailIfNoTests=false test --file pom.xml
+         run: mvn -B -DfailIfNoTests=false test --file pom.xml
