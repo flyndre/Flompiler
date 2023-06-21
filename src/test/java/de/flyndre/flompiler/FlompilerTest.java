@@ -202,6 +202,28 @@ public class FlompilerTest {
 
 
 
+    // OPERATORS
+
+    @Test
+    @DisplayName("Flompiler: Pre-Increment")
+    public void testFlompilerPreIncrement() {
+        testParsingSuccess("/operators/PreIncrement.java");
+        Object instance = Fleflection.getReflectionInstance("/operators", "PreIncrement");
+        Flassertions.assertClassNameEquals(instance, "PreIncrement");
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1);
+    }
+
+    @Test
+    @DisplayName("Flompiler: Pre-Decrement")
+    public void testFlompilerPreDecrement() {
+        testParsingSuccess("/operators/PreDecrement.java");
+        Object instance = Fleflection.getReflectionInstance("/operators", "PreDecrement");
+        Flassertions.assertClassNameEquals(instance, "PreDecrement");
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 0);
+    }
+
+
+
     // COMPLEX TESTS
 
     @Test
