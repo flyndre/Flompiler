@@ -1,7 +1,5 @@
 package de.flyndre.flompiler.scannerparserlexer.syntaxtree;
 
-import jdk.jshell.spi.ExecutionControl;
-
 import java.util.List;
 
 /**
@@ -12,6 +10,9 @@ public class StatementExprStatement extends Statement {
     /**
      * Default constructor
      */
+    public StatementExprStatement(StatementExpression statementExpression) {
+        this.statementExpression = statementExpression;
+    }
     public StatementExprStatement() {
     }
 

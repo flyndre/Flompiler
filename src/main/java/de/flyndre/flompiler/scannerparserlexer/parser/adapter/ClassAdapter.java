@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class ClassAdapter {
-    public static List<Class> adapt(MiniJavaParser.ClassesContext ctx) {
+    public static List<Class> adapt(MiniJavaParser.ClassesContext ctx) throws Exception {
         List<Class> elements = new ArrayList<>();
         if(ctx.classes() != null){
              List<Class> subs = ClassAdapter.adapt(ctx.classes());

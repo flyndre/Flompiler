@@ -68,8 +68,7 @@ public class StatementAdapter {
             //TODO IMPLEMENT ZUWEISUNG
         }
         else if(ctx.expressionstatement() != null){
-            //return adaptExpressionStatement(ctx.booldeclaration());
-            //TODO IMPLEMENT ZUWEISUNG
+            return new StatementExprStatement(ExpressionStatementAdapter.adaptExpressionStatement(ctx.expressionstatement().statementexpression()));
         }
         else if(ctx.emptystatement() != null){
             //return adaptEmptyStatement(ctx.booldeclaration());
@@ -134,7 +133,7 @@ public class StatementAdapter {
         throw new RuntimeException();
     }
 
-    public static List<Method> adaptMethods(MiniJavaParser.ClassbodyContext ctx) {
+    public static List<Method> adaptMethods(MiniJavaParser.ClassbodyContext ctx) throws Exception {
         List<Method> methods = new ArrayList<>();
         if(ctx != null && ctx.methoddeclaration() != null) {
             methods.add(MethodAdapter.adapt(ctx.methoddeclaration()));

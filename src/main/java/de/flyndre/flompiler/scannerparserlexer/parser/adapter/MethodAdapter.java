@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MethodAdapter {
 
-    public static Method adapt(MiniJavaParser.MethoddeclarationContext ctx) {
+    public static Method adapt(MiniJavaParser.MethoddeclarationContext ctx) throws Exception {
         if(ctx.type() != null && ctx.NAME() != null && ctx.accessMod() != null){
             Block block = new Block();
 

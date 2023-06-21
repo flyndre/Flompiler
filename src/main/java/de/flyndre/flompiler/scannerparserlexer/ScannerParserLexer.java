@@ -12,11 +12,12 @@ import java.io.IOException;
 import java.util.BitSet;
 
 public class ScannerParserLexer {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String as = "public class abc{\n" +
                 "\n" +
-                "public String abasc(){\n" +
-                "        if(true){\n" +
+                "public String abasc(int a, int b){\n" +
+                "        b = b+1*2;" +
+                "          if(b){\n" +
                 "            return 1;\n" +
                 "        }else{\n" +
                 "            return 1; \n" +
@@ -49,11 +50,11 @@ public class ScannerParserLexer {
         }
 
     }
-    public static Program compile(String input) {
+    public static Program compile(String input) throws Exception {
         return parse(input);
     }
 
-    private static Program parse(String input) {
+    private static Program parse(String input) throws Exception {
         MiniJavaLexer lexer = new MiniJavaLexer(CharStreams.fromString(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);

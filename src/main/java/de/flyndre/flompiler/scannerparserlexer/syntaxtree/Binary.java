@@ -13,6 +13,12 @@ public class Binary extends Expression {
     public Binary() {
     }
 
+    public Binary(Expression expressionLeft, String operator, Expression expressionRight) {
+        this.expressionLeft = expressionLeft;
+        this.operator = operator;
+        this.expressionRight = expressionRight;
+    }
+
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         String tyl;

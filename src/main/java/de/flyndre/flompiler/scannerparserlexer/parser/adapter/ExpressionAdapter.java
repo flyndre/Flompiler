@@ -24,7 +24,7 @@ public class ExpressionAdapter {
             return new StatemenExpressionExpression(StatementExpressionAdapter.adapt(ctx.statementexpression()));
         }
         else if(ctx.equalityexpression() != null){
-            //TODO IMPLEMENT
+            return EqualityExpressionAdapter.adapt(ctx.equalityexpression());
         }
         throw new RuntimeException();
     }

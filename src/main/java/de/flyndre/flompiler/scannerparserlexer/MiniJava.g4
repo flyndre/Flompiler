@@ -1,7 +1,7 @@
 grammar MiniJava;
 
 
-// 1+1 = Statement?
+//TODO: FIX THAT
 NEW                 : 'new';
 THIS                : 'this';
 WHILE               : 'while';
@@ -46,16 +46,14 @@ DIVIDEEQUAL         : '/=';
 PLUSEQUAL           : '+=';
 MINUSEQUAL          : '-=';
 
+program                         : classes;
+classes                         : class classes| ;
 class                           : accessMod CLASS NAME WAVEDBROPEN classbody WAVEDBRCLOSE;
 
 accessMod                       : PUBLIC
                                 | PRIVATE
                                 | PROTECTED
-                                | ;
-
-program                         : classes;
-
-classes                         : class classes| ;
+                                |;
 
 block                           : WAVEDBROPEN WAVEDBRCLOSE |
                                 | WAVEDBROPEN statements WAVEDBRCLOSE;
@@ -83,7 +81,7 @@ statement                       : returnstatement
 ifstatement                     : IF BROPEN expression BRCLOSE statement SEMICOLON
                                 | IF BROPEN expression BRCLOSE block
                                 | IF BROPEN expression BRCLOSE
-                                |IF BROPEN statementexpression BRCLOSE statement SEMICOLON
+                                | IF BROPEN statementexpression BRCLOSE statement SEMICOLON
                                 | IF BROPEN statementexpression BRCLOSE block
                                 | IF BROPEN statementexpression BRCLOSE;
 
@@ -187,6 +185,8 @@ primarynonewarray               : literal
 		                        | fieldaccess
 		                        | methodinvocation;
 
+
+//TODO: FIX THAT 1+1 CANNOT BE USED IN IF
 equalityexpression              : relationalexpression
 		                        | equalityexpression EQUALSSTAT relationalexpression;
 

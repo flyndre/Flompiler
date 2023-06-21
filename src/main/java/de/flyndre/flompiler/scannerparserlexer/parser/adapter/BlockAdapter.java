@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockAdapter {
-    public static Block adapt(MiniJavaParser.BlockContext ctx){
+    public static Block adapt(MiniJavaParser.BlockContext ctx) throws Exception {
 
         List<Statement> stats = new ArrayList<>();
         if(ctx.statements() != null){
