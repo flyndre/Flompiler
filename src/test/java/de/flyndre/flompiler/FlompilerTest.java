@@ -171,4 +171,17 @@ public class FlompilerTest {
         Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIfElse");
         Flassertions.assertClassNameEquals(instance, "DynamicIfElse");
     }
+
+
+
+    // COMPLEX TESTS
+
+    @Test
+    @DisplayName("Flompiler: Complex Test A")
+    public void testFlompilerComplexTestA() {
+        testParsingSuccess("/complete/ComplexTestA.java");
+        Object instance = Fleflection.getReflectionInstance("/complete", "ComplexTestA");
+        Flassertions.assertClassNameEquals(instance, "ComplexTestA");
+    }
+
 }
