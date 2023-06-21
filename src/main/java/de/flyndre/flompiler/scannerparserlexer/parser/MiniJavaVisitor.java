@@ -155,6 +155,24 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitChardeclaration(MiniJavaParser.ChardeclarationContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#intFieldDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntFieldDecl(MiniJavaParser.IntFieldDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#stringFieldDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringFieldDecl(MiniJavaParser.StringFieldDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#charFieldDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharFieldDecl(MiniJavaParser.CharFieldDeclContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#intdeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -62,7 +62,7 @@ public class StatementAdapter {
             return adaptWhile(ctx.while_());
         }
         else if(ctx.booldeclaration() != null){
-            return new DeclarationWithAssignment(adaptBoolDecl(ctx.booldeclaration()), new Assign(new LocalOrFieldVar(ctx.booldeclaration().NAME().getText()), "=", AssignmentExpressionAdapter.adapt(ctx.booldeclaration().assignmentexpression())));
+            return new DeclarationWithAssignment(adaptBoolDecl(ctx.booldeclaration()), new Assign(new LocalOrFieldVar(ctx.booldeclaration().NAME().getText()), "=", new BooleanConst(Boolean.getBoolean(ctx.booldeclaration().BOOLEAN().getText()))));
         }
         else if(ctx.chardeclaration() != null){
             return new DeclarationWithAssignment(adaptCharDecl(ctx.chardeclaration()), new Assign(new LocalOrFieldVar(ctx.chardeclaration().NAME().getText()), "=", AssignmentExpressionAdapter.adapt(ctx.chardeclaration().assignmentexpression())));
