@@ -17,6 +17,7 @@ public class ScannerParserLexer {
                 "\n" +
                 "public String abasc(int a, int b){\n" +
                 "        b = b+1*2;" +
+                "              abc(1+1);"          +
                 "          if(b){\n" +
                 "            return 1;\n" +
                 "        }else{\n" +
