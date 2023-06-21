@@ -30,7 +30,7 @@ public class ScannerParserLexerTest {
      * @param inputFilePath path to the .java file
      * @param expected the expected AST
      */
-    private void testSuccess(String inputFilePath, Program expected) {
+    private void testSuccess(String inputFilePath, Program expected) throws Exception {
         final var inputPath = TestConstants.RESOURCES_ROOT + inputFilePath;
         final String inputString;
         try {
@@ -64,7 +64,7 @@ public class ScannerParserLexerTest {
 
     @Test
     @DisplayName("ScannerParserLexer: Empty Class")
-    public void testEmptyClass() {
+    public void testEmptyClass() throws Exception {
         testSuccess("/basic/EmptyClass.java", EmptyClassResults.AST);
     }
 
@@ -82,25 +82,25 @@ public class ScannerParserLexerTest {
 
     @Test
     @DisplayName("ScannerParserLexer: Boolean Attribute Class")
-    public void testAttributeBooleanClass() {
+    public void testAttributeBooleanClass() throws Exception {
         testSuccess("/attributes/BooleanClass.java", BooleanClassResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: Integer Attribute Class")
-    public void testAttributeIntegerClass() {
+    public void testAttributeIntegerClass() throws Exception {
         testSuccess("/attributes/IntegerClass.java", IntegerClassResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: Char Attribute Class")
-    public void testAttributeCharClass() {
+    public void testAttributeCharClass() throws Exception {
         testSuccess("/attributes/CharClass.java", CharClassResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: String Attribute Class")
-    public void testAttributeStringClass() {
+    public void testAttributeStringClass() throws Exception {
         testSuccess("/attributes/StringClass.java", StringClassResults.AST);
     }
 
@@ -120,25 +120,25 @@ public class ScannerParserLexerTest {
 
     @Test
     @DisplayName("ScannerParserLexer: Boolean Assigned Attribute Class")
-    public void testAttributeAssignedBooleanClass() {
+    public void testAttributeAssignedBooleanClass() throws Exception {
         testSuccess("/attribute_assignments/BooleanAssignment.java", BooleanAssignmentResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: Integer Assigned Attribute Class")
-    public void testAttributeAssignedIntegerClass() {
+    public void testAttributeAssignedIntegerClass() throws Exception {
         testSuccess("/attribute_assignments/IntegerAssignment.java", IntegerAssignmentResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: Char Assigned Attribute Class")
-    public void testAttributeAssignedCharClass() {
+    public void testAttributeAssignedCharClass() throws Exception {
         testSuccess("/attribute_assignments/CharAssignment.java", CharAssignmentResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: String Assigned Attribute Class")
-    public void testAttributeAssignedStringClass() {
+    public void testAttributeAssignedStringClass() throws Exception {
         testSuccess("/attribute_assignments/StringAssignment.java", StringAssignmentResults.AST);
     }
 
@@ -152,25 +152,25 @@ public class ScannerParserLexerTest {
 
     @Test
     @DisplayName("ScannerParserLexer: Parameterless Boolean Method Class")
-    public void testMethodBooleanParameterlessClass() {
+    public void testMethodBooleanParameterlessClass() throws Exception {
         testSuccess("/methods/parameterless/BooleanMethod.java", BooleanMethodClassResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: Parameterless Integer Method Class")
-    public void testMethodIntegerParameterlessClass() {
+    public void testMethodIntegerParameterlessClass() throws Exception {
         testSuccess("/methods/parameterless/IntegerMethod.java", IntegerMethodClassResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: Parameterless Char Method Class")
-    public void testMethodCharParameterlessClass() {
+    public void testMethodCharParameterlessClass() throws Exception {
         testSuccess("/methods/parameterless/CharMethod.java", CharMethodClassResults.AST);
     }
 
     @Test
     @DisplayName("ScannerParserLexer: Parameterless String Method Class")
-    public void testMethodStringParameterlessClass() {
+    public void testMethodStringParameterlessClass() throws Exception {
         testSuccess("/methods/parameterless/StringMethod.java", StringMethodClassResults.AST);
     }
 
