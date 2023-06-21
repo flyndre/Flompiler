@@ -1,5 +1,10 @@
 package de.flyndre.flompiler.scannerparserlexer;
 
+import de.flyndre.flompiler.results.if_condition.DynamicIfElseResults;
+import de.flyndre.flompiler.results.if_condition.DynamicIfResults;
+import de.flyndre.flompiler.results.if_condition.StaticIfElseResults;
+import de.flyndre.flompiler.results.if_condition.StaticIfResults;
+import de.flyndre.flompiler.results.methods.*;
 import de.flyndre.flompiler.testing.Flassertions;
 import de.flyndre.flompiler.TestConstants;
 import de.flyndre.flompiler.results.attribute_assignments.BooleanAssignmentResults;
@@ -11,11 +16,8 @@ import de.flyndre.flompiler.results.attributes.CharClassResults;
 import de.flyndre.flompiler.results.attributes.IntegerClassResults;
 import de.flyndre.flompiler.results.attributes.StringClassResults;
 import de.flyndre.flompiler.results.basic.EmptyClassResults;
-import de.flyndre.flompiler.results.methods.BooleanMethodClassResults;
-import de.flyndre.flompiler.results.methods.CharMethodClassResults;
-import de.flyndre.flompiler.results.methods.IntegerMethodClassResults;
-import de.flyndre.flompiler.results.methods.StringMethodClassResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
+import de.flyndre.flompiler.testing.Fleflection;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 
@@ -142,13 +144,32 @@ public class ScannerParserLexerTest {
         testSuccess("/attribute_assignments/StringAssignment.java", StringAssignmentResults.AST);
     }
 
+
+
+
     // Failure
 
-    // TODO
+    @Test
+    @DisplayName("ScannerParserLexer: Defective Boolean Assigned Attribute Class")
+    public void testDefectiveAttributeAssignedBooleanClass() {
+        testFailure("/attribute_assignments/defective/BooleanAssignment.java");
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Defective Integer Assigned Attribute Class")
+    public void testDefectiveAttributeAssignedIntegerClass() {
+        testFailure("/attribute_assignments/defective/IntegerAssignment.java");
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Defective Char Assigned Attribute Class")
+    public void testDefectiveAttributeAssignedCharClass() {
+        testFailure("/attribute_assignments/defective/CharAssignment.java");
+    }
 
 
 
-    // EMPTY METHODS
+    // METHODS
 
     @Test
     @DisplayName("ScannerParserLexer: Parameterless Boolean Method Class")
@@ -157,21 +178,52 @@ public class ScannerParserLexerTest {
     }
 
     @Test
-    @DisplayName("ScannerParserLexer: Parameterless Integer Method Class")
+    @DisplayName("ScannerParserLexer: Boolean Method Class With Parameters")
+    public void testMethodBooleanParameterlessReturnClass() {
+        testSuccess("/methods/parameters/BooleanMethodReturn.java", BooleanMethodReturnClassResults.AST);
+    }
+
+    @Test
+    @DisplayName("ScannerParserLexer: Integer Method Class With Parameters")
     public void testMethodIntegerParameterlessClass() {
-        testSuccess("/methods/parameterless/IntegerMethod.java", IntegerMethodClassResults.AST);
+        testSuccess("/methods/parameters/IntegerMethod.java", IntegerMethodClassResults.AST);
     }
 
     @Test
-    @DisplayName("ScannerParserLexer: Parameterless Char Method Class")
+    @DisplayName("ScannerParserLexer: Char Method Class With Parameters")
     public void testMethodCharParameterlessClass() {
-        testSuccess("/methods/parameterless/CharMethod.java", CharMethodClassResults.AST);
+        testSuccess("/methods/parameters/CharMethod.java", CharMethodClassResults.AST);
+    }
+
+
+
+    // STATIC IF AND IF-ELSE
+
+    @Test
+    @DisplayName("Flompiler: Static If Condition")
+    public void testFlompilerStaticIf() {
+        testSuccess("/if_condition/StaticIf.java", StaticIfResults.AST);
     }
 
     @Test
-    @DisplayName("ScannerParserLexer: Parameterless String Method Class")
-    public void testMethodStringParameterlessClass() {
-        testSuccess("/methods/parameterless/StringMethod.java", StringMethodClassResults.AST);
+    @DisplayName("Flompiler: Static If-Else Condition")
+    public void testFlompilerStaticIfElse() {
+        testSuccess("/if_condition/StaticIfElse.java", StaticIfElseResults.AST);
     }
 
+
+
+    // DYNAMIC IF AND IF-ELSE
+
+    @Test
+    @DisplayName("Flompiler: Dynamic If Condition")
+    public void testFlompilerDynamicIf() {
+        testSuccess("/if_condition/DynamicIf.java", DynamicIfResults.AST);
+    }
+
+    @Test
+    @DisplayName("Flompiler: Dynamic If-Else Condition")
+    public void testFlompilerDynamicIfElse() {
+        testSuccess("/if_condition/DynamicIfElse.java", DynamicIfElseResults.AST);
+    }
 }

@@ -39,26 +39,36 @@ public class StaticIfElseResults {
                         {
                             var ifCondition = new BooleanConst();
                             ifCondition.value = false;
-                            ifCondition.type = "int";
+                            ifCondition.type = "boolean";
                             statement.condition = ifCondition;
                         }
                         {
-                            var ifBlock = new Return();
+                            var ifBlock = new Block();
+                            ifBlock.statements = new ArrayList<>();
                             {
-                                var returnValue = new IntConst();
-                                returnValue.value = 1;
-                                returnValue.type = "int";
-                                ifBlock.expression = returnValue;
+                                var returnBlock = new Return();
+                                {
+                                    var returnValue = new IntConst();
+                                    returnValue.value = 1;
+                                    returnValue.type = "int";
+                                    returnBlock.expression = returnValue;
+                                }
+                                ifBlock.statements.add(returnBlock);
                             }
                             statement.ifStatement = ifBlock;
                         }
                         {
-                            var elseBlock = new Return();
+                            var elseBlock = new Block();
+                            elseBlock.statements = new ArrayList<>();
                             {
-                                var returnValue = new IntConst();
-                                returnValue.value = 2;
-                                returnValue.type = "int";
-                                elseBlock.expression = returnValue;
+                                var returnBlock = new Return();
+                                {
+                                    var returnValue = new IntConst();
+                                    returnValue.value = 2;
+                                    returnValue.type = "int";
+                                    returnBlock.expression = returnValue;
+                                }
+                                elseBlock.statements.add(returnBlock);
                             }
                             statement.elseStatement = elseBlock;
                         }
@@ -122,28 +132,40 @@ public class StaticIfElseResults {
                         {
                             var ifCondition = new BooleanConst();
                             ifCondition.value = false;
-                            ifCondition.type = "int";
+                            ifCondition.type = "boolean";
                             statement.condition = ifCondition;
                         }
                         {
-                            var ifBlock = new Return();
+                            var ifBlock = new Block();
                             ifBlock.type = "int";
+                            ifBlock.statements = new ArrayList<>();
                             {
-                                var returnValue = new IntConst();
-                                returnValue.value = 1;
-                                returnValue.type = "int";
-                                ifBlock.expression = returnValue;
+                                var returnBlock = new Return();
+                                returnBlock.type = "int";
+                                {
+                                    var returnValue = new IntConst();
+                                    returnValue.value = 1;
+                                    returnValue.type = "int";
+                                    returnBlock.expression = returnValue;
+                                }
+                                ifBlock.statements.add(returnBlock);
                             }
                             statement.ifStatement = ifBlock;
                         }
                         {
-                            var elseBlock = new Return();
+                            var elseBlock = new Block();
                             elseBlock.type = "int";
+                            elseBlock.statements = new ArrayList<>();
                             {
-                                var returnValue = new IntConst();
-                                returnValue.value = 2;
-                                returnValue.type = "int";
-                                elseBlock.expression = returnValue;
+                                var returnBlock = new Return();
+                                returnBlock.type = "int";
+                                {
+                                    var returnValue = new IntConst();
+                                    returnValue.value = 2;
+                                    returnValue.type = "int";
+                                    returnBlock.expression = returnValue;
+                                }
+                                elseBlock.statements.add(returnBlock);
                             }
                             statement.elseStatement = elseBlock;
                         }
@@ -173,6 +195,7 @@ public class StaticIfElseResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);

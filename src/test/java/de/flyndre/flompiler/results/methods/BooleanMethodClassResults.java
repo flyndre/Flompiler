@@ -39,6 +39,7 @@ public class BooleanMethodClassResults {
                         {
                             var expression = new BooleanConst();
                             expression.value = true;
+                            expression.type = "boolean";
                             statement.expression = expression;
                         }
                         block.statements.add(statement);

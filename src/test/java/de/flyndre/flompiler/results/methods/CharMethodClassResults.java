@@ -45,8 +45,6 @@ public class CharMethodClassResults {
                         {
                             var parameterVar = new LocalOrFieldVar();
                             parameterVar.name = "symbol";
-                            // TODO: Remove because typecheck is responsible for this
-                            parameterVar.type = "char";
                             statement.expression = parameterVar;
                         }
                         block.statements.add(statement);
@@ -64,7 +62,6 @@ public class CharMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
-                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);

@@ -1,15 +1,16 @@
 package de.flyndre.flompiler.typecheker;
 
+import de.flyndre.flompiler.results.if_condition.DynamicIfElseResults;
+import de.flyndre.flompiler.results.if_condition.DynamicIfResults;
+import de.flyndre.flompiler.results.if_condition.StaticIfElseResults;
+import de.flyndre.flompiler.results.if_condition.StaticIfResults;
+import de.flyndre.flompiler.results.methods.*;
 import de.flyndre.flompiler.testing.Flassertions;
 import de.flyndre.flompiler.results.attributes.BooleanClassResults;
 import de.flyndre.flompiler.results.attributes.CharClassResults;
 import de.flyndre.flompiler.results.attributes.IntegerClassResults;
 import de.flyndre.flompiler.results.attributes.StringClassResults;
 import de.flyndre.flompiler.results.basic.EmptyClassResults;
-import de.flyndre.flompiler.results.methods.BooleanMethodClassResults;
-import de.flyndre.flompiler.results.methods.CharMethodClassResults;
-import de.flyndre.flompiler.results.methods.IntegerMethodClassResults;
-import de.flyndre.flompiler.results.methods.StringMethodClassResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -95,21 +96,63 @@ public class TypeCheckerTest {
     }
 
     @Test
-    @DisplayName("TypeChecker: Parameterless Integer Method Class")
-    public void testMethodIntegerParameterlessClass() {
+    @DisplayName("TypeChecker: Parameterless String Method Class")
+    public void testMethodStringParameterlessClass() {
+        testSuccess(StringMethodClassResults.AST, StringMethodClassResults.TYPED_AST);
+    }
+
+
+
+    // METHODS WITH PARAMETERS
+
+    @Test
+    @DisplayName("TypeChecker: Boolean Method Class With Parameters")
+    public void testMethodBooleanClassWithParameters() {
+        testSuccess(BooleanMethodReturnClassResults.AST, BooleanMethodReturnClassResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Integer Method Class With Parameters")
+    public void testMethodIntegerClassWithParameters() {
         testSuccess(IntegerMethodClassResults.AST, IntegerMethodClassResults.TYPED_AST);
     }
 
     @Test
-    @DisplayName("TypeChecker: Parameterless Char Method Class")
-    public void testMethodCharParameterlessClass() {
+    @DisplayName("TypeChecker: Char Method Class With Parameters")
+    public void testMethodCharClassWithParameters() {
         testSuccess(CharMethodClassResults.AST, CharMethodClassResults.TYPED_AST);
     }
 
+
+
+    // STATIC IF AND IF-ELSE
+
     @Test
-    @DisplayName("TypeChecker: Parameterless String Method Class")
-    public void testMethodStringParameterlessClass() {
-        testSuccess(StringMethodClassResults.AST, StringMethodClassResults.TYPED_AST);
+    @DisplayName("TypeChecker: Static If-Condition")
+    public void testMethodStaticIf() {
+        testSuccess(StaticIfResults.AST, StaticIfResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Static If-Else-Condition")
+    public void testMethodStaticIfElse() {
+        testSuccess(StaticIfElseResults.AST, StaticIfElseResults.TYPED_AST);
+    }
+
+
+
+    // DYNAMIC IF AND IF-ELSE
+
+    @Test
+    @DisplayName("TypeChecker: Dynamic If-Condition")
+    public void testMethodDynamicIf() {
+        testSuccess(DynamicIfResults.AST, DynamicIfResults.TYPED_AST);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Dynamic If-Else-Condition")
+    public void testMethodDynamicIfElse() {
+        testSuccess(DynamicIfElseResults.AST, DynamicIfElseResults.TYPED_AST);
     }
 
 }

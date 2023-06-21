@@ -1,11 +1,11 @@
-package de.flyndre.flompiler.results.if_condition;
+package de.flyndre.flompiler.results.operators;
 
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 
 import java.util.ArrayList;
 
-public class DynamicIfResults {
+public class DivideResults {
     /**
      * The manually parsed resulting untyped abstract syntax tree for the class with a boolean method.
      */
@@ -22,7 +22,7 @@ public class DynamicIfResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "DynamicIf";
+            clazz.name = "Divide";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
@@ -33,46 +33,32 @@ public class DynamicIfResults {
                 method.parameter = new ArrayList<>();
                 {
                     var parameter = new Parameter();
-                    parameter.type = "boolean";
-                    parameter.name = "returnOne";
+                    parameter.name = "number";
+                    parameter.type = "int";
                     method.parameter.add(parameter);
                 }
                 {
                     var block = new Block();
                     block.statements = new ArrayList<>();
                     {
-                        var statement = new If();
+                        var statement = new Return();
                         {
-                            var ifCondition = new LocalOrFieldVar();
-                            ifCondition.name = "returnOne";
-                            statement.condition = ifCondition;
-                        }
-                        {
-                            var ifBlock = new Block();
-                            ifBlock.statements = new ArrayList<>();
+                            var addition = new Binary();
+                            addition.operator = "/";
                             {
-                                var returnBlock = new Return();
-                                {
-                                    var returnValue = new IntConst();
-                                    returnValue.value = 1;
-                                    returnValue.type = "int";
-                                    returnBlock.expression = returnValue;
-                                }
-                                ifBlock.statements.add(returnBlock);
+                                var parameterVar = new LocalOrFieldVar();
+                                parameterVar.name = "number";
+                                addition.expressionLeft = parameterVar;
                             }
-                            statement.ifStatement = ifBlock;
+                            {
+                                var intConst = new IntConst();
+                                intConst.value = 2;
+                                intConst.type = "int";
+                                addition.expressionRight = intConst;
+                            }
+                            statement.expression = addition;
                         }
                         block.statements.add(statement);
-                    }
-                    {
-                        var returnStatement = new Return();
-                        {
-                            var returnValue = new IntConst();
-                            returnValue.value = 2;
-                            returnValue.type = "int";
-                            returnStatement.expression = returnValue;
-                        }
-                        block.statements.add(returnStatement);
                     }
                     method.statement = block;
                 }
@@ -87,6 +73,7 @@ public class DynamicIfResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);
@@ -103,7 +90,7 @@ public class DynamicIfResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "DynamicIf";
+            clazz.name = "Divide";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
@@ -114,8 +101,8 @@ public class DynamicIfResults {
                 method.parameter = new ArrayList<>();
                 {
                     var parameter = new Parameter();
-                    parameter.type = "boolean";
-                    parameter.name = "returnOne";
+                    parameter.name = "number";
+                    parameter.type = "int";
                     method.parameter.add(parameter);
                 }
                 {
@@ -123,43 +110,27 @@ public class DynamicIfResults {
                     block.type = "int";
                     block.statements = new ArrayList<>();
                     {
-                        var statement = new If();
+                        var statement = new Return();
                         statement.type = "int";
                         {
-                            var ifCondition = new LocalOrFieldVar();
-                            ifCondition.name = "returnOne";
-                            ifCondition.type = "boolean";
-                            statement.condition = ifCondition;
-                        }
-                        {
-                            var ifBlock = new Block();
-                            ifBlock.type = "int";
-                            ifBlock.statements = new ArrayList<>();
+                            var addition = new Binary();
+                            addition.operator = "/";
+                            addition.type = "int";
                             {
-                                var returnBlock = new Return();
-                                returnBlock.type = "int";
-                                {
-                                    var returnValue = new IntConst();
-                                    returnValue.value = 1;
-                                    returnValue.type = "int";
-                                    returnBlock.expression = returnValue;
-                                }
-                                ifBlock.statements.add(returnBlock);
+                                var parameterVar = new LocalOrFieldVar();
+                                parameterVar.name = "number";
+                                parameterVar.type = "int";
+                                addition.expressionLeft = parameterVar;
                             }
-                            statement.ifStatement = ifBlock;
+                            {
+                                var intConst = new IntConst();
+                                intConst.value = 2;
+                                intConst.type = "int";
+                                addition.expressionRight = intConst;
+                            }
+                            statement.expression = addition;
                         }
                         block.statements.add(statement);
-                    }
-                    {
-                        var returnStatement = new Return();
-                        returnStatement.type = "int";
-                        {
-                            var returnValue = new IntConst();
-                            returnValue.value = 2;
-                            returnValue.type = "int";
-                            returnStatement.expression = returnValue;
-                        }
-                        block.statements.add(returnStatement);
                     }
                     method.statement = block;
                 }
