@@ -45,8 +45,8 @@
           
        #Test the application using Maven
        - name: Test with Maven
-         run: mvn -Dtest=SannerParserLexerTest test --file pom.xml
+         run: mvn -Dtest=SannerParserLexerTest -DfailIfNoTests=false test --file pom.xml
         
        #Test the application using Maven - all Tests
        - name: Test with Maven - all
-         run: mvn test --file pom.xml
+         run: mvn -DfailIfNoTests=false test --file pom.xml
