@@ -11,6 +11,7 @@ import de.flyndre.flompiler.results.methods.BooleanMethodClassResults;
 import de.flyndre.flompiler.results.methods.BooleanMethodReturnClassResults;
 import de.flyndre.flompiler.results.methods.CharMethodClassResults;
 import de.flyndre.flompiler.results.methods.IntegerMethodClassResults;
+import de.flyndre.flompiler.results.operators.IntegerMethodAddResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import de.flyndre.flompiler.testing.Flassertions;
 import de.flyndre.flompiler.testing.Fleflection;
@@ -121,8 +122,8 @@ public class BytecodeGeneratorTest {
         Object instance = Fleflection.getReflectionInstance("/methods/parameters", "IntegerMethod");
         Flassertions.assertClassNameEquals(instance, "IntegerMethod");
         // Method should return the given parameter increased by 2
-        Flassertions.assertClassHasWorkingMethod(instance, "method", 3, 1);
-        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, -1);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, 1);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 420, 420);
     }
 
     @Test
@@ -176,7 +177,7 @@ public class BytecodeGeneratorTest {
     }
 
     @Test
-    @DisplayName("Flompiler: Dynamic If-Else Condition")
+    @DisplayName("TypeChecker: Dynamic If-Else Condition")
     public void testDynamicIfElse() {
         testBytecodeGenerationSuccess(DynamicIfElseResults.TYPED_AST, "/if_condition/DynamicIfElse.class");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIfElse");
@@ -184,5 +185,20 @@ public class BytecodeGeneratorTest {
         // Function arg is "returnOne", but with else
         Flassertions.assertClassHasWorkingMethod(instance, "method", 1, true);
         Flassertions.assertClassHasWorkingMethod(instance, "method", 2, false);
+    }
+
+
+
+    // OPERATORS
+
+    @Test
+    @DisplayName("TypeChecker: Add Operator")
+    public void testAddOperator() {
+        testBytecodeGenerationSuccess(IntegerMethodAddResults.TYPED_AST, "/operators/Add.class");
+        Object instance = Fleflection.getReflectionInstance("/operators", "Add");
+        Flassertions.assertClassNameEquals(instance, "Add");
+        // Function should return parameter value increased by 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, 3);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 0, 2);
     }
 }
