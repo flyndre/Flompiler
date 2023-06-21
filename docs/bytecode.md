@@ -1,7 +1,6 @@
 ---
 title: Bytecode-Generator
 author: Paul Lehman
-date: today
 ---
 
 # Bytecode-Generator

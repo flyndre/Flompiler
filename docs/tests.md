@@ -1,7 +1,6 @@
 ---
 title: Tests
 author: David Maier
-date: today
 ---
 
 # Tests

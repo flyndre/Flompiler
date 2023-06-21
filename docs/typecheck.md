@@ -1,7 +1,6 @@
 ---
 title: Type-Check
 author: Lukas Burkhardt
-date: today
 ---
 
 # Type-Check

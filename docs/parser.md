@@ -1,7 +1,6 @@
 ---
 title: Scanner-Parser-Lexer
 author: Ruben Kraft
-date: today
 ---
 
 # Scanner-Parser-Lexer
