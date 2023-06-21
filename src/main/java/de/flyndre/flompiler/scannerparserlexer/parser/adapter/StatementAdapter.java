@@ -37,7 +37,6 @@ public class StatementAdapter {
 
         return statements;
     }
-
     public static Statement adaptStatement(MiniJavaParser.StatementContext ctx) throws Exception {
         if(ctx.returnstatement() != null){
             return adaptReturn(ctx.returnstatement());

@@ -107,7 +107,7 @@ argumentlist                    : expression
 		                        | argumentlist  COMMA  expression |
 		                        ;
 
-returnstatement                 : RETURN INTEGER SEMICOLON | RETURN STRING SEMICOLON | RETURN CHAR SEMICOLON |RETURN BOOLEAN SEMICOLON;
+returnstatement                 : RETURN INTEGER SEMICOLON | RETURN STRING SEMICOLON | RETURN CHAR SEMICOLON |RETURN BOOLEAN SEMICOLON | RETURN expression SEMICOLON;
 
 classbody                       : fielddeclaration classbody
                                 | methoddeclaration classbody
