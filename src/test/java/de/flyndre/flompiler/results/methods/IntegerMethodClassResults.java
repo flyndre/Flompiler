@@ -62,7 +62,6 @@ public class IntegerMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
-                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);

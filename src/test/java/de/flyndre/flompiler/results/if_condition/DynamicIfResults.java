@@ -45,18 +45,20 @@ public class DynamicIfResults {
                         {
                             var ifCondition = new LocalOrFieldVar();
                             ifCondition.name = "returnOne";
-                            // TODO: @Lukas folgende Zeile existiert im ungetypten AST eigentlich nicht.
-                            // TODO: Das muss eigentlich der Typ-Check rausfinden.
-                            ifCondition.type = "int";
                             statement.condition = ifCondition;
                         }
                         {
-                            var ifBlock = new Return();
+                            var ifBlock = new Block();
+                            ifBlock.statements = new ArrayList<>();
                             {
-                                var returnValue = new IntConst();
-                                returnValue.value = 1;
-                                returnValue.type = "int";
-                                ifBlock.expression = returnValue;
+                                var returnBlock = new Return();
+                                {
+                                    var returnValue = new IntConst();
+                                    returnValue.value = 1;
+                                    returnValue.type = "int";
+                                    returnBlock.expression = returnValue;
+                                }
+                                ifBlock.statements.add(returnBlock);
                             }
                             statement.ifStatement = ifBlock;
                         }
@@ -130,13 +132,19 @@ public class DynamicIfResults {
                             statement.condition = ifCondition;
                         }
                         {
-                            var ifBlock = new Return();
+                            var ifBlock = new Block();
                             ifBlock.type = "int";
+                            ifBlock.statements = new ArrayList<>();
                             {
-                                var returnValue = new IntConst();
-                                returnValue.value = 1;
-                                returnValue.type = "int";
-                                ifBlock.expression = returnValue;
+                                var returnBlock = new Return();
+                                returnBlock.type = "int";
+                                {
+                                    var returnValue = new IntConst();
+                                    returnValue.value = 1;
+                                    returnValue.type = "int";
+                                    returnBlock.expression = returnValue;
+                                }
+                                ifBlock.statements.add(returnBlock);
                             }
                             statement.ifStatement = ifBlock;
                         }

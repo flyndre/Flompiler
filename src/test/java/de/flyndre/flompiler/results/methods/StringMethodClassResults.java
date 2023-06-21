@@ -39,6 +39,7 @@ public class StringMethodClassResults {
                         {
                             var expression = new StringConst();
                             expression.value = "Hello World!";
+                            expression.type = "String";
                             statement.expression = expression;
                         }
                         block.statements.add(statement);
