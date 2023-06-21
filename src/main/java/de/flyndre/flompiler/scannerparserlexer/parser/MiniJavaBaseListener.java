@@ -473,6 +473,18 @@ public class MiniJavaBaseListener implements MiniJavaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEqualityoperations(MiniJavaParser.EqualityoperationsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqualityoperations(MiniJavaParser.EqualityoperationsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEqualityexpression(MiniJavaParser.EqualityexpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}

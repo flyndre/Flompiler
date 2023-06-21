@@ -239,6 +239,12 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrimarynonewarray(MiniJavaParser.PrimarynonewarrayContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#equalityoperations}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualityoperations(MiniJavaParser.EqualityoperationsContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#equalityexpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -20,12 +20,12 @@ public class ScannerParserLexer {
                 "ABC abc = new ABC();"+
                 "        int badi = b+1*2;" +
                 "        int i = abc(1+1);"          +
-                "          if(a == 1){\n" +
+                "          if(a > 1){\n" +
                 "            return 1;\n" +
                 "        }else{\n" +
                 "            return 1; \n" +
                 "        }\n" +
-                "        while(true){\n" +
+                "        while(i < 5){\n" +
                 "            return 5; \n" +
                 "        }\n" +
                 "}\n" +

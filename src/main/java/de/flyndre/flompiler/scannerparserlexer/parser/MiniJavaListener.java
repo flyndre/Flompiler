@@ -388,6 +388,16 @@ public interface MiniJavaListener extends ParseTreeListener {
 	 */
 	void exitPrimarynonewarray(MiniJavaParser.PrimarynonewarrayContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#equalityoperations}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualityoperations(MiniJavaParser.EqualityoperationsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#equalityoperations}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualityoperations(MiniJavaParser.EqualityoperationsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#equalityexpression}.
 	 * @param ctx the parse tree
 	 */
