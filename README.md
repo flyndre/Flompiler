@@ -13,6 +13,9 @@ Im Rahmen der Vorlesung "Compilerbau" an der DHBW Stuttgart Campus Horb entwicke
 | Paul Lehmann    | Bytecode        | NoName11234  | [Bytecode](docs/bytecode.md)    |
 | David Maier     | Tests           | dasdawidt    | [Tests](docs/tests.md)          |
 
+In den jeweils verlinkten Dateien ist dokumentiert, woraus die Aufgabe bestand und wie sie gelöst wurde.
+Die Bearbeitung eines Aufgabenbereichs wurde vom jeweiligen verantwortlichen Teammitglied verantwortet und durchgeführt.
+
 ## Aufbau des Compilers
 
 Unser Compiler besteht aus drei Teilen:
