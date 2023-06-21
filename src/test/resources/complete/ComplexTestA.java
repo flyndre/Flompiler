@@ -1,13 +1,9 @@
 public class ComplexTestA {
     public String method(int a, int b) {
-        b = b + 1 * 2;
-        if (b) {
-            return 1;
+        if (b < a) {
+            return "lesser";
         } else {
-            return 1;
-        }
-        while (true) {
-            return 5;
+            return "greater";
         }
     }
 }
