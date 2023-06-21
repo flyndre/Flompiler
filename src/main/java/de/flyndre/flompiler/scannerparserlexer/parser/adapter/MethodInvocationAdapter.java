@@ -19,6 +19,9 @@ public class MethodInvocationAdapter {
         if(methodinvocation.argumentlist() != null){
             expressions = (ArrayList<Expression>) ArgumentListAdapter.adapt(methodinvocation.argumentlist());
         }
+        if(methodinvocation.classinstancecreationexpression() != null){
+            System.out.println("Halli Hallo");
+        }
 
         return new MethodCall(dotMethod, methodinvocation.NAME().getText(), expressions);
     }
