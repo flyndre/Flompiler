@@ -11,18 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link MiniJavaParser#class}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitClass(MiniJavaParser.ClassContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MiniJavaParser#accessMod}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAccessMod(MiniJavaParser.AccessModContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -34,6 +22,18 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitClasses(MiniJavaParser.ClassesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#class}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClass(MiniJavaParser.ClassContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#accessMod}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAccessMod(MiniJavaParser.AccessModContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#block}.
 	 * @param ctx the parse tree
@@ -160,6 +160,12 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIntdeclaration(MiniJavaParser.IntdeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#classdeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClassdeclaration(MiniJavaParser.ClassdeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#methoddeclaration}.
 	 * @param ctx the parse tree

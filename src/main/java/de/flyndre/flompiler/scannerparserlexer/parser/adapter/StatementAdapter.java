@@ -10,7 +10,7 @@ import java.util.List;
 
 public class StatementAdapter {
 
-    public static Return adaptReturn(MiniJavaParser.ReturnstatementContext ctx){
+    public static Return adaptReturn(MiniJavaParser.ReturnstatementContext ctx) throws Exception {
         if(ctx.BOOLEAN() != null){
             return new Return(new BooleanConst(Boolean.valueOf(ctx.BOOLEAN().getText())));
         }
@@ -23,12 +23,23 @@ public class StatementAdapter {
         else if(ctx.STRING() != null){
             return new Return(new StringConst(ctx.STRING().getText()));
         }
+        else if(ctx.expression() != null){
+            return new Return(ExpressionAdapter.adapt(ctx.expression()));
+        }
         return new Return(new Null());
     }
 
     public static List<Statement> adapt(MiniJavaParser.StatementsContext ctx) throws Exception {
         List<Statement> statements = new ArrayList<>();
         if(ctx.statement() != null){
+            Statement stat = adaptStatement(ctx.statement());
+
+            if(stat instanceof DeclarationWithAssignment){
+                DeclarationWithAssignment decl = (DeclarationWithAssignment) stat;
+                statements.add(decl.getVardecl());
+                statements.add(new StatementExprStatement(decl.getAssignment()));
+            }
+
             statements.add(adaptStatement(ctx.statement()));
         }
         if(ctx.statements() != null){
@@ -51,23 +62,22 @@ public class StatementAdapter {
             return adaptWhile(ctx.while_());
         }
         else if(ctx.booldeclaration() != null){
-            return adaptBoolDecl(ctx.booldeclaration());
-            //TODO IMPLEMENT ZUWEISUNG
+            return new DeclarationWithAssignment(adaptBoolDecl(ctx.booldeclaration()), new Assign(new LocalOrFieldVar(ctx.booldeclaration().NAME().getText()), "=", AssignmentExpressionAdapter.adapt(ctx.booldeclaration().assignmentexpression())));
         }
         else if(ctx.chardeclaration() != null){
-            return adaptCharDecl(ctx.chardeclaration());
-            //TODO IMPLEMENT ZUWEISUNG
+            return new DeclarationWithAssignment(adaptCharDecl(ctx.chardeclaration()), new Assign(new LocalOrFieldVar(ctx.chardeclaration().NAME().getText()), "=", AssignmentExpressionAdapter.adapt(ctx.chardeclaration().assignmentexpression())));
         }
         else if(ctx.stringdeclaration() != null){
-            return adaptStringDecl(ctx.stringdeclaration());
-            //TODO IMPLEMENT ZUWEISUNG
+            return new DeclarationWithAssignment(adaptStringDecl(ctx.stringdeclaration()), new Assign(new LocalOrFieldVar(ctx.stringdeclaration().NAME().getText()), "=", AssignmentExpressionAdapter.adapt(ctx.stringdeclaration().assignmentexpression())));
         }
         else if(ctx.intdeclaration() != null){
-            return adaptIntDecl(ctx.intdeclaration());
-            //TODO IMPLEMENT ZUWEISUNG
+            return new DeclarationWithAssignment(adaptIntDecl(ctx.intdeclaration()), new Assign(new LocalOrFieldVar(ctx.intdeclaration().NAME().getText()), "=", AssignmentExpressionAdapter.adapt(ctx.intdeclaration().assignmentexpression())));
         }
         else if(ctx.expressionstatement() != null){
             return new StatementExprStatement(ExpressionStatementAdapter.adaptExpressionStatement(ctx.expressionstatement().statementexpression()));
+        }
+        else if(ctx.classdeclaration() != null){
+            return new DeclarationWithAssignment(new LocalVarDecl(ctx.classdeclaration().NAME().get(1).getText(), ctx.classdeclaration().NAME().get(0).getText()), new Assign(new LocalOrFieldVar(ctx.classdeclaration().NAME().get(1).getText()), "=", ClassInstanceCreationExpressionAdapter.adapt(ctx.classdeclaration().classinstancecreationexpression())));
         }
         else if(ctx.emptystatement() != null){
             //return adaptEmptyStatement(ctx.booldeclaration());

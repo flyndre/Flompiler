@@ -14,11 +14,14 @@ import java.util.BitSet;
 public class ScannerParserLexer {
     public static void main(String[] args) throws Exception {
         String as = "public class abc{\n" +
+                "public String abc = \"abc\";"+
                 "\n" +
                 "public String abasc(int a, int b){\n" +
-                "        b = b+1*2;" +
-                "              abc(1+1);"          +
-                "          if(b){\n" +
+                         "++a;"+
+                "ABC abc = new ABC();"+
+                "        int badi = b+1*2;" +
+                "        int i = abc(1+1);"          +
+                "          if(a == 1){\n" +
                 "            return 1;\n" +
                 "        }else{\n" +
                 "            return 1; \n" +

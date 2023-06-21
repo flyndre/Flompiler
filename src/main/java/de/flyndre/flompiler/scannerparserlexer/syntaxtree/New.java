@@ -13,6 +13,11 @@ public class New extends StatementExpression {
     public New() {
     }
 
+    public New(String type, List<Expression> exprArguments) {
+        this.type = type;
+        this.constructorParams = exprArguments;
+    }
+
     /**
      * @return the type of this StatementExpression.
      */

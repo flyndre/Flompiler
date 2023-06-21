@@ -75,6 +75,7 @@ statement                       : returnstatement
                                 | stringdeclaration
                                 | chardeclaration
                                 | booldeclaration
+                                | classdeclaration
                                 | emptystatement
                                 | expressionstatement;
 
@@ -124,6 +125,7 @@ fielddeclaration                : booldeclaration
                                 | stringdeclaration
                                 | chardeclaration
                                 | intdeclaration;
+                             //TODO NEW KANN HIER NICHT GEHANDELT WERDEN DA STRING ALS VALUE :(
 
 parameter                       : accessMod BOOLEANTYPE NAME
                                 | accessMod STRINGTYPE NAME
@@ -145,6 +147,9 @@ chardeclaration                 : accessMod CHARTYPE NAME SEMICOLON
 intdeclaration                  : accessMod INTTYPE NAME SEMICOLON
                                 | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON
                                 | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
+
+classdeclaration                : accessMod NAME NAME SEMICOLON
+                                | accessMod NAME NAME EQUALS classinstancecreationexpression SEMICOLON;
 
 methoddeclaration               : accessMod  type NAME BROPEN parameters BRCLOSE block;
 
