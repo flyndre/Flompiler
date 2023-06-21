@@ -3,6 +3,7 @@ package de.flyndre.flompiler.bytecodegenerator;
 import de.flyndre.flompiler.TestConstants;
 import de.flyndre.flompiler.results.attributes.BooleanClassResults;
 import de.flyndre.flompiler.results.basic.EmptyClassResults;
+import de.flyndre.flompiler.results.if_condition.DynamicIfElseResults;
 import de.flyndre.flompiler.results.if_condition.DynamicIfResults;
 import de.flyndre.flompiler.results.if_condition.StaticIfElseResults;
 import de.flyndre.flompiler.results.if_condition.StaticIfResults;
@@ -10,6 +11,7 @@ import de.flyndre.flompiler.results.methods.BooleanMethodClassResults;
 import de.flyndre.flompiler.results.methods.BooleanMethodReturnClassResults;
 import de.flyndre.flompiler.results.methods.CharMethodClassResults;
 import de.flyndre.flompiler.results.methods.IntegerMethodClassResults;
+import de.flyndre.flompiler.results.operators.IntegerMethodAddResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import de.flyndre.flompiler.testing.Flassertions;
 import de.flyndre.flompiler.testing.Fleflection;
@@ -18,10 +20,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Optional;
 
 public class BytecodeGeneratorTest {
 
@@ -77,6 +75,7 @@ public class BytecodeGeneratorTest {
         testBytecodeGenerationSuccess(BooleanClassResults.TYPED_AST, "/attributes/BooleanClass.class");
         Object instance = Fleflection.getReflectionInstance("/attributes", "BooleanClass");
         Flassertions.assertClassNameEquals(instance, "BooleanClass");
+        Flassertions.assertClassHasField(instance, "isFalse", false);
     }
 
 
@@ -89,6 +88,8 @@ public class BytecodeGeneratorTest {
         testBytecodeGenerationSuccess(BooleanMethodClassResults.TYPED_AST, "/methods/parameterless/BooleanMethod.class");
         Object instance = Fleflection.getReflectionInstance("/methods/parameterless", "BooleanMethod");
         Flassertions.assertClassNameEquals(instance, "BooleanMethod");
+        // Method should return true
+        Flassertions.assertClassHasWorkingMethod(instance, "method", true);
     }
 
 
@@ -109,6 +110,9 @@ public class BytecodeGeneratorTest {
         testBytecodeGenerationSuccess(BooleanMethodReturnClassResults.TYPED_AST, "/methods/parameters/BooleanMethodReturn.class");
         Object instance = Fleflection.getReflectionInstance("/methods/parameters", "BooleanMethodReturn");
         Flassertions.assertClassNameEquals(instance, "BooleanMethodReturn");
+        // Method should return the given parameter
+        Flassertions.assertClassHasWorkingMethod(instance, "method", true, true);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", false, false);
     }
 
     @Test
@@ -117,6 +121,9 @@ public class BytecodeGeneratorTest {
         testBytecodeGenerationSuccess(IntegerMethodClassResults.TYPED_AST, "/methods/parameters/IntegerMethod.class");
         Object instance = Fleflection.getReflectionInstance("/methods/parameters", "IntegerMethod");
         Flassertions.assertClassNameEquals(instance, "IntegerMethod");
+        // Method should return the given parameter increased by 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, 1);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 420, 420);
     }
 
     @Test
@@ -125,6 +132,9 @@ public class BytecodeGeneratorTest {
         testBytecodeGenerationSuccess(CharMethodClassResults.TYPED_AST, "/methods/parameters/CharMethod.class");
         Object instance = Fleflection.getReflectionInstance("/methods/parameters", "CharMethod");
         Flassertions.assertClassNameEquals(instance, "CharMethod");
+        // Method should return the given parameter
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 'a', 'a');
+        Flassertions.assertClassHasWorkingMethod(instance, "method", '5', '5');
     }
 
 
@@ -137,16 +147,8 @@ public class BytecodeGeneratorTest {
         testBytecodeGenerationSuccess(StaticIfResults.TYPED_AST, "/if_condition/StaticIf.class");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "StaticIf");
         Flassertions.assertClassNameEquals(instance, "StaticIf");
-        Optional<Method> method = Arrays.stream(instance.getClass().getDeclaredMethods())
-                .filter((Method m) -> m.getName().equals("method")).findFirst();
-        Assertions.assertTrue(method.isPresent());
-        int result;
-        try {
-            result = (int) method.get().invoke(instance);
-        } catch (IllegalAccessException | InvocationTargetException e ) {
-            throw new RuntimeException(e);
-        }
-        Assertions.assertEquals(1, result);
+        // Method should return 1
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1);
     }
 
     @Test
@@ -155,6 +157,8 @@ public class BytecodeGeneratorTest {
         testBytecodeGenerationSuccess(StaticIfElseResults.TYPED_AST, "/if_condition/StaticIfElse.class");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "StaticIfElse");
         Flassertions.assertClassNameEquals(instance, "StaticIfElse");
+        // Method should return 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2);
     }
 
 
@@ -167,13 +171,34 @@ public class BytecodeGeneratorTest {
         testBytecodeGenerationSuccess(DynamicIfResults.TYPED_AST, "/if_condition/DynamicIf.class");
         Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIf");
         Flassertions.assertClassNameEquals(instance, "DynamicIf");
+        // Function arg is "returnOne"
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, true);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2, false);
     }
 
-//    @Test
-//    @DisplayName("Flompiler: Dynamic If-Else Condition")
-//    public void testDynamicIfElse() {
-//        testBytecodeGenerationSuccess(DynamicIfElseResults.TYPED_AST, "/if_condition/DynamicIfElse.class");
-//        Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIfElse");
-//        Flassertions.assertClassNameEquals(instance, "DynamicIfElse");
-//    }
+    @Test
+    @DisplayName("TypeChecker: Dynamic If-Else Condition")
+    public void testDynamicIfElse() {
+        testBytecodeGenerationSuccess(DynamicIfElseResults.TYPED_AST, "/if_condition/DynamicIfElse.class");
+        Object instance = Fleflection.getReflectionInstance("/if_condition", "DynamicIfElse");
+        Flassertions.assertClassNameEquals(instance, "DynamicIfElse");
+        // Function arg is "returnOne", but with else
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, true);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2, false);
+    }
+
+
+
+    // OPERATORS
+
+    @Test
+    @DisplayName("TypeChecker: Add Operator")
+    public void testAddOperator() {
+        testBytecodeGenerationSuccess(IntegerMethodAddResults.TYPED_AST, "/operators/Add.class");
+        Object instance = Fleflection.getReflectionInstance("/operators", "Add");
+        Flassertions.assertClassNameEquals(instance, "Add");
+        // Function should return parameter value increased by 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, 3);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 0, 2);
+    }
 }

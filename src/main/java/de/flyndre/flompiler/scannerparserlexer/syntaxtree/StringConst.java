@@ -9,8 +9,9 @@ public class StringConst extends Expression{
 
     }
 
-    public StringConst(String value){
+    public StringConst(String value, String type){
         this.value = value;
+        this.type = type;
     }
 
     /**

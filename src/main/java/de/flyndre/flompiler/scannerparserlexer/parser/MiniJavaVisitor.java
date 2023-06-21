@@ -161,6 +161,24 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIntdeclaration(MiniJavaParser.IntdeclarationContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#intFieldDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntFieldDecl(MiniJavaParser.IntFieldDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#stringFieldDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringFieldDecl(MiniJavaParser.StringFieldDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#charFieldDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharFieldDecl(MiniJavaParser.CharFieldDeclContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#classdeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -220,6 +238,12 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPrimarynonewarray(MiniJavaParser.PrimarynonewarrayContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#equalityoperations}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualityoperations(MiniJavaParser.EqualityoperationsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MiniJavaParser#equalityexpression}.
 	 * @param ctx the parse tree

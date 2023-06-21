@@ -1,11 +1,11 @@
-package de.flyndre.flompiler.results.methods;
+package de.flyndre.flompiler.results.operators;
 
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Class;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 
 import java.util.ArrayList;
 
-public class BooleanMethodReturnClassResults {
+public class IntegerMethodAddResults {
     /**
      * The manually parsed resulting untyped abstract syntax tree for the class with a boolean method.
      */
@@ -22,19 +22,19 @@ public class BooleanMethodReturnClassResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "BooleanMethodReturn";
+            clazz.name = "Add";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
                 var method = new Method();
                 method.access = "public";
-                method.type = "boolean";
+                method.type = "int";
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
                     var parameter = new Parameter();
-                    parameter.type = "boolean";
-                    parameter.name = "isTrue";
+                    parameter.name = "number";
+                    parameter.type = "int";
                     method.parameter.add(parameter);
                 }
                 {
@@ -43,10 +43,20 @@ public class BooleanMethodReturnClassResults {
                     {
                         var statement = new Return();
                         {
-                            var expression = new InstVar();
-                            expression.type = "boolean";
-                            expression.name = "isTrue";
-                            statement.expression = expression;
+                            var addition = new Binary();
+                            addition.operator = "+";
+                            {
+                                var parameterVar = new LocalOrFieldVar();
+                                parameterVar.name = "number";
+                                addition.expressionLeft = parameterVar;
+                            }
+                            {
+                                var intConst = new IntConst();
+                                intConst.value = 2;
+                                intConst.type = "int";
+                                addition.expressionRight = intConst;
+                            }
+                            statement.expression = addition;
                         }
                         block.statements.add(statement);
                     }
@@ -63,6 +73,7 @@ public class BooleanMethodReturnClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);
@@ -79,33 +90,45 @@ public class BooleanMethodReturnClassResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "BooleanMethodReturn";
+            clazz.name = "Add";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
                 var method = new Method();
                 method.access = "public";
-                method.type = "boolean";
+                method.type = "int";
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
                     var parameter = new Parameter();
-                    parameter.type = "boolean";
-                    parameter.name = "isTrue";
+                    parameter.name = "number";
+                    parameter.type = "int";
                     method.parameter.add(parameter);
                 }
                 {
                     var block = new Block();
-                    block.type = "boolean";
+                    block.type = "int";
                     block.statements = new ArrayList<>();
                     {
                         var statement = new Return();
-                        statement.type = "boolean";
+                        statement.type = "int";
                         {
-                            var expression = new LocalOrFieldVar();
-                            expression.type = "boolean";
-                            expression.name = "isTrue";
-                            statement.expression = expression;
+                            var addition = new Binary();
+                            addition.operator = "+";
+                            addition.type = "int";
+                            {
+                                var parameterVar = new LocalOrFieldVar();
+                                parameterVar.name = "number";
+                                parameterVar.type = "int";
+                                addition.expressionLeft = parameterVar;
+                            }
+                            {
+                                var intConst = new IntConst();
+                                intConst.value = 2;
+                                intConst.type = "int";
+                                addition.expressionRight = intConst;
+                            }
+                            statement.expression = addition;
                         }
                         block.statements.add(statement);
                     }

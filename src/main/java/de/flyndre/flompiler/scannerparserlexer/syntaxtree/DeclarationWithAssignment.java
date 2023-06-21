@@ -20,7 +20,7 @@ public class DeclarationWithAssignment extends Statement{
     }
 
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+    public String typeCheck() throws Exception {
         return null;
     }
 }

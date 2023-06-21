@@ -16,17 +16,17 @@ public class ScannerParserLexer {
         String as = "public class abc{\n" +
                 "\n" +
                 "public String abasc(int a, int b){\n" +
-                         "++a;"+
+                         "public int abc = 1;"+
                 "ABC abc = new ABC();"+
                 "        int badi = b+1*2;" +
-                "        int i = abc(1+1);"          +
-                "          if(a == 1){\n" +
+                "        int i = -1;"          +
+                "          if(a > 1){\n" +
                 "            return 1;\n" +
                 "        }else{\n" +
                 "            return 1; \n" +
                 "        }\n" +
-                "        while(true){\n" +
-                "            return 5; \n" +
+                "        while(i < 5){\n" +
+                "            return a + 5; \n" +
                 "        }\n" +
                 "}\n" +
                 "}";
@@ -59,9 +59,15 @@ public class ScannerParserLexer {
 
     private static Program parse(String input) throws Exception {
         MiniJavaLexer lexer = new MiniJavaLexer(CharStreams.fromString(input));
+        lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+
         CommonTokenStream tokens = new CommonTokenStream(lexer);
+
         MiniJavaParser parser = new MiniJavaParser(tokens);
+        parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+
         MiniJavaParser.ProgramContext tree = parser.program(); //Parsen
+
         Program doc = new Program(ClassAdapter.adapt(tree.classes()));
         return doc;
     }

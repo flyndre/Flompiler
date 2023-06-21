@@ -5,7 +5,7 @@ import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 
 import java.util.ArrayList;
 
-public class DynamicIfResults {
+public class DynamicIfElseResults {
     /**
      * The manually parsed resulting untyped abstract syntax tree for the class with a boolean method.
      */
@@ -22,7 +22,7 @@ public class DynamicIfResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "DynamicIf";
+            clazz.name = "DynamicIfElse";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
@@ -45,9 +45,6 @@ public class DynamicIfResults {
                         {
                             var ifCondition = new LocalOrFieldVar();
                             ifCondition.name = "returnOne";
-                            // TODO: @Lukas folgende Zeile existiert im ungetypten AST eigentlich nicht.
-                            // TODO: Das muss eigentlich der Typ-Check rausfinden.
-                            ifCondition.type = "int";
                             statement.condition = ifCondition;
                         }
                         {
@@ -60,13 +57,23 @@ public class DynamicIfResults {
                             }
                             statement.ifStatement = ifBlock;
                         }
+                        {
+                            var elseBlock = new Return();
+                            {
+                                var returnValue = new IntConst();
+                                returnValue.value = 2;
+                                returnValue.type = "int";
+                                elseBlock.expression = returnValue;
+                            }
+                            statement.elseStatement = elseBlock;
+                        }
                         block.statements.add(statement);
                     }
                     {
                         var returnStatement = new Return();
                         {
                             var returnValue = new IntConst();
-                            returnValue.value = 2;
+                            returnValue.value = 3;
                             returnValue.type = "int";
                             returnStatement.expression = returnValue;
                         }
@@ -101,7 +108,7 @@ public class DynamicIfResults {
         {
             var clazz = new Class();
             clazz.access = "public";
-            clazz.name = "DynamicIf";
+            clazz.name = "DynamicIfElse";
             clazz.fields = new ArrayList<>();
             clazz.methods = new ArrayList<>();
             {
@@ -140,6 +147,17 @@ public class DynamicIfResults {
                             }
                             statement.ifStatement = ifBlock;
                         }
+                        {
+                            var elseBlock = new Return();
+                            elseBlock.type = "int";
+                            {
+                                var returnValue = new IntConst();
+                                returnValue.value = 2;
+                                returnValue.type = "int";
+                                elseBlock.expression = returnValue;
+                            }
+                            statement.elseStatement = elseBlock;
+                        }
                         block.statements.add(statement);
                     }
                     {
@@ -147,7 +165,7 @@ public class DynamicIfResults {
                         returnStatement.type = "int";
                         {
                             var returnValue = new IntConst();
-                            returnValue.value = 2;
+                            returnValue.value = 3;
                             returnValue.type = "int";
                             returnStatement.expression = returnValue;
                         }

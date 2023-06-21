@@ -31,15 +31,15 @@ public class ScannerParserLexerTest {
      * @param expected the expected AST
      */
     private void testSuccess(String inputFilePath, Program expected) {
-        final var inputPath = TestConstants.RESOURCES_ROOT + inputFilePath;
-        final String inputString;
         try {
+            final var inputPath = TestConstants.RESOURCES_ROOT + inputFilePath;
+            final String inputString;
             inputString = Files.readString(Path.of(inputPath));
-        } catch (IOException e) {
+            final var actual = ScannerParserLexer.compile(inputString);
+            Flassertions.assertDeeplyAlike(expected, actual);
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        final var actual = ScannerParserLexer.compile(inputString);
-        Flassertions.assertDeeplyAlike(expected, actual);
+        };
     }
 
     /**

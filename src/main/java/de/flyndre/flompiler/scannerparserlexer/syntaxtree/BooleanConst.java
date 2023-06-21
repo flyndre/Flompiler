@@ -14,8 +14,9 @@ public class BooleanConst extends Expression {
     public BooleanConst() {
     }
 
-    public BooleanConst(boolean value) {
+    public BooleanConst(boolean value, String type) {
         this.value = value;
+        this.type = type;
     }
 
     /**

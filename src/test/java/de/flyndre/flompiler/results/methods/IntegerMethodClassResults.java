@@ -32,14 +32,20 @@ public class IntegerMethodClassResults {
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
+                    var parameter = new Parameter();
+                    parameter.name = "number";
+                    parameter.type = "int";
+                    method.parameter.add(parameter);
+                }
+                {
                     var block = new Block();
                     block.statements = new ArrayList<>();
                     {
                         var statement = new Return();
                         {
-                            var expression = new IntConst();
-                            expression.value = 1;
-                            statement.expression = expression;
+                            var parameterVar = new LocalOrFieldVar();
+                            parameterVar.name = "number";
+                            statement.expression = parameterVar;
                         }
                         block.statements.add(statement);
                     }
@@ -56,6 +62,7 @@ public class IntegerMethodClassResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);
@@ -82,6 +89,12 @@ public class IntegerMethodClassResults {
                 method.name = "method";
                 method.parameter = new ArrayList<>();
                 {
+                    var parameter = new Parameter();
+                    parameter.name = "number";
+                    parameter.type = "int";
+                    method.parameter.add(parameter);
+                }
+                {
                     var block = new Block();
                     block.type = "int";
                     block.statements = new ArrayList<>();
@@ -89,10 +102,10 @@ public class IntegerMethodClassResults {
                         var statement = new Return();
                         statement.type = "int";
                         {
-                            var expression = new IntConst();
-                            expression.value = 1;
-                            expression.type = "int";
-                            statement.expression = expression;
+                            var parameterVar = new LocalOrFieldVar();
+                            parameterVar.name = "number";
+                            parameterVar.type = "int";
+                            statement.expression = parameterVar;
                         }
                         block.statements.add(statement);
                     }

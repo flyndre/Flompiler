@@ -7,9 +7,7 @@ import de.flyndre.flompiler.scannerparserlexer.syntaxtree.StatemenExpressionExpr
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.StatementExpression;
 
 public class ClassInstanceCreationExpressionAdapter {
-    public static Expression adapt(MiniJavaParser.ClassinstancecreationexpressionContext classinstancecreationexpression) {
-        //TODO: CHANGE NEW TO ONLY EXPRESSION
-        //TODO: ADD PARAMETER IN CONSTRUCTOR
-        return new StatemenExpressionExpression(new New());
+    public static Expression adapt(MiniJavaParser.ClassinstancecreationexpressionContext classinstancecreationexpression) throws Exception {
+        return new StatemenExpressionExpression(new New(classinstancecreationexpression.classtype().getText(), ArgumentListAdapter.adapt(classinstancecreationexpression.argumentlist())));
     }
 }
