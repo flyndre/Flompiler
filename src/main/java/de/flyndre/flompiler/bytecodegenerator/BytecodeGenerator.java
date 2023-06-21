@@ -412,13 +412,18 @@ public class BytecodeGenerator {
                     case "char":
                         methodDescriptor = methodDescriptor + "C";
                         break;
+                    case "void":
+                        methodDescriptor = methodDescriptor + "V";
+                        break;
                     default:
                         methodDescriptor = methodDescriptor + "L" + mc.type + ";";
                 }
                 //call method
                 mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type, mc.name, methodDescriptor, false);
-                //discard return value
-                mv.visitInsn(Opcodes.POP);
+                //discard return value if return type not "void"
+                if(!mc.type.equals("void")){
+                    mv.visitInsn(Opcodes.POP);
+                }
             }else if(se instanceof Assign assign){
                 //generate code for expression calculation
                 Expr expression = generateByteCodeForExpressions(mv, assign.expression, localVarScope);
