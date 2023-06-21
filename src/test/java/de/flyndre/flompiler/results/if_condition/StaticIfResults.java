@@ -35,13 +35,33 @@ public class StaticIfResults {
                     var block = new Block();
                     block.statements = new ArrayList<>();
                     {
-                        var statement = new Return();
+                        var statement = new If();
                         {
-                            var expression = new BooleanConst();
-                            expression.value = true;
-                            statement.expression = expression;
+                            var ifCondition = new BooleanConst();
+                            ifCondition.value = true;
+                            statement.condition = ifCondition;
+                        }
+                        {
+                            var ifBlock = new Return();
+                            {
+                                var returnValue = new IntConst();
+                                returnValue.value = 1;
+                                returnValue.type = "int";
+                                ifBlock.expression = returnValue;
+                            }
+                            statement.ifStatement = ifBlock;
                         }
                         block.statements.add(statement);
+                    }
+                    {
+                        var returnStatement = new Return();
+                        {
+                            var returnValue = new IntConst();
+                            returnValue.value = 2;
+                            returnValue.type = "int";
+                            returnStatement.expression = returnValue;
+                        }
+                        block.statements.add(returnStatement);
                     }
                     method.statement = block;
                 }
@@ -86,15 +106,37 @@ public class StaticIfResults {
                     block.type = "int";
                     block.statements = new ArrayList<>();
                     {
-                        var statement = new Return();
+                        var statement = new If();
                         statement.type = "int";
                         {
-                            var expression = new BooleanConst();
-                            expression.value = true;
-                            expression.type = "int";
-                            statement.expression = expression;
+                            var ifCondition = new BooleanConst();
+                            ifCondition.value = true;
+                            ifCondition.type = "int";
+                            statement.condition = ifCondition;
+                        }
+                        {
+                            var ifBlock = new Return();
+                            ifBlock.type = "int";
+                            {
+                                var returnValue = new IntConst();
+                                returnValue.value = 1;
+                                returnValue.type = "int";
+                                ifBlock.expression = returnValue;
+                            }
+                            statement.ifStatement = ifBlock;
                         }
                         block.statements.add(statement);
+                    }
+                    {
+                        var returnStatement = new Return();
+                        returnStatement.type = "int";
+                        {
+                            var returnValue = new IntConst();
+                            returnValue.value = 2;
+                            returnValue.type = "int";
+                            returnStatement.expression = returnValue;
+                        }
+                        block.statements.add(returnStatement);
                     }
                     method.statement = block;
                 }
@@ -109,7 +151,6 @@ public class StaticIfResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
-                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);
