@@ -13,9 +13,14 @@ public class Unary extends StatementExpression {
     public Unary() {
     }
 
+    /**
+     * Checks and sets the type of the unary.
+     * @return the type of the unary.
+     * @throws Exception if no type could be determined.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        return type = expression.typeCheck(fields,parameters);
+    public String typeCheck() throws Exception {
+        return type = expression.typeCheck();
     }
 
     /**

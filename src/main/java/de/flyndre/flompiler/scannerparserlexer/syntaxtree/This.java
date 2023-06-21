@@ -13,8 +13,11 @@ public class This extends Expression {
     public This() {
     }
 
+    /**
+     * @return the set type.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+    public String typeCheck() {
         return type;
     }
 

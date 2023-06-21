@@ -15,8 +15,12 @@ public class For extends Statement {
     public For() {
     }
 
+    /**
+     * Type check for for-loop
+     * @return The type value void due the for-loop statement not implemented yet.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
+    public String typeCheck()  {
         return type = "void";
     }
 

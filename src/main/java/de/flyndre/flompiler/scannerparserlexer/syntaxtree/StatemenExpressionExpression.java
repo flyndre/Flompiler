@@ -17,9 +17,14 @@ public class StatemenExpressionExpression extends Expression {
         this.statementExpression = statementExpression;
     }
 
+    /**
+     * Checks and sets the type of the Expression.
+     * @return the type of the Expression.
+     * @throws Exception if the type couldn't be determined.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        return type = statementExpression.typeCheck(fields,parameters);
+    public String typeCheck() throws Exception {
+        return type = statementExpression.typeCheck();
     }
 
     /**

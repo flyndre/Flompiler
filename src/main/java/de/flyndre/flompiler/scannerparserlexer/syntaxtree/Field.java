@@ -31,4 +31,12 @@ public class Field {
 
     public String standardValue;
 
+    /**
+     * Type check for the field.
+     * @return the type of the field.
+     */
+    public String typeCheck(){
+        return type;
+    }
+
 }

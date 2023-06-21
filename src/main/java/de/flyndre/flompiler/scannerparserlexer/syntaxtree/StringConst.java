@@ -13,8 +13,11 @@ public class StringConst extends Expression{
         this.value = value;
     }
 
+    /**
+     * @return The type value string.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+    public String typeCheck()  {
         return type = "String";
     }
 }

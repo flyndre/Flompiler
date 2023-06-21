@@ -15,8 +15,11 @@ public class Continue extends Statement {
     public Continue() {
     }
 
+    /**
+     * @return The type vale void.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
+    public String typeCheck() {
         return type = "void";
     }
 

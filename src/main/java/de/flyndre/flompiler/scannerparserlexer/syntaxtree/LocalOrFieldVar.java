@@ -17,8 +17,11 @@ public class LocalOrFieldVar extends Expression {
         this.name = name;
     }
 
+    /**
+     * @return The type of the Var.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+    public String typeCheck()  {
         return type;
     }
 

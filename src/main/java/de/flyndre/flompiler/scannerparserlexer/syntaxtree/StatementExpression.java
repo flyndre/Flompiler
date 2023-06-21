@@ -17,5 +17,10 @@ public abstract class StatementExpression {
     public StatementExpression() {
     }
 
-    public abstract String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception;
+    /**
+     * Type check for all StatementExpressions.
+     * @return the type of the StatementExpression.
+     * @throws Exception if the type check failed.
+     */
+    public abstract String typeCheck() throws Exception;
 }

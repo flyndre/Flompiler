@@ -13,8 +13,11 @@ public class Super extends Expression {
     public Super() {
     }
 
+    /**
+     * @return The set type.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+    public String typeCheck()  {
         return type;
     }
 
