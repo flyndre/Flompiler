@@ -8,9 +8,21 @@ public class EqualityExpressionAdapter {
     public static Expression adapt(MiniJavaParser.EqualityexpressionContext equalityexpression) throws Exception {
 
         if(equalityexpression.equalityexpression() != null){
-            return new Binary(EqualityExpressionAdapter.adapt(equalityexpression.equalityexpression()), "==", RelationalExpressionAdapter.adapt(equalityexpression.relationalexpression()));
+            String operator = "";
+            if(equalityexpression.equalityoperations().EQUALSSTAT() != null){
+                operator = "==";
+            }else if(equalityexpression.equalityoperations().GREATERTHAN() != null){
+                operator = ">";
+            }else if(equalityexpression.equalityoperations().LESSTHAN() != null){
+                operator = "<";
+            }
+            else if(equalityexpression.equalityoperations().OR() != null){
+                operator = "||";
+            }
+
+
+            return new Binary(EqualityExpressionAdapter.adapt(equalityexpression.equalityexpression()), operator, RelationalExpressionAdapter.adapt(equalityexpression.relationalexpression()));
         }
-        //TODO: NEEDED?
         else if(equalityexpression.relationalexpression() != null && equalityexpression.equalityexpression() == null){
             return RelationalExpressionAdapter.adapt(equalityexpression.relationalexpression());
         }

@@ -14,8 +14,9 @@ public class CharConst extends Expression {
     public CharConst() {
     }
 
-    public CharConst(char value) {
+    public CharConst(char value, String type) {
         this.value = value;
+        this.type = type;
     }
 
     /**
