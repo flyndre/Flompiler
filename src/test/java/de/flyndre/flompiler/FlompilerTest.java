@@ -98,7 +98,25 @@ public class FlompilerTest {
 
 
 
-    // METHODS WITH PARAMETERS
+    // METHODS (USING FIELDS)
+
+    @Test
+    @DisplayName("Flompiler: Boolean Method using Field")
+    public void testFlompilerBooleanMethodFieldClass() {
+        testParsingSuccess("/methods/attributes/BooleanMethod.java");
+        Object instance = Fleflection.getReflectionInstance("/methods/attributes", "BooleanMethod");
+        Flassertions.assertClassNameEquals(instance, "BooleanMethod");
+    }
+
+    @Test
+    @DisplayName("Flompiler: Defective Boolean Method using Field")
+    public void testFlompilerDefectiveBooleanMethodFieldClass() {
+        testParsingFailure("/methods/attributes/defective/BooleanMethod.java");
+    }
+
+
+
+    // METHODS (WITH PARAMETERS)
 
     @Test
     @DisplayName("Flompiler: Boolean Method Class with Boolean Parameter")
