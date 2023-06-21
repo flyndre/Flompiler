@@ -305,6 +305,18 @@ public class MiniJavaBaseListener implements MiniJavaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIntdeclaration(MiniJavaParser.IntdeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntdeclaration(MiniJavaParser.IntdeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIntFieldDecl(MiniJavaParser.IntFieldDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -336,18 +348,6 @@ public class MiniJavaBaseListener implements MiniJavaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCharFieldDecl(MiniJavaParser.CharFieldDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIntdeclaration(MiniJavaParser.IntdeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIntdeclaration(MiniJavaParser.IntdeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

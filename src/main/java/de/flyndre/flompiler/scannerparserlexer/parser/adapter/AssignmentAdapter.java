@@ -7,7 +7,6 @@ import de.flyndre.flompiler.scannerparserlexer.syntaxtree.StatementExpression;
 
 public class AssignmentAdapter {
     public static Assign adapt(MiniJavaParser.AssignmentContext assignment) throws Exception {
-
         String operator = "";
 
         if(assignment.assignmentoperator().EQUALS() != null){
