@@ -143,7 +143,7 @@ public class DynamicIfElseResults {
                         {
                             var ifCondition = new LocalOrFieldVar();
                             ifCondition.name = "returnOne";
-                            ifCondition.type = "int";
+                            ifCondition.type = "boolean";
                             statement.condition = ifCondition;
                         }
                         {
@@ -206,6 +206,7 @@ public class DynamicIfElseResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);

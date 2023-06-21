@@ -117,16 +117,16 @@ public class StaticIfResults {
                         {
                             var ifCondition = new BooleanConst();
                             ifCondition.value = true;
-                            ifCondition.type = "int";
+                            ifCondition.type = "boolean";
                             statement.condition = ifCondition;
                         }
                         {
                             var ifBlock = new Block();
-                            ifBlock.type = "boolean";
+                            ifBlock.type = "int";
                             ifBlock.statements = new ArrayList<>();
                             {
                                 var returnBlock = new Return();
-                                returnBlock.type = "boolean";
+                                returnBlock.type = "int";
                                 {
                                     var returnValue = new IntConst();
                                     returnValue.value = 1;
@@ -163,6 +163,7 @@ public class StaticIfResults {
                 var block = new Block();
                 {
                     block.statements = new ArrayList<>();
+                    block.type = "void";
                 }
                 constructor.statement = block;
                 clazz.methods.add(constructor);
