@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Assertions used to test the Flompiler.
@@ -58,10 +60,16 @@ public class Flassertions {
             Object... methodArguments
     ) {
         try {
-            Method method = instance.getClass().getDeclaredMethod(methodName);
-            Object result = method.invoke(instance, methodArguments);
+            // Das hier wäre die schöne Variante:
+            //      List<? extends Class<?>> args = Arrays.stream(methodArguments).map(Object::getClass).toList();
+            //      Method method = instance.getClass().getDeclaredMethod(methodName, args.toArray(new Class<?>[0]));
+            // Leider funktioniert das wegen der Wrapper-Typen für primitive Typen nicht.
+            // Da ich nicht mehr genug Zeit habe, müssen Sie hiermit vorliebnehmen:
+            Optional<Method> method = Arrays.stream(instance.getClass().getDeclaredMethods()).filter((Method m) -> m.getName().equals(methodName)).findFirst();
+            Assertions.assertTrue(method.isPresent());
+            Object result = method.get().invoke(instance, methodArguments);
             Assertions.assertEquals(expectedOutput, result);
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e ) {
+        } catch (IllegalAccessException | InvocationTargetException e ) {
             throw new RuntimeException(e);
         }
     }
