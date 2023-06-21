@@ -37,7 +37,7 @@ public class LocalOrFieldVar extends Expression {
         if(this.type !=null){
             return type;
         }
-        throw new Exception(String.format("For the field or parameter {0} was no type found.",this.name));
+        throw new Exception(String.format("For the field or parameter %s was no type found.",this.name));
     }
 
     /**
