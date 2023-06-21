@@ -19,7 +19,7 @@ public class LocalVarDecl extends Statement {
      * @return The type of the local var.
      */
     @Override
-    public String typeCheck()  {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters)  {
         return type;
     }
 

@@ -23,7 +23,7 @@ public class BooleanConst extends Expression {
      * @return the value boolean as type.
      */
     @Override
-    public String typeCheck(){
+    public String typeCheck(List<Field> fields, List<Parameter> parameters){
         return type = "boolean";
     }
 

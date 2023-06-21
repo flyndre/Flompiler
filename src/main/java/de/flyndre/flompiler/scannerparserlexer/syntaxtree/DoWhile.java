@@ -20,7 +20,7 @@ public class DoWhile extends Statement {
      * @return The type value void due the do while statement not implemented yet.
      */
     @Override
-    public String typeCheck() {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) {
         return type = "void";
     }
 

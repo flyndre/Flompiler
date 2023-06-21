@@ -19,8 +19,8 @@ public class MethodCall extends StatementExpression {
      * @throws Exception if no typ could be determined.
      */
     @Override
-    public String typeCheck() throws Exception {
-        return type = expr.typeCheck();
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        return type = expr.typeCheck(fields,parameters);
     }
 
     public MethodCall(Expression expr, String name, List<Expression> expressions) {

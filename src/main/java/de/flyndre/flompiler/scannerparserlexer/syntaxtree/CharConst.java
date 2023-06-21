@@ -23,7 +23,7 @@ public class CharConst extends Expression {
      * @return The type value char.
      */
     @Override
-    public String typeCheck() {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) {
         return type = "char";
     }
 

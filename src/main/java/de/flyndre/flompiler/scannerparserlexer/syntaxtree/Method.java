@@ -50,8 +50,9 @@ public class Method {
      * @return the type of the method.
      * @throws Exception if the types doesn't match.
      */
-    public String typeCheck() throws Exception {
-        String foundType = statement.typeCheck();
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        parameters.addAll(parameter);
+        String foundType = statement.typeCheck(fields,parameters);
         if(!foundType.equals(type)){
             throw new Exception(String.format("The given type does not equal the expected. Expected: %s found: %s",type,foundType));
         }

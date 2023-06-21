@@ -22,5 +22,5 @@ public abstract class StatementExpression {
      * @return the type of the StatementExpression.
      * @throws Exception if the type check failed.
      */
-    public abstract String typeCheck() throws Exception;
+    public abstract String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception;
 }

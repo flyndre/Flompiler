@@ -19,7 +19,7 @@ public class Break extends Statement {
      * @return The type value void.
      */
     @Override
-    public String typeCheck(){
+    public String typeCheck(List<Field> fields, List<Parameter> parameters){
         return type = "void";
     }
 

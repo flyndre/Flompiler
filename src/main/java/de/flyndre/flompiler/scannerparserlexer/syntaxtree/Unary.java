@@ -19,8 +19,8 @@ public class Unary extends StatementExpression {
      * @throws Exception if no type could be determined.
      */
     @Override
-    public String typeCheck() throws Exception {
-        return type = expression.typeCheck();
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        return type = expression.typeCheck(fields,parameters);
     }
 
     /**

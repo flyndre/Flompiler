@@ -17,7 +17,7 @@ public class Null extends Expression {
      * @return the type value void.
      */
     @Override
-    public String typeCheck() {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) {
         return type ="void";
     }
 

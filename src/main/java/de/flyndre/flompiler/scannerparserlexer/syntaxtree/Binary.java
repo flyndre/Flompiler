@@ -25,10 +25,10 @@ public class Binary extends Expression {
      * @throws Exception if the types are different
      */
     @Override
-    public String typeCheck() throws Exception {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         String tyl;
         String tyr;
-        if((tyl=expressionLeft.typeCheck()).equals(tyr=expressionRight.typeCheck())){
+        if((tyl=expressionLeft.typeCheck(fields, parameters)).equals(tyr=expressionRight.typeCheck(fields, parameters))){
             return type = tyl;
         }
         throw new Exception(String.format("Expected two equal types but was %s and %s",tyl,tyr));

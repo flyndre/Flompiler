@@ -18,7 +18,7 @@ public class StringConst extends Expression{
      * @return The type value string.
      */
     @Override
-    public String typeCheck()  {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters)  {
         return type = "String";
     }
 }

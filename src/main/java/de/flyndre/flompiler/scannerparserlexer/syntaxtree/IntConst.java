@@ -23,7 +23,7 @@ public class IntConst extends Expression {
      * @return Type value int.
      */
     @Override
-    public String typeCheck() {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) {
         return type ="int";
     }
 

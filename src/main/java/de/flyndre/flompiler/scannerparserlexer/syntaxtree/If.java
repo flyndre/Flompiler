@@ -27,11 +27,11 @@ public class If extends Statement {
      * @throws Exception when the types are not compatible
      */
     @Override
-    public String typeCheck() throws Exception {
-        String ifType = ifStatement.typeCheck();
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        String ifType = ifStatement.typeCheck(fields, parameters);
         String elseType;
         try{
-            elseType = elseStatement.typeCheck();
+            elseType = elseStatement.typeCheck(fields, parameters);
         }catch (NullPointerException e){
             elseType="void";
         }

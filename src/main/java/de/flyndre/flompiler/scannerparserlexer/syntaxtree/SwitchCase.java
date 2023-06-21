@@ -20,7 +20,7 @@ public class SwitchCase extends Statement {
      * @return void due to not implemented class SwitchCase
      */
     @Override
-    public String typeCheck()  {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters)  {
         return type = "void";
     }
 

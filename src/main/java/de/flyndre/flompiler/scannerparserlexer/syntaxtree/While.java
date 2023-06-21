@@ -26,8 +26,8 @@ public class While extends Statement {
      * @throws Exception if not type could be determined.
      */
     @Override
-    public String typeCheck() throws Exception {
-        return type = statement.typeCheck();
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        return type = statement.typeCheck(fields,parameters);
     }
 
     /**

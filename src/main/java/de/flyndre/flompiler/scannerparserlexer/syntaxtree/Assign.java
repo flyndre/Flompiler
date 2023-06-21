@@ -19,9 +19,9 @@ public class Assign extends StatementExpression {
      * @throws Exception when the types are different.
      */
     @Override
-    public String typeCheck() throws Exception {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         String vartype, expType;
-        if((vartype = var.typeCheck()).equals(expType = expression.typeCheck())){
+        if((vartype = var.typeCheck(fields, parameters)).equals(expType = expression.typeCheck(fields,parameters))){
             return type = vartype;
         }
         throw new Exception(String.format("Expected two equal types but was %s and %s",vartype,expType));

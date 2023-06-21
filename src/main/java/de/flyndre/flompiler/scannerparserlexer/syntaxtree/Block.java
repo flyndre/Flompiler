@@ -25,14 +25,14 @@ public class Block extends Statement {
      * @throws Exception when not able to determine a type for the block.
      */
     @Override
-    public String typeCheck() throws Exception {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
         type = "void";
         for(Statement stm:statements){
             String nextType;
-            if((nextType=stm.typeCheck()).equals("void")){
+            if((nextType=stm.typeCheck(fields, parameters)).equals("void")){
                 continue;
             }
-            if(!type.equals("void")&&!(nextType=stm.typeCheck()).equals(type)){
+            if(!type.equals("void")&&!(nextType=stm.typeCheck(fields, parameters)).equals(type)){
                 throw new Exception(String.format("There are two different return types. First: %s Second: %s",type,nextType));
             }
             type = nextType;

@@ -19,8 +19,8 @@ public class InstVar extends Expression {
      * @throws Exception if the type check goes wrong.
      */
     @Override
-    public String typeCheck() throws Exception {
-        return type = expression.typeCheck();
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        return type = expression.typeCheck(fields,parameters);
     }
 
     /**

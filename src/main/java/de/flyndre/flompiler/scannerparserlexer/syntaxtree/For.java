@@ -20,7 +20,7 @@ public class For extends Statement {
      * @return The type value void due the for-loop statement not implemented yet.
      */
     @Override
-    public String typeCheck()  {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters)  {
         return type = "void";
     }
 

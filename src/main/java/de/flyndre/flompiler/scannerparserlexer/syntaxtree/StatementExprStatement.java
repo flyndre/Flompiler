@@ -22,8 +22,8 @@ public class StatementExprStatement extends Statement {
      * @throws Exception if the type couldn't be determined.
      */
     @Override
-    public String typeCheck() throws Exception {
-        return  type = statementExpression.typeCheck();
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+        return  type = statementExpression.typeCheck(fields, parameters);
     }
 
     /**

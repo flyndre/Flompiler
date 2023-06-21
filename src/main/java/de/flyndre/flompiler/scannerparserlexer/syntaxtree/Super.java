@@ -17,7 +17,7 @@ public class Super extends Expression {
      * @return The set type.
      */
     @Override
-    public String typeCheck()  {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters)  {
         return type;
     }
 

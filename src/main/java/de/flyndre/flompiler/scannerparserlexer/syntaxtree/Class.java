@@ -48,7 +48,7 @@ public class Class {
      */
     public void typeCheck() throws Exception {
         for(Method method:methods){
-            method.typeCheck();
+            method.typeCheck(fields,new ArrayList<>());
         }
     }
 }

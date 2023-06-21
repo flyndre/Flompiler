@@ -19,7 +19,7 @@ public class Continue extends Statement {
      * @return The type vale void.
      */
     @Override
-    public String typeCheck() {
+    public String typeCheck(List<Field> fields, List<Parameter> parameters) {
         return type = "void";
     }
 
