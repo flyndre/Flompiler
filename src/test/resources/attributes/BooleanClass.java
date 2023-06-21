@@ -1,3 +1,3 @@
 public class BooleanClass {
-    public boolean isTrue;
+    public boolean isFalse = false;
 }
