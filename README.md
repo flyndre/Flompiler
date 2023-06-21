@@ -20,6 +20,8 @@ Die Bearbeitung eines Aufgabenbereichs wurde vom jeweiligen verantwortlichen Tea
 
 ## Aufbau des Compilers
 
+### Komponenten
+
 Unser Compiler besteht aus drei Teilen:
 
 * Dem [`ScannerParserLexer`](src/main/java/de/flyndre/flompiler/scannerparserlexer/ScannerParserLexer.java), der die Input-Datei einliest, sie in Tokens umwandelt und parst.
@@ -29,6 +31,8 @@ Unser Compiler besteht aus drei Teilen:
 
 Orchestriert wird der Compiler von [`Flompiler`](src/main/java/de/flyndre/flompiler/Flompiler.java), der als Controller fungiert und zwischen den Komponenten vermittelt.
 Dieser implementiert eine Main-Methode, die den Pfad zur Input-Datei als erstes Argument erhält.
+
+### Abstrakter Syntaxbaum
 
 Die drei Bestandteile kommunizieren intern den abstrakten Syntaxbaum (AST), der wie folgt aufgebaut ist:
 
@@ -48,20 +52,23 @@ Es folgt eine Übersicht über die prägnantesten der unterstützen Features.
 ### Operatoren
 
 * Arithmetische (`+`, `-`, `*`, `/`)
-* Logische (`&&`, `||`)
 * Unäre (`++`, `--`)
+* Konkatenation (`"Hello " + "world!"`)
 
-### Klassen
+### Objektorientierung
 
 * Klassen an sich
-* Konstruktoren
+* Attribute (direkt initialisierte)
 * Methoden
+* Methodenaufrufe
+* Variablen
+* Leerer Konstruktor
 
 ### Strukturen
 
 * `if`, `if-else`
-* `while`, `do-while`
-* `for`
+* `while`
+* `return`
 
 ## Verwendung
 
