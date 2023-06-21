@@ -412,13 +412,18 @@ public class BytecodeGenerator {
                     case "char":
                         methodDescriptor = methodDescriptor + "C";
                         break;
+                    case "void":
+                        methodDescriptor = methodDescriptor + "V";
+                        break;
                     default:
                         methodDescriptor = methodDescriptor + "L" + mc.type + ";";
                 }
                 //call method
                 mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, type, mc.name, methodDescriptor, false);
-                //discard return value
-                mv.visitInsn(Opcodes.POP);
+                //discard return value if return type not "void"
+                if(!mc.type.equals("void")){
+                    mv.visitInsn(Opcodes.POP);
+                }
             }else if(se instanceof Assign assign){
                 //generate code for expression calculation
                 Expr expression = generateByteCodeForExpressions(mv, assign.expression, localVarScope);
@@ -1329,42 +1334,14 @@ public class BytecodeGenerator {
         }
 
         //calculate method descriptor
-        methodDescriptor = "(" + methodDescriptor + ")";
-        switch(newExpr.type){
-            case "int":
-                methodDescriptor = methodDescriptor + "I";
-                break;
-            case "boolean":
-                methodDescriptor = methodDescriptor + "Z";
-                break;
-            case "char":
-                methodDescriptor = methodDescriptor + "C";
-                break;
-            default:
-                methodDescriptor = methodDescriptor + "L" + newExpr.type + ";";
-        }
+        methodDescriptor = "(" + methodDescriptor + ")" + "V";//constructor always "void"
 
         //call the constructor
         mv.visitMethodInsn(Opcodes.INVOKESPECIAL, newExpr.type, "<init>", methodDescriptor, false);
 
         //create new expression with return value
-        switch (newExpr.type){
-            case "int":
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
-                localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
-                return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
-            case "boolean":
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
-                localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar("boolean", (localVarScope.size())));
-                return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
-            case "char":
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
-                localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar("char", (localVarScope.size())));
-                return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
-            default:
-                mv.visitVarInsn(Opcodes.ALOAD, localVarScope.size());
-                localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar(newExpr.type, (localVarScope.size())));
-                return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
-        }
+        mv.visitVarInsn(Opcodes.ALOAD, localVarScope.size());
+        localVarScope.put("NewConstructorCall" + newExpr.type + (localVarScope.size()), new LocalVar(newExpr.type, (localVarScope.size())));
+        return new Expr("NewConstructorCall" + newExpr.type + (localVarScope.size()-1), ExprType.LocalVar);
     }
 }
