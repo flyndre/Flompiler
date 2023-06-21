@@ -15,5 +15,10 @@ public abstract class Expression {
     public Expression() {
     }
 
-    public abstract String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception;
+    /**
+     * Type check for all expressions.
+     * @return The type of the expression.
+     * @throws Exception if the type could not be determined.
+     */
+    public abstract String typeCheck() throws Exception;
 }

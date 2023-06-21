@@ -21,12 +21,17 @@ public class If extends Statement {
         this.elseStatement = elseStatement;
     }
 
+    /**
+     * Type check for if-statement. Checks if both statements have compatible types.
+     * @return the type of the if-statement.
+     * @throws Exception when the types are not compatible
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        String ifType = ifStatement.typeCheck(fields,parameters);
+    public String typeCheck() throws Exception {
+        String ifType = ifStatement.typeCheck();
         String elseType;
         try{
-            elseType = elseStatement.typeCheck(fields,parameters);
+            elseType = elseStatement.typeCheck();
         }catch (NullPointerException e){
             elseType="void";
         }

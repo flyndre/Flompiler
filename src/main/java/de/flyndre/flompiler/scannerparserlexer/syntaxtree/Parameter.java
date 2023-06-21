@@ -27,7 +27,11 @@ public class Parameter {
         this.type = type;
         this.name = name;
     }
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+
+    /**
+     * @return the type of the parameter-
+     */
+    public String typeCheck() {
         return type;
     }
 }

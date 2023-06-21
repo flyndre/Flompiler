@@ -13,8 +13,11 @@ public class New extends StatementExpression {
     public New() {
     }
 
+    /**
+     * @return the type of this StatementExpression.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+    public String typeCheck() {
         return type;
     }
 

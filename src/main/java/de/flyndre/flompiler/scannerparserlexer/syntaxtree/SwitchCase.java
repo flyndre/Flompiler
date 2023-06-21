@@ -15,8 +15,12 @@ public class SwitchCase extends Statement {
     public SwitchCase() {
     }
 
+    /**
+     *
+     * @return void due to not implemented class SwitchCase
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
+    public String typeCheck()  {
         return type = "void";
     }
 

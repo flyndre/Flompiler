@@ -18,8 +18,11 @@ public class IntConst extends Expression {
         this.value = value;
     }
 
+    /**
+     * @return Type value int.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+    public String typeCheck() {
         return type ="int";
     }
 

@@ -15,8 +15,11 @@ public class Break extends Statement {
     public Break() {
     }
 
+    /**
+     * @return The type value void.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws ExecutionControl.NotImplementedException {
+    public String typeCheck(){
         return type = "void";
     }
 

@@ -20,9 +20,14 @@ public class While extends Statement {
         this.statement = statement;
     }
 
+    /**
+     * Checks the type of the statement and sets is as the type for the while-loop.
+     * @return the type of the while-loop.
+     * @throws Exception if not type could be determined.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
-        return type = statement.typeCheck(fields,parameters);
+    public String typeCheck() throws Exception {
+        return type = statement.typeCheck();
     }
 
     /**

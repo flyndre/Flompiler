@@ -42,10 +42,13 @@ public class Class {
     public List<Method> methods;
 
 
-
+    /**
+     * Checks the type of all methods in the class.
+     * @throws Exception if the type of a method could not be determined.
+     */
     public void typeCheck() throws Exception {
         for(Method method:methods){
-            method.typeCheck(fields);
+            method.typeCheck();
         }
     }
 }

@@ -13,8 +13,11 @@ public class Null extends Expression {
     public Null() {
     }
 
+    /**
+     * @return the type value void.
+     */
     @Override
-    public String typeCheck(List<Field> fields, List<Parameter> parameters) throws Exception {
+    public String typeCheck() {
         return type ="void";
     }
 
