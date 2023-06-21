@@ -14,10 +14,9 @@ import java.util.BitSet;
 public class ScannerParserLexer {
     public static void main(String[] args) throws Exception {
         String as = "public class abc{\n" +
-                "public String abc = \"abc\";"+
                 "\n" +
                 "public String abasc(int a, int b){\n" +
-                         "++a;"+
+                         "public int abc = 1;"+
                 "ABC abc = new ABC();"+
                 "        int badi = b+1*2;" +
                 "        int i = abc(1+1);"          +
@@ -60,9 +59,15 @@ public class ScannerParserLexer {
 
     private static Program parse(String input) throws Exception {
         MiniJavaLexer lexer = new MiniJavaLexer(CharStreams.fromString(input));
+        lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+
         CommonTokenStream tokens = new CommonTokenStream(lexer);
+
         MiniJavaParser parser = new MiniJavaParser(tokens);
+        parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+
         MiniJavaParser.ProgramContext tree = parser.program(); //Parsen
+
         Program doc = new Program(ClassAdapter.adapt(tree.classes()));
         return doc;
     }

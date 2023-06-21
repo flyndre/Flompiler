@@ -15,13 +15,13 @@ public class StatementAdapter {
             return new Return(new BooleanConst(Boolean.valueOf(ctx.BOOLEAN().getText())));
         }
         else if(ctx.CHAR() != null){
-            return new Return(new CharConst(ctx.CHAR().getText().charAt(0)));
+            return new Return(new CharConst(ctx.CHAR().getText().charAt(1)));
         }
         else if(ctx.INTEGER() != null){
             return new Return(new IntConst(Integer.valueOf(ctx.INTEGER().getText())));
         }
         else if(ctx.STRING() != null){
-            return new Return(new StringConst(ctx.STRING().getText()));
+            return new Return(new StringConst(ctx.STRING().getText().replace("\"", "")));
         }
         else if(ctx.expression() != null){
             return new Return(ExpressionAdapter.adapt(ctx.expression()));

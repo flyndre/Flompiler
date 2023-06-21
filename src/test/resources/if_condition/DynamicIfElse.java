@@ -1,4 +1,4 @@
-public class DynamicIf {
+public class DynamicIfElse {
     public int method(boolean returnOne) {
         if (returnOne) {
             return 1;
