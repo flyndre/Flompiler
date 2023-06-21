@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class BytecodeGenerator {
     private static HashMap<String, String> classFields = new HashMap<>();//key string is the field name, second string is the field type
@@ -312,7 +313,7 @@ public class BytecodeGenerator {
                         consMeth.visitFieldInsn(Opcodes.PUTFIELD, type, defaultFields.get(a).name, "I");
                         break;
                     case "boolean":
-                        if(defaultFields.get(a).standardValue == "true"){
+                        if(Objects.equals(defaultFields.get(a).standardValue, "true")){
                             consMeth.visitInsn(Opcodes.ICONST_1);
                         }else{
                             consMeth.visitInsn(Opcodes.ICONST_0);
