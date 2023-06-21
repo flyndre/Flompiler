@@ -144,9 +144,9 @@ chardeclaration                 : accessMod CHARTYPE NAME SEMICOLON
 intdeclaration                  : accessMod INTTYPE NAME SEMICOLON
                                 | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
-intFieldDecl                    : accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
-stringFieldDecl                 : accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
-charFieldDecl                   : accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON;
+intFieldDecl                    : accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON | accessMod INTTYPE NAME SEMICOLON;
+stringFieldDecl                 : accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON | accessMod STRINGTYPE NAME SEMICOLON;
+charFieldDecl                   : accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON | accessMod CHARTYPE NAME SEMICOLON;
 
 
 
