@@ -38,9 +38,9 @@ public class StatementAdapter {
                 DeclarationWithAssignment decl = (DeclarationWithAssignment) stat;
                 statements.add(decl.getVardecl());
                 statements.add(new StatementExprStatement(decl.getAssignment()));
+            }else{
+                statements.add(stat);
             }
-
-            statements.add(adaptStatement(ctx.statement()));
         }
         if(ctx.statements() != null){
             statements.addAll(StatementAdapter.adapt(ctx.statements()));
