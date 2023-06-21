@@ -26,7 +26,7 @@ public class ScannerParserLexer {
                 "            return 1; \n" +
                 "        }\n" +
                 "        while(i < 5){\n" +
-                "            return 5; \n" +
+                "            return a + 5; \n" +
                 "        }\n" +
                 "}\n" +
                 "}";

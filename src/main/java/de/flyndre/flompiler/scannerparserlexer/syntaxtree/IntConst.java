@@ -14,8 +14,9 @@ public class IntConst extends Expression {
     public IntConst() {
     }
 
-    public IntConst(int value){
+    public IntConst(int value, String type){
         this.value = value;
+        this.type = type;
     }
 
     /**

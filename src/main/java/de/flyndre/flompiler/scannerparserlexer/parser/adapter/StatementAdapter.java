@@ -12,16 +12,16 @@ public class StatementAdapter {
 
     public static Return adaptReturn(MiniJavaParser.ReturnstatementContext ctx) throws Exception {
         if(ctx.BOOLEAN() != null){
-            return new Return(new BooleanConst(Boolean.valueOf(ctx.BOOLEAN().getText())));
+            return new Return(new BooleanConst(Boolean.valueOf(ctx.BOOLEAN().getText()), "boolean"));
         }
         else if(ctx.CHAR() != null){
-            return new Return(new CharConst(ctx.CHAR().getText().charAt(1)));
+            return new Return(new CharConst(ctx.CHAR().getText().charAt(1), "char"));
         }
         else if(ctx.INTEGER() != null){
-            return new Return(new IntConst(Integer.valueOf(ctx.INTEGER().getText())));
+            return new Return(new IntConst(Integer.valueOf(ctx.INTEGER().getText()), "int"));
         }
         else if(ctx.STRING() != null){
-            return new Return(new StringConst(ctx.STRING().getText().replace("\"", "")));
+            return new Return(new StringConst(ctx.STRING().getText().replace("\"", ""), "String"));
         }
         else if(ctx.expression() != null){
             return new Return(ExpressionAdapter.adapt(ctx.expression()));
@@ -62,7 +62,7 @@ public class StatementAdapter {
             return adaptWhile(ctx.while_());
         }
         else if(ctx.booldeclaration() != null){
-            return new DeclarationWithAssignment(adaptBoolDecl(ctx.booldeclaration()), new Assign(new LocalOrFieldVar(ctx.booldeclaration().NAME().getText()), "=", new BooleanConst(Boolean.getBoolean(ctx.booldeclaration().BOOLEAN().getText()))));
+            return new DeclarationWithAssignment(adaptBoolDecl(ctx.booldeclaration()), new Assign(new LocalOrFieldVar(ctx.booldeclaration().NAME().getText()), "=", new BooleanConst(Boolean.getBoolean(ctx.booldeclaration().BOOLEAN().getText()), "boolean")));
         }
         else if(ctx.chardeclaration() != null){
             return new DeclarationWithAssignment(adaptCharDecl(ctx.chardeclaration()), new Assign(new LocalOrFieldVar(ctx.chardeclaration().NAME().getText()), "=", AssignmentExpressionAdapter.adapt(ctx.chardeclaration().assignmentexpression())));
