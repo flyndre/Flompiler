@@ -9,6 +9,8 @@ public class LiteralAdapter {
             return new BooleanConst(Boolean.getBoolean(literal.BOOLEAN().getText()), "boolean");
         }
         else if(literal.INTEGER() != null){
+            String intString = literal.INTEGER().getText();
+
             return new IntConst(Integer.valueOf(literal.INTEGER().getText()), "int");
         }
         else if(literal.CHAR() != null){

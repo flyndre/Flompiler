@@ -19,7 +19,7 @@ public class ScannerParserLexer {
                          "public int abc = 1;"+
                 "ABC abc = new ABC();"+
                 "        int badi = b+1*2;" +
-                "        int i = abc(1+1);"          +
+                "        int i = -1;"          +
                 "          if(a > 1){\n" +
                 "            return 1;\n" +
                 "        }else{\n" +

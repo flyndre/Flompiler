@@ -24,7 +24,7 @@ EQUALSSTAT                      : '==';
 OR                              : '||';
 LESSTHAN                        : '<';
 GREATERTHAN                     : '>';
-INTEGER                         : [0-9]+;
+INTEGER                         : [0-9]+ | MINUS [0-9]+;
 COMMA                           : ',';
 DECREMENT                       : '--';
 INCREMENT                       : '++';
