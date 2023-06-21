@@ -69,7 +69,7 @@ public final class BooleanClassResults {
                 var isTrueField = new Field();
                 isTrueField.access = "public";
                 isTrueField.type = "boolean";
-                isTrueField.name = "isTrue";
+                isTrueField.name = "isFalse";
                 isTrueField.standardValue = "false";
                 booleanClass.fields.add(isTrueField);
             }
