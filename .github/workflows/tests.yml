@@ -17,7 +17,7 @@
 
  jobs:
    test_scanner_parser_lexer:
-     name: Scanner-Parser-Lexer-Test
+     name: Tests
      continue-on-error: true
      runs-on: ubuntu-latest
      permissions:
@@ -26,18 +26,18 @@
 
      steps:
        #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
-       - uses: actions/checkout@v1
+       - uses: actions/checkout@v2
       
        #Set up JDK
        - name: Set up JDK
          uses: actions/setup-java@v1
          with:
-           java-version: '19'
+           java-version: 19
 
        #Set up Maven cache
        - name: Cache Maven packages
          #This action allows caching dependencies and build outputs to improve workflow execution time.
-         uses: actions/cache@v1
+         uses: actions/cache@v2
          with:
            path: ~/.m2
            key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}

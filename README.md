@@ -1,3 +1,5 @@
+![](https://github.com/pereki/flompiler/workflows/Tests/badge.svg)
+
 ![Flompiler Logo](docs/flompiler.png)
 
 # Flompiler
