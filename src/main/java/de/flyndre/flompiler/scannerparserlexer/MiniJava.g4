@@ -2,49 +2,49 @@ grammar MiniJava;
 
 
 //TODO: FIX THAT
-NEW                 : 'new';
-THIS                : 'this';
-WHILE               : 'while';
-IF                  : 'if';
-ELSE                : 'else';
-DOT                 : '.';
-RETURN              : 'return';
-CLASS               : 'class';
-BOOLEAN             : 'true' | 'false';
-INTTYPE             : 'int';
-STRINGTYPE          : 'String';
-BOOLEANTYPE         : 'boolean';
-CHARTYPE            : 'char';
-VOIDTYPE            : 'void';
-EQUALS              : '=';
-STRING              : '"' SEQUENCE* '"';
-CHAR                : '\'' [a-zA-Z0-9] '\'';
-JNULL               : 'null';
-EQUALSSTAT          : '==';
-INTEGER             : [0-9]+;
-COMMA               : ',';
-DECREMENT           : '--';
-INCREMENT           : '++';
-PLUS                : '+';
-MINUS               : '-';
-MUL                 : '*';
-DIV                 : '/';
-MOD                 : '%';
+NEW                             : 'new';
+THIS                            : 'this';
+WHILE                           : 'while';
+IF                              : 'if';
+ELSE                            : 'else';
+DOT                             : '.';
+RETURN                          : 'return';
+CLASS                           : 'class';
+BOOLEAN                         : 'true' | 'false';
+INTTYPE                         : 'int';
+STRINGTYPE                      : 'String';
+BOOLEANTYPE                     : 'boolean';
+CHARTYPE                        : 'char';
+VOIDTYPE                        : 'void';
+EQUALS                          : '=';
+STRING                          : '"' ('\\' ["\\] | ~["\\\r\n])* '"';
+CHAR                            : '\'' [a-zA-Z0-9] '\'';
+JNULL                           : 'null';
+EQUALSSTAT                      : '==';
+INTEGER                         : [0-9]+;
+COMMA                           : ',';
+DECREMENT                       : '--';
+INCREMENT                       : '++';
+PLUS                            : '+';
+MINUS                           : '-';
+MUL                             : '*';
+DIV                             : '/';
+MOD                             : '%';
 
-PUBLIC              : 'public';
-PRIVATE             : 'private';
-PROTECTED           : 'protected';
-NAME                : [A-Za-z]+;
-WAVEDBROPEN         : '{';
-WAVEDBRCLOSE        : '}';
-SEMICOLON           : ';';
-BROPEN              : '(';
-BRCLOSE             : ')';
-SEQUENCE            : [a-zA-Z0-9];
-TIMESEQUAL          : '*=';
-DIVIDEEQUAL         : '/=';
-PLUSEQUAL           : '+=';
-MINUSEQUAL          : '-=';
+PUBLIC                          : 'public';
+PRIVATE                         : 'private';
+PROTECTED                       : 'protected';
+NAME                            : [A-Za-z]+;
+WAVEDBROPEN                     : '{';
+WAVEDBRCLOSE                    : '}';
+SEMICOLON                       : ';';
+BROPEN                          : '(';
+BRCLOSE                         : ')';
+SEQUENCE                        : [a-zA-Z0-9];
+TIMESEQUAL                      : '*=';
+DIVIDEEQUAL                     : '/=';
+PLUSEQUAL                       : '+=';
+MINUSEQUAL                      : '-=';
 
 program                         : classes;
 classes                         : class classes| ;
@@ -134,15 +134,15 @@ parameter                       : accessMod BOOLEANTYPE NAME
 
 booldeclaration                 : accessMod BOOLEANTYPE NAME SEMICOLON
                                 | accessMod BOOLEANTYPE NAME EQUALS BOOLEAN SEMICOLON
-                                | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
+                                | accessMod BOOLEANTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 stringdeclaration               : accessMod STRINGTYPE NAME SEMICOLON
                                 | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON
-                                | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
+                                | accessMod STRINGTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 chardeclaration                 : accessMod CHARTYPE NAME SEMICOLON
                                 | accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON
-                                | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
+                                | accessMod CHARTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 intdeclaration                  : accessMod INTTYPE NAME SEMICOLON
                                 | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON

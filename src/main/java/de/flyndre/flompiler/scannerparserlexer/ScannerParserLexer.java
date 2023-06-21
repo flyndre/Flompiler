@@ -14,10 +14,9 @@ import java.util.BitSet;
 public class ScannerParserLexer {
     public static void main(String[] args) throws Exception {
         String as = "public class abc{\n" +
-                "public String abc = \"abc\";"+
                 "\n" +
                 "public String abasc(int a, int b){\n" +
-                         "++a;"+
+                         "public int abc = 1;"+
                 "ABC abc = new ABC();"+
                 "        int badi = b+1*2;" +
                 "        int i = abc(1+1);"          +
