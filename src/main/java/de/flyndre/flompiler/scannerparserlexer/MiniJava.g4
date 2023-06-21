@@ -122,9 +122,9 @@ statementexpression             : assignment
 		                        | methodinvocation;
 
 fielddeclaration                : booldeclaration
-                                | stringdeclaration
-                                | chardeclaration
-                                | intdeclaration;
+                                | stringFieldDecl
+                                | charFieldDecl
+                                | intFieldDecl;
                              //TODO NEW KANN HIER NICHT GEHANDELT WERDEN DA STRING ALS VALUE :(
 
 parameter                       : accessMod BOOLEANTYPE NAME
@@ -133,20 +133,22 @@ parameter                       : accessMod BOOLEANTYPE NAME
                                 | accessMod INTTYPE NAME;
 
 booldeclaration                 : accessMod BOOLEANTYPE NAME SEMICOLON
-                                | accessMod BOOLEANTYPE NAME EQUALS BOOLEAN SEMICOLON
-                                | accessMod BOOLEANTYPE NAME EQUALS assignmentexpression SEMICOLON;
+                                | accessMod BOOLEANTYPE NAME EQUALS BOOLEAN SEMICOLON;
 
 stringdeclaration               : accessMod STRINGTYPE NAME SEMICOLON
-                                | accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON
                                 | accessMod STRINGTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 chardeclaration                 : accessMod CHARTYPE NAME SEMICOLON
-                                | accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON
                                 | accessMod CHARTYPE NAME EQUALS assignmentexpression SEMICOLON;
 
 intdeclaration                  : accessMod INTTYPE NAME SEMICOLON
-                                | accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON
                                 | accessMod INTTYPE NAME EQUALS assignmentexpression SEMICOLON;
+
+intFieldDecl                    : accessMod INTTYPE NAME EQUALS INTEGER SEMICOLON;
+stringFieldDecl                 : accessMod STRINGTYPE NAME EQUALS STRING SEMICOLON;
+charFieldDecl                   : accessMod CHARTYPE NAME EQUALS CHAR SEMICOLON;
+
+
 
 classdeclaration                : accessMod NAME NAME SEMICOLON
                                 | accessMod NAME NAME EQUALS classinstancecreationexpression SEMICOLON;

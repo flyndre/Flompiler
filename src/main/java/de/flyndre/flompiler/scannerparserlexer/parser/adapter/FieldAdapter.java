@@ -23,37 +23,37 @@ public class FieldAdapter {
                     newField.standardValue = ctx.booldeclaration().BOOLEAN().getText();
                 }
 
-            }else if(ctx.chardeclaration() != null){
-                newField = new Field(ctx.chardeclaration().NAME().getText(),
-                        ctx.chardeclaration().accessMod().getText(),
+            }else if(ctx.charFieldDecl() != null){
+                newField = new Field(ctx.charFieldDecl().NAME().getText(),
+                        ctx.charFieldDecl().accessMod().getText(),
                         "char",
                         ""
                 );
 
-                if(ctx.chardeclaration().CHAR() != null){
-                    newField.standardValue = ctx.chardeclaration().CHAR().getText();
+                if(ctx.charFieldDecl().CHAR() != null){
+                    newField.standardValue = ctx.charFieldDecl().CHAR().getText();
                 }
 
-            }else if(ctx.intdeclaration() != null){
-                newField = new Field(ctx.intdeclaration().NAME().getText(),
-                        ctx.intdeclaration().accessMod().getText(),
+            }else if(ctx.intFieldDecl() != null){
+                newField = new Field(ctx.intFieldDecl().NAME().getText(),
+                        ctx.intFieldDecl().accessMod().getText(),
                         "int",
                         "0"
                 );
 
-                if(ctx.intdeclaration().INTEGER() != null){
-                    newField.standardValue = ctx.intdeclaration().INTEGER().getText();
+                if(ctx.intFieldDecl().INTEGER() != null){
+                    newField.standardValue = ctx.intFieldDecl().INTEGER().getText();
                 }
 
-            }else if(ctx.stringdeclaration() != null){
-                newField = new Field(ctx.stringdeclaration().NAME().getText(),
-                        ctx.stringdeclaration().accessMod().getText(),
+            }else if(ctx.stringFieldDecl() != null){
+                newField = new Field(ctx.stringFieldDecl().NAME().getText(),
+                        ctx.stringFieldDecl().accessMod().getText(),
                         "String",
                         ""
                 );
 
-                if(ctx.stringdeclaration().STRING() != null) {
-                    newField.standardValue = ctx.stringdeclaration().STRING().getText();
+                if(ctx.stringFieldDecl().STRING() != null) {
+                    newField.standardValue = ctx.stringFieldDecl().STRING().getText();
                 }
             }
         }

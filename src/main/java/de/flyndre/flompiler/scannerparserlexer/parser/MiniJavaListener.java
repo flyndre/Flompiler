@@ -258,6 +258,36 @@ public interface MiniJavaListener extends ParseTreeListener {
 	 */
 	void exitIntdeclaration(MiniJavaParser.IntdeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#intFieldDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntFieldDecl(MiniJavaParser.IntFieldDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#intFieldDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntFieldDecl(MiniJavaParser.IntFieldDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#stringFieldDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringFieldDecl(MiniJavaParser.StringFieldDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#stringFieldDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringFieldDecl(MiniJavaParser.StringFieldDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#charFieldDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterCharFieldDecl(MiniJavaParser.CharFieldDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#charFieldDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitCharFieldDecl(MiniJavaParser.CharFieldDeclContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#classdeclaration}.
 	 * @param ctx the parse tree
 	 */
