@@ -11,7 +11,10 @@ import de.flyndre.flompiler.results.methods.BooleanMethodClassResults;
 import de.flyndre.flompiler.results.methods.BooleanMethodReturnClassResults;
 import de.flyndre.flompiler.results.methods.CharMethodClassResults;
 import de.flyndre.flompiler.results.methods.IntegerMethodClassResults;
-import de.flyndre.flompiler.results.operators.IntegerMethodAddResults;
+import de.flyndre.flompiler.results.operators.AddResults;
+import de.flyndre.flompiler.results.operators.DivideResults;
+import de.flyndre.flompiler.results.operators.MultiplyResults;
+import de.flyndre.flompiler.results.operators.SubtractResults;
 import de.flyndre.flompiler.scannerparserlexer.syntaxtree.Program;
 import de.flyndre.flompiler.testing.Flassertions;
 import de.flyndre.flompiler.testing.Fleflection;
@@ -192,13 +195,46 @@ public class BytecodeGeneratorTest {
     // OPERATORS
 
     @Test
-    @DisplayName("TypeChecker: Add Operator")
-    public void testAddOperator() {
-        testBytecodeGenerationSuccess(IntegerMethodAddResults.TYPED_AST, "/operators/Add.class");
+    @DisplayName("TypeChecker: Add")
+    public void testAdd() {
+        testBytecodeGenerationSuccess(AddResults.TYPED_AST, "/operators/Add.class");
         Object instance = Fleflection.getReflectionInstance("/operators", "Add");
         Flassertions.assertClassNameEquals(instance, "Add");
-        // Function should return parameter value increased by 2
-        Flassertions.assertClassHasWorkingMethod(instance, "method", 1, 3);
-        Flassertions.assertClassHasWorkingMethod(instance, "method", 0, 2);
+        // Method should return given argument increased by 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2, 0);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 420, 418);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Subtract")
+    public void testSubtract() {
+        testBytecodeGenerationSuccess(SubtractResults.TYPED_AST, "/operators/Subtract.class");
+        Object instance = Fleflection.getReflectionInstance("/operators", "Subtract");
+        Flassertions.assertClassNameEquals(instance, "Subtract");
+        // Method should return given argument decreased by 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2, 4);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 420, 422);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Multiply")
+    public void testMultiply() {
+        testBytecodeGenerationSuccess(MultiplyResults.TYPED_AST, "/operators/Multiply.class");
+        Object instance = Fleflection.getReflectionInstance("/operators", "Multiply");
+        Flassertions.assertClassNameEquals(instance, "Multiply");
+        // Method should return given argument multiplied by 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2, 1);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 420, 210);
+    }
+
+    @Test
+    @DisplayName("TypeChecker: Divide")
+    public void testDivide() {
+        testBytecodeGenerationSuccess(DivideResults.TYPED_AST, "/operators/Divide.class");
+        Object instance = Fleflection.getReflectionInstance("/operators", "Divide");
+        Flassertions.assertClassNameEquals(instance, "Divide");
+        // Method should return given argument divided by 2
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 2, 4);
+        Flassertions.assertClassHasWorkingMethod(instance, "method", 420, 840);
     }
 }

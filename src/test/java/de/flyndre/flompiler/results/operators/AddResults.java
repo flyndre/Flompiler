@@ -5,7 +5,7 @@ import de.flyndre.flompiler.scannerparserlexer.syntaxtree.*;
 
 import java.util.ArrayList;
 
-public class IntegerMethodAddResults {
+public class AddResults {
     /**
      * The manually parsed resulting untyped abstract syntax tree for the class with a boolean method.
      */
