@@ -20,6 +20,7 @@ public class LocalVarDecl extends Statement {
      */
     @Override
     public String typeCheck(List<Field> fields, List<Parameter> parameters)  {
+        parameters.add(new Parameter(this.name,this.type));
         return type;
     }
 
