@@ -6,6 +6,13 @@
 
 Im Rahmen der Vorlesung "Compilerbau" an der DHBW Stuttgart Campus Horb entwickeln wir als Gruppe den minimalen Java-Compiler "Flompiler".
 
+## Inhalt
+
+1. [Gruppenzusammenstellung](#gruppenzusammenstellung)
+1. [Aufbau des Compilers](#aufbau-des-compilers)
+1. [Unterstütze Features](#unterstütze-features)
+1. [Verwendung](#verwendung)
+
 ## Gruppenzusammenstellung
 
 | Name            | Aufgabenbereich | Benutzername | Dokumentation                   |
@@ -82,3 +89,5 @@ java Flompiler "path/to/file.java"
 Alternativ kann der Pfad in der IDE als Kommandozeilenargument angegeben werden.
 Beispiel-Quelldateien befinden sich im Ordner [`src/test/resources`](src/test/resources/).
 Bei erfolgreicher Kompilierung erzeugt der Compiler eine gleichnamige `.class`-Datei neben der Input-Datei.
+
+Kompillierte `.jar`-Dateien finden sich auf der [Releases-Seite](https://github.com/Pereki/Flompiler/releases).
