@@ -64,7 +64,7 @@ Es folgt eine Übersicht über die prägnantesten der unterstützen Features.
 * Unäre* (`++`, `--`)
 * Konkatenation* (`"Hello " + "world!"`)
 
-\*Mit Stern markierte Funktionen sind in Version 1.0 nicht in allen Teilen des Compilers funktionsfähig.
+*Mit Stern markierte Funktionen sind in Version 1.0 nicht in allen Teilen des Compilers funktionsfähig.
 
 ### Objektorientierung
 
