@@ -42,12 +42,6 @@
            path: ~/.m2
            key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
            restore-keys: ${{ runner.os }}-m2
-
-       #Test the application using Maven
-#       - name: Test with Maven
-#         run: mvn -Dtest=SannerParserLexerTest -DfailIfNoTests=false test --file pom.xml
-       - name: RunMavenTest
-         uses: Maes95/maven-action@1.1.0
         
        #Test the application using Maven
        - name: Test with Maven
