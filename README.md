@@ -59,15 +59,17 @@ Es folgt eine Übersicht über die prägnantesten der unterstützen Features.
 ### Operatoren
 
 * Arithmetische (`+`, `-`, `*`, `/`)
-* Unäre (`++`, `--`)
-* Konkatenation (`"Hello " + "world!"`)
+* Unäre* (`++`, `--`)
+* Konkatenation* (`"Hello " + "world!"`)
+
+\*Mit Stern markierte Funktionen sind in Version 1.0 nicht in allen Teilen des Compilers funktionsfähig.
 
 ### Objektorientierung
 
-* Klassen an sich
-* Attribute (direkt initialisierte)
+* Klassen
+* Attribute (direkte Initialisierung nur mittels Konstanten)
 * Methoden
-* Methodenaufrufe
+* Methodenaufrufe (nur Methoden derselben Klasse)
 * Variablen
 * Leerer Konstruktor
 
