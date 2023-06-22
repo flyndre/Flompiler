@@ -46,7 +46,11 @@
        #Test the application using Maven
 #       - name: Test with Maven
 #         run: mvn -Dtest=SannerParserLexerTest -DfailIfNoTests=false test --file pom.xml
+       - name: RunMavenTest
+         uses: Maes95/maven-action@1.1.0
         
        #Test the application using Maven
        - name: Test with Maven
          run: mvn -B test --file pom.xml
+         
+         
