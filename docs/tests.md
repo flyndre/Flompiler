@@ -18,7 +18,7 @@ Von dort aus werden nach und nach die einzelnen Features 'hinzugefügt'.
 ### Systemtests
 
 Das Gesamtsystem (die Klasse `Flompiler` bzw. ihre Main-Methode `Flompiler.main`) werden in der Test-Klasse [`de.flyndre.flompiler.FlompilerTest`](../src/test/java/de/flyndre/flompiler/FlompilerTest.java) getestet.
-Dabei starten die Tests mit einem der 38 `.java`-File aus dem Ressourcen-Ordner.
+Dabei starten die Tests mit einem der 38 `.java`-Files aus dem Ressourcen-Ordner.
 Wurde der Quellcode erfolgreich kompiliert, wird die Java-Reflection-API verwendet, um die generierte Klasse zu instanziieren.
 So werden dann ihre Methoden und Attribute auf Korrektheit überprüft.
 Es existieren auch fehlerhafte Test-Dateien, bei denen eine Exception des Compilers erwartet wird.
