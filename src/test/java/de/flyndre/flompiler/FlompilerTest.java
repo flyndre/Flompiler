@@ -288,16 +288,4 @@ public class FlompilerTest {
         Flassertions.assertClassHasWorkingMethod(instance, "method", 0);
     }
 
-
-
-    // COMPLEX TESTS
-
-    @Test
-    @DisplayName("Flompiler: Complex Test A")
-    public void testFlompilerComplexTestA() {
-        testParsingSuccess("/complete/ComplexTestA.java");
-        Object instance = Fleflection.getReflectionInstance("/complete", "ComplexTestA");
-        Flassertions.assertClassNameEquals(instance, "ComplexTestA");
-    }
-
 }

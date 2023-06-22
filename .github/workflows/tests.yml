@@ -42,15 +42,18 @@
            path: ~/.m2
            key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
            restore-keys: ${{ runner.os }}-m2
-
-       #Test the application using Maven
-#       - name: Test with Maven
-#         run: mvn -Dtest=SannerParserLexerTest -DfailIfNoTests=false test --file pom.xml
-       - name: RunMavenTest
-         uses: Maes95/maven-action@1.1.0
         
        #Test the application using Maven
        - name: Test with Maven
          run: mvn -B test --file pom.xml
+         
+       - name: Upload a Build Artifact
+         if: always()
+         uses: actions/upload-artifact@v3.1.2
+         with:
+           # Artifact name
+           name: test results
+           # A file, directory or wildcard pattern that describes what to upload
+           path: D:\a\Flompiler\Flompiler\target\surefire-reports
          
          

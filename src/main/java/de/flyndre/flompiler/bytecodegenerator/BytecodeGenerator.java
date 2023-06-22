@@ -799,7 +799,7 @@ public class BytecodeGenerator {
                 }
 
                 mv.visitInsn(Opcodes.IADD);
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
                 localVarScope.put("IntAddition" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
                 return new Expr("IntAddition" + (localVarScope.size()-1), ExprType.LocalVar);
 
@@ -819,7 +819,7 @@ public class BytecodeGenerator {
                 }
 
                 mv.visitInsn(Opcodes.ISUB);
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
                 localVarScope.put("IntSubtraction" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
                 return new Expr("IntSubtraction" + (localVarScope.size()-1), ExprType.LocalVar);
 
@@ -839,7 +839,7 @@ public class BytecodeGenerator {
                 }
 
                 mv.visitInsn(Opcodes.IMUL);
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
                 localVarScope.put("IntMultiplication" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
                 return new Expr("IntMultiplication" + (localVarScope.size()-1), ExprType.LocalVar);
 
@@ -859,7 +859,7 @@ public class BytecodeGenerator {
                 }
 
                 mv.visitInsn(Opcodes.IDIV);
-                mv.visitVarInsn(Opcodes.ILOAD, localVarScope.size());
+                mv.visitVarInsn(Opcodes.ISTORE, localVarScope.size());
                 localVarScope.put("IntDivision" + (localVarScope.size()), new LocalVar("int", (localVarScope.size())));
                 return new Expr("IntDivision" + (localVarScope.size()-1), ExprType.LocalVar);
 
