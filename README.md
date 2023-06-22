@@ -59,6 +59,8 @@ Es folgt eine Übersicht über die prägnantesten der unterstützen Features.
 ### Operatoren
 
 * Arithmetische (`+`, `-`, `*`, `/`)
+* Vergleichsoperatoren (`<`, `>`, `<=`, `>=`, `==`)
+* Logische Operatoren* (`&&`, `||`, `!=`)
 * Unäre* (`++`, `--`)
 * Konkatenation* (`"Hello " + "world!"`)
 
@@ -67,7 +69,7 @@ Es folgt eine Übersicht über die prägnantesten der unterstützen Features.
 ### Objektorientierung
 
 * Klassen
-* Attribute (direkte Initialisierung nur mittels Konstanten)
+* Attribute (direkte Initialisierung nur mittels Konstanten, also `public int age = 1;` und nicht `public int age = 1 + 1;`)
 * Methoden
 * Methodenaufrufe (nur Methoden derselben Klasse)
 * Variablen
