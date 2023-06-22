@@ -39,8 +39,8 @@ public String typeCheck(List<Field> fields, List<Parameter> parameters) throws E
         throw new Exception(String.format("For the field or parameter %s was no type found.",this.name));
     }
 ```
-In diesem Beispiel aus der Klasse [LocalOrFieldVar.java](src/main/java/de/flyndre/flompiler/scannerparserlexer/syntaxtree/LocalOrFieldVar.java) ist zu erkennen wie zuerst die ``fields`` durchsucht werden und danach von den lokalen ``parameters`` überschrieben werden kann. So wird versucht den Typ der Variablen anhand ihres Namens zu bestimmen.
-Damit dies funktioniert muss im typeCheck() der Klasse [Class](src/main/java/de/flyndre/flompiler/scannerparserlexer/syntaxtree/Class.java) alle Klassenvariablen der Methode ``typeCheck()`` als ``fields`` übergeben werden. Für den Übergabeparameter `` parameters`` wird eine neue leere Liste übergeben.
+In diesem Beispiel aus der Klasse [LocalOrFieldVar.java](../src/main/java/de/flyndre/flompiler/scannerparserlexer/syntaxtree/LocalOrFieldVar.java) ist zu erkennen wie zuerst die ``fields`` durchsucht werden und danach von den lokalen ``parameters`` überschrieben werden kann. So wird versucht den Typ der Variablen anhand ihres Namens zu bestimmen.
+Damit dies funktioniert muss im typeCheck() der Klasse [Class](../src/main/java/de/flyndre/flompiler/scannerparserlexer/syntaxtree/Class.java) alle Klassenvariablen der Methode ``typeCheck()`` als ``fields`` übergeben werden. Für den Übergabeparameter `` parameters`` wird eine neue leere Liste übergeben.
 ``` java
 public void typeCheck() throws Exception {
         for(Method method:methods){
@@ -48,7 +48,7 @@ public void typeCheck() throws Exception {
         }
     }
 ```
-Zusätzlich wird bei jedem Typecheck in der Klasse [LocalVarDecl](src/main/java/de/flyndre/flompiler/scannerparserlexer/syntaxtree/LocalVarDecl.java) der ``parameters`` Liste hinzugefügt um im späteren Verlauf dort verfügbar zu sein.
+Zusätzlich wird bei jedem Typecheck in der Klasse [LocalVarDecl](../src/main/java/de/flyndre/flompiler/scannerparserlexer/syntaxtree/LocalVarDecl.java) der ``parameters`` Liste hinzugefügt um im späteren Verlauf dort verfügbar zu sein.
 ``` java
 public String typeCheck(List<Field> fields, List<Parameter> parameters)  {
         parameters.add(new Parameter(this.name,this.type));
