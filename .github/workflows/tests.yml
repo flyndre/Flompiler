@@ -48,6 +48,7 @@
          run: mvn -B test --file pom.xml
          
        - name: Upload a Build Artifact
+         if: always()
          uses: actions/upload-artifact@v3.1.2
          with:
            # Artifact name
