@@ -128,7 +128,8 @@ public class DynamicIfResults {
                         {
                             var ifCondition = new LocalOrFieldVar();
                             ifCondition.name = "returnOne";
-                            ifCondition.type = "boolean";
+                            // TODO: Should the following be inserted by typechecker?
+                            // ifCondition.type = "boolean";
                             statement.condition = ifCondition;
                         }
                         {
