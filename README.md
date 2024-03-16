@@ -1,4 +1,4 @@
-![](https://github.com/pereki/flompiler/workflows/Tests/badge.svg)
+![Tests](https://github.com/pereki/flompiler/workflows/Tests/badge.svg)
 
 ![Flompiler Logo](docs/flompiler.png)
 
@@ -8,15 +8,23 @@ Im Rahmen der Vorlesung "Compilerbau" an der DHBW Stuttgart Campus Horb entwicke
 
 ## Inhalt
 
-1. [Gruppenzusammenstellung](#gruppenzusammenstellung)
-1. [Aufbau des Compilers](#aufbau-des-compilers)
-1. [Unterstütze Features](#unterstütze-features)
-1. [Verwendung](#verwendung)
+-   [Flompiler](#flompiler)
+    -   [Inhalt](#inhalt)
+    -   [Gruppenzusammenstellung](#gruppenzusammenstellung)
+    -   [Aufbau des Compilers](#aufbau-des-compilers)
+        -   [Komponenten](#komponenten)
+        -   [Abstrakter Syntaxbaum](#abstrakter-syntaxbaum)
+    -   [Unterstütze Features](#unterstütze-features)
+        -   [Datentypen](#datentypen)
+        -   [Operatoren](#operatoren)
+        -   [Objektorientierung](#objektorientierung)
+        -   [Strukturen](#strukturen)
+    -   [Verwendung](#verwendung)
 
 ## Gruppenzusammenstellung
 
 | Name            | Aufgabenbereich | Benutzername | Dokumentation                   |
-|-----------------|-----------------|--------------|---------------------------------|
+| --------------- | --------------- | ------------ | ------------------------------- |
 | Ruben Kraft     | Parser          | Pereki       | [Parser](docs/parser.md)        |
 | Lukas Burkhardt | Typ-Check       | L4kiLuk      | [Type-check](docs/typecheck.md) |
 | Paul Lehmann    | Bytecode        | NoName11234  | [Bytecode](docs/bytecode.md)    |
@@ -31,10 +39,10 @@ Die Bearbeitung eines Aufgabenbereichs wurde vom jeweiligen verantwortlichen Tea
 
 Unser Compiler besteht aus drei Teilen:
 
-* Dem [`ScannerParserLexer`](src/main/java/de/flyndre/flompiler/scannerparserlexer/ScannerParserLexer.java), der die Input-Datei einliest, sie in Tokens umwandelt und parst.
+-   Dem [`ScannerParserLexer`](src/main/java/de/flyndre/flompiler/scannerparserlexer/ScannerParserLexer.java), der die Input-Datei einliest, sie in Tokens umwandelt und parst.
     So entsteht der ungetypte abstrakte Syntaxbaum.
-* Dem [`TypeChecker`](src/main/java/de/flyndre/flompiler/typecheker/TypeChecker.java), der die Semantik der Tokens kontrolliert, woraus der getypte abstrakte Syntaxbaum resultiert.
-* Dem [`BytecodeGenerator`](src/main/java/de/flyndre/flompiler/bytecodegenerator/BytecodeGenerator.java), der aus dem resultierenden getypten abstrakten Syntaxbaum Bytecode generiert.
+-   Dem [`TypeChecker`](src/main/java/de/flyndre/flompiler/typecheker/TypeChecker.java), der die Semantik der Tokens kontrolliert, woraus der getypte abstrakte Syntaxbaum resultiert.
+-   Dem [`BytecodeGenerator`](src/main/java/de/flyndre/flompiler/bytecodegenerator/BytecodeGenerator.java), der aus dem resultierenden getypten abstrakten Syntaxbaum Bytecode generiert.
 
 Orchestriert wird der Compiler von [`Flompiler`](src/main/java/de/flyndre/flompiler/Flompiler.java), der als Controller fungiert und zwischen den Komponenten vermittelt.
 Dieser implementiert eine Main-Methode, die den Pfad zur Input-Datei als erstes Argument erhält.
@@ -51,35 +59,35 @@ Es folgt eine Übersicht über die prägnantesten der unterstützen Features.
 
 ### Datentypen
 
-* `boolean`
-* `int`
-* `char`
-* `String`
+-   `boolean`
+-   `int`
+-   `char`
+-   `String`
 
 ### Operatoren
 
-* Arithmetische (`+`, `-`, `*`, `/`)
-* Vergleichsoperatoren (`<`, `>`, `<=`, `>=`, `==`)
-* Logische Operatoren* (`&&`, `||`, `!=`)
-* Unäre* (`++`, `--`)
-* Konkatenation* (`"Hello " + "world!"`)
+-   Arithmetische (`+`, `-`, `*`, `/`)
+-   Vergleichsoperatoren (`<`, `>`, `<=`, `>=`, `==`)
+-   Logische Operatoren\* (`&&`, `||`, `!=`)
+-   Unäre\* (`++`, `--`)
+-   Konkatenation\* (`"Hello " + "world!"`)
 
-*Mit Stern markierte Funktionen sind in Version 1.0 nicht in allen Teilen des Compilers funktionsfähig.
+\*Mit Stern markierte Funktionen sind in Version 1.0 nicht in allen Teilen des Compilers funktionsfähig.
 
 ### Objektorientierung
 
-* Klassen
-* Attribute (direkte Initialisierung nur mittels Konstanten, also `public int age = 1;` und nicht `public int age = 1 + 1;`)
-* Methoden
-* Methodenaufrufe (nur Methoden derselben Klasse)
-* Variablen
-* Leerer Konstruktor
+-   Klassen
+-   Attribute (direkte Initialisierung nur mittels Konstanten, also `public int age = 1;` und nicht `public int age = 1 + 1;`)
+-   Methoden
+-   Methodenaufrufe (nur Methoden derselben Klasse)
+-   Variablen
+-   Leerer Konstruktor
 
 ### Strukturen
 
-* `if`, `if-else`
-* `while`
-* `return`
+-   `if`, `if-else`
+-   `while`
+-   `return`
 
 ## Verwendung
 
